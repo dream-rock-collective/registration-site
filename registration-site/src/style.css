@@ -1,0 +1,12 @@
+.logo {
+  display: block;
+  margin: 2rem auto 0;
+  width: 4rem;
+}
+
+h1 {
+  font-family: system-ui, sans-serif;
+  text-align: center;
+  margin-top: 1rem;
+  color: #222;
+}
