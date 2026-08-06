@@ -1,4 +1,113 @@
+.construction {
+  color: red;
+  background-color: black;
+  width: 100%;
+  text-align: center;
+}
+
 h1 {
   font-family: serif;
   text-align: center;
+}
+
+img {
+  max-width: 100%;
+}
+
+body {
+  background: url('/background.jpeg')
+    /*no-repeat*/
+    center top / cover;
+}
+
+.logo {
+  display: flex;
+  width: 100%;
+  justify-content: center;
+}
+
+.logo>img {
+  max-width: 400px;
+  width: 80%;
+}
+
+.rock {
+  position: absolute;
+  top: 130px;
+  left: 0;
+  width: 180px;
+  rotate: 35deg;
+  z-index: -1;
+}
+
+.signup-section {
+  margin-top: 42px;
+  display: flex;
+  flex-direction: row;
+  justify-content: center;
+}
+
+.signup-block {
+  background-color: #D74828;
+  max-width: 300px;
+  padding: 15px;
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+  align-items: center;
+}
+
+.signup-block>h2 {
+  margin: 0;
+  color: white;
+}
+
+.signup-form {
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+  padding: 10px;
+}
+
+.signup-form p {
+  margin: 0;
+  color: white;
+}
+
+.signup-form button {
+  background-color: #445B85;
+  color: white;
+  padding: 10px;
+}
+
+
+.info-section {
+  display: flex;
+  flex-direction: row;
+  justify-content: center;
+  gap: 20px;
+  align-items: center;
+  flex-wrap: wrap;
+}
+
+.leading-blurb {
+  max-width: 600px;
+}
+
+.trailing-image {
+  max-width: 400px;
+  height: auto;
+  object-fit: contain;
+  max-height: 300px;
+}
+
+.mt-20 {
+  margin-top: 20px;
+}
+
+@media (max-width: 600px) {
+  .rock {
+    width: 100px;
+    top: 60px;
+  }
 }

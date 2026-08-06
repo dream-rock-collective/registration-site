@@ -9,30 +9,67 @@
 </head>
 
 <body>
-  <!-- <img src="/vite.svg" class="logo" alt="Vite logo" />-->
-  <h1>Dream-Rock Collective</h1>
-  <p><b>this site is under construction</b></p>
-  <hr />
-  <p>Dream-Rock Collective began as an intersectional way to bring the community together and support those impacted by
-    systemic violence. Merging the power of art with community reinvestment, Dream-Rock Collective reimagines business
-    by giving half of our profits to our local community. Only by working together can we create the world we want to
-    live in. We are donating 50% of our profits to local mutual aids and nonprofits that can do the work in impacted and
-    underinvested communities.
-    <br />
-    <br />
-    50% of profits towards <br />
-  <ul>
-    <li>local San Diego initiatives</li>
-    <li>Climate Justice</li>
-    <li>Helping people impacted by ICE</li>
-    <li>Racial Justice + Education</li>
-  </ul>
-  <p>
-    <hr />
+  <p class="construction"><b>!!!!!!!!!this site is under construction</b></p>
 
-  <p>Leeya Appleby lives in San Diego, California. She is a painter, printmaker, and collage artist.
-    Her subjects range from whimsical, imaginative pieces to art activism to celebrating the magic in everyday
-    life–capturing the joy and complexities that come with being alive. </p>
+  <div class="logo">
+    <img src="/logo.png" class="logo" alt="Dream-Rock Collective logo" />
+  </div>
+
+  <img src="/rock.png" alt="" class="rock">
+
+  <section class="signup-section">
+    <div class="signup-block">
+      <img src="/social-impact-mail-club.png" alt="Social Impact Mail Club - Become a Member" class="card-image">
+
+      <h2>Become a Member</h2>
+      <form class="signup-form">
+        <input type="text" name="name" placeholder="Name" required>
+        <input type="email" name="email" placeholder="Email" required>
+        <input type="text" name="address" placeholder="Address" required>
+        <p>subtext about how this subscription will work. Subscriptions are managed through Stripe</p>
+        <button type="submit">Subscribe</button>
+      </form>
+    </div>
+  </section>
+
+  <section class="whats-included info-section mt-20">
+    <div class="leading-blurb">
+      <h2>What&rsquo;s Included</h2>
+      <p>Dream-Rock Collective began as an intersectional way to bring the community together and support those impacted
+        by
+        systemic violence. Merging the power of art with community reinvestment, Dream-Rock Collective reimagines
+        business
+        by giving half of our profits to our local community. Only by working together can we create the world we want
+        to
+        live in. We are donating 50% of our profits to local mutual aids and nonprofits that can do the work in impacted
+        and
+        underinvested communities.
+        <br />
+        <br />
+        50% of profits towards <br />
+      <ul>
+        <li>local San Diego initiatives</li>
+        <li>Climate Justice</li>
+        <li>Helping people impacted by ICE</li>
+        <li>Racial Justice + Education</li>
+      </ul>
+      <p>
+    </div>
+
+    <img class="trailing-image" src="/whats-included/collage.png" alt="">
+  </section>
+
+  <section class="about-me info-section mt-20">
+    <div class="leading-blurb">
+      <h2>About Me</h2>
+      <p>Leeya Appleby lives in San Diego, California. She is a painter, printmaker, and collage artist.
+        Her subjects range from whimsical, imaginative pieces to art activism to celebrating the magic in everyday
+        life–capturing the joy and complexities that come with being alive. </p>
+
+    </div>
+
+    <img class="trailing-image" src="/leeya-appleby.jpeg" alt="Leeya Appleby">
+  </section>
 
   <script type="module" src="/src/main.ts"></script>
 </body>
