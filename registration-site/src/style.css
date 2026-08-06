@@ -1,6 +1,23 @@
+.construction {
+  color: red;
+  background-color: black;
+  width: 100%;
+  text-align: center;
+}
+
 h1 {
   font-family: serif;
   text-align: center;
+}
+
+img {
+  max-width: 100%;
+}
+
+body {
+  background: url('/background.jpeg')
+    /*no-repeat*/
+    center top / cover;
 }
 
 .logo {
@@ -12,4 +29,52 @@ h1 {
 .logo>img {
   max-width: 400px;
   width: 80%;
+}
+
+.rock {
+  position: absolute;
+  top: 130px;
+  left: 0;
+  width: 180px;
+  rotate: 35deg;
+  z-index: -1;
+}
+
+.signup-section {
+  display: flex;
+  flex-direction: row;
+  justify-content: center;
+}
+
+.signup-block {
+  background-color: #D74828;
+  max-width: 300px;
+  padding: 15px;
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+  align-items: center;
+}
+
+.signup-block>h2 {
+  margin: 0;
+  color: white;
+}
+
+.signup-form {
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+  padding: 10px;
+}
+
+.signup-form p {
+  margin: 0;
+  color: white;
+}
+
+.signup-form button {
+  background-color: #445B85;
+  color: white;
+  padding: 10px;
 }
