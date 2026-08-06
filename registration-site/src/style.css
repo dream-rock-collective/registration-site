@@ -41,6 +41,7 @@ body {
 }
 
 .signup-section {
+  margin-top: 42px;
   display: flex;
   flex-direction: row;
   justify-content: center;
@@ -77,4 +78,36 @@ body {
   background-color: #445B85;
   color: white;
   padding: 10px;
+}
+
+
+.info-section {
+  display: flex;
+  flex-direction: row;
+  justify-content: center;
+  gap: 20px;
+  align-items: center;
+  flex-wrap: wrap;
+}
+
+.leading-blurb {
+  max-width: 600px;
+}
+
+.trailing-image {
+  max-width: 400px;
+  height: auto;
+  object-fit: contain;
+  max-height: 300px;
+}
+
+.mt-20 {
+  margin-top: 20px;
+}
+
+@media (max-width: 600px) {
+  .rock {
+    width: 100px;
+    top: 60px;
+  }
 }
