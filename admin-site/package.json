@@ -11,6 +11,8 @@
     "typescript": "^7.0.2"
   },
   "dependencies": {
-    "hono": "^4.13.0"
+    "hono": "^4.13.0",
+    "postgres": "^3.4.7",
+    "zod": "^4.1.12"
   }
 }

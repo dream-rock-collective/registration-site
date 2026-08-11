@@ -1,13 +1,20 @@
-import { Hono } from 'hono';
-import { healthRoute } from './routes/health';
+import { Hono } from "hono";
+import { cors } from "hono/cors";
+import { healthRoute } from "./routes/health";
+import { registrationsRoute } from "./routes/registrations";
 
 const app = new Hono();
-app.route('/', healthRoute);
+app.use(
+  "/*",
+  cors({
+    origin:
+      process.env.REGISTRATION_SITE_ORIGIN ?? "http://localhost:5173",
+  }),
+);
+app.route("/", healthRoute);
+app.route("/", registrationsRoute);
 
-// TODO: Postgres connection setup
-// TODO: CORS config for registration-site's origin
-
-const port = 3000;
+const port = 6942;
 
 export default {
   port,
