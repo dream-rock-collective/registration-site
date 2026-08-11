@@ -5,8 +5,8 @@ services:
     ports:
       - "6942:6942"
     environment:
-      DATABASE_URL: postgres://admin:admin@postgres:5432/collective_admin
-      REGISTRATION_SITE_ORIGIN: http://localhost:5173
+      DATABASE_URL: postgres://${POSTGRES_USER}:${POSTGRES_PASSWORD}@postgres:5432/${POSTGRES_DB}
+      REGISTRATION_SITE_ORIGIN: ${REGISTRATION_SITE_ORIGIN}
     depends_on:
       postgres:
         condition: service_healthy
@@ -14,16 +14,16 @@ services:
   postgres:
     image: postgres:16-alpine
     environment:
-      POSTGRES_DB: collective_admin
-      POSTGRES_USER: admin
-      POSTGRES_PASSWORD: admin
+      POSTGRES_DB: ${POSTGRES_DB}
+      POSTGRES_USER: ${POSTGRES_USER}
+      POSTGRES_PASSWORD: ${POSTGRES_PASSWORD}
     ports:
       - "5432:5432"
     volumes:
       - postgres-data:/var/lib/postgresql/data
       - ./docker/init.sql:/docker-entrypoint-initdb.d/001-init.sql:ro
     healthcheck:
-      test: ["CMD-SHELL", "pg_isready -U admin -d collective_admin"]
+      test: ["CMD-SHELL", "pg_isready -U ${POSTGRES_USER} -d ${POSTGRES_DB}"]
       interval: 5s
       timeout: 5s
       retries: 10
