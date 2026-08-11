@@ -105,6 +105,10 @@ body {
   margin-top: 20px;
 }
 
+.mb-40 {
+  margin-bottom: 40px;
+}
+
 @media (max-width: 600px) {
   .rock {
     width: 100px;
