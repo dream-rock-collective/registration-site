@@ -1,8 +1,8 @@
 import "./style.css";
 
-const API_BASE_URL =
-  import.meta.env["VITE_API_BASE_URL"] ||
-  (import.meta.env.DEV ? "http://localhost:6942" : "https://api.dreamrock.co");
+const API_BASE_URL = import.meta.env.DEV
+  ? "http://localhost:6942"
+  : "https://api.dreamrock.co";
 
 const form = document.querySelector<HTMLFormElement>("#signup-form");
 const submitButton =
@@ -44,6 +44,11 @@ form?.addEventListener("submit", async (event) => {
     email: String(formData.get("email") || "").trim(),
     address: String(formData.get("address") || "").trim(),
   };
+
+  if (Object.values(registration).some((value) => !value)) {
+    setFormMessage("Please provide your name, email, and address.");
+    return;
+  }
 
   submitButton.disabled = true;
   setFormMessage("Submitting your registration…");
