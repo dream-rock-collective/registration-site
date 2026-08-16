@@ -88,12 +88,8 @@ body {
   color: #222;
 }
 
-.health-banner.is-healthy {
-  background-color: #b9d99c;
-}
-
-.health-banner.is-unhealthy {
-  background-color: #f3a08b;
+.health-banner.is-hidden {
+  display: none;
 }
 
 .form-message {
