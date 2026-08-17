@@ -1,6 +1,8 @@
 import "./style.css";
 
-const API_BASE_URL = import.meta.env.DEV
+const isLocalSite = window.location.hostname === "localhost" ||
+  window.location.hostname === "127.0.0.1";
+const API_BASE_URL = isLocalSite
   ? "http://localhost:6942"
   : "https://api.dreamrock.co";
 
