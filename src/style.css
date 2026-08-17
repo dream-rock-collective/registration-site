@@ -187,7 +187,7 @@ img {
   margin: 0 auto;
   box-sizing: border-box;
   padding: 24px;
-  background: white;
+  background: url('/paper-background.jpg') center / cover;
 }
 
 .info-section:not(.text-section) .section-inner {
@@ -222,15 +222,13 @@ img {
 
 .faq-question {
   margin: 0;
-  padding: 10px 14px;
-  background: white;
+  padding: 6px 10px;
   font-weight: 500 !important;
 }
 
 .faq-item p:not(.faq-question) {
-  margin: 10px 0 0;
-  padding: 10px 14px;
-  background: white;
+  margin: 4px 0 0;
+  padding: 6px 10px;
 }
 
 .faq-item p:last-child {
@@ -244,14 +242,28 @@ img {
 .leading-blurb > p,
 .text-section .section-inner > p,
 .text-section .section-inner > ul {
-  background: white;
   padding: 10px 14px;
 }
 
-.about-collective .section-inner > p,
+.info-section p,
+.info-section li {
+  line-height: 1.5;
+}
+
 .about-collective .section-inner > ul {
-  padding: 0;
-  background: transparent;
+  padding-left: 1.5rem;
+}
+
+.thanks-section .section-inner {
+  text-align: center;
+}
+
+.thanks-section {
+  margin-bottom: clamp(100px, 15vw, 220px);
+}
+
+.whats-included.info-section {
+  margin-top: clamp(80px, 10vw, 140px);
 }
 
 .leading-blurb {
@@ -295,6 +307,10 @@ img {
   .rock {
     width: 100px;
     top: 60px;
+  }
+
+  .whats-included.info-section {
+    margin-top: 40px;
   }
 
 }
