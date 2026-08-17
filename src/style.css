@@ -188,11 +188,11 @@ img {
 }
 
 .leading-blurb {
-  max-width: 480px;
+  max-width: 576px;
 }
 
 .trailing-image {
-  max-width: 320px;
+  max-width: 384px;
   height: auto;
   object-fit: contain;
   max-height: 240px;
