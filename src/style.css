@@ -1,3 +1,23 @@
+@font-face {
+  font-family: "Fraunces";
+  src: url("/fonts/fraunces-variable.woff") format("woff");
+  font-style: normal;
+  font-weight: 100 900;
+  font-display: swap;
+}
+
+@font-face {
+  font-family: "Fraunces";
+  src: url("/fonts/fraunces-italic-variable.woff") format("woff");
+  font-style: italic;
+  font-weight: 100 900;
+  font-display: swap;
+}
+
+:root {
+  --font-display: "Fraunces", Georgia, serif;
+}
+
 .construction {
   color: red;
   background-color: black;
@@ -5,19 +25,28 @@
   text-align: center;
 }
 
+body {
+  font-family: var(--font-display);
+  font-optical-sizing: auto;
+  background: url('/background.jpeg')
+    /*no-repeat*/
+    center top / cover;
+}
+
+button,
+input,
+textarea,
+select {
+  font: inherit;
+}
+
 h1 {
-  font-family: serif;
+  font-family: var(--font-display);
   text-align: center;
 }
 
 img {
   max-width: 100%;
-}
-
-body {
-  background: url('/background.jpeg')
-    /*no-repeat*/
-    center top / cover;
 }
 
 .logo {
