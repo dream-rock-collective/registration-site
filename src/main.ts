@@ -2,9 +2,9 @@ import "./style.css";
 
 const isLocalSite = window.location.hostname === "localhost" ||
   window.location.hostname === "127.0.0.1";
-const API_BASE_URL = isLocalSite
+const API_BASE_URL = import.meta.env["VITE_API_BASE_URL"] || (isLocalSite
   ? "http://localhost:6942"
-  : "https://api.dreamrock.co";
+  : "https://api.dreamrock.co");
 
 const form = document.querySelector<HTMLFormElement>("#signup-form");
 const submitButton =
@@ -74,8 +74,14 @@ form?.addEventListener("submit", async (event) => {
       return;
     }
 
-    form.reset();
-    setFormMessage("Thanks! Your registration has been saved.");
+    const registrationId = body.registrationId ?? body.id ?? body.registration?.id;
+    if (!registrationId) {
+      setFormMessage("Registration saved, but we could not start payment.");
+      submitButton.disabled = false;
+      return;
+    }
+
+    window.location.href = `/registered/?registrationId=${encodeURIComponent(String(registrationId))}`;
   } catch {
     setFormMessage(
       "We could not reach the registration service. Please try again.",
