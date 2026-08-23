@@ -594,6 +594,124 @@ footer p {
     margin-top: 3px;
   }
 
+  .subscription-page {
+    width: 100%;
+  }
+
+  .subscription-page>.cloud {
+    display: none;
+  }
+
+  .subscription-banner {
+    padding: 16px 14px 14px;
+  }
+
+  .subscription-selection {
+    margin: 48px auto;
+  }
+
+  .subscription-card {
+    width: 100%;
+  }
+
+  .plan-list {
+    gap: 16px;
+    margin-top: 24px;
+  }
+
+  .plan-list button {
+    gap: 10px;
+    padding: 12px 10px;
+  }
+
+  .subscription-copy {
+    padding-bottom: 70px;
+  }
+
+
+  .card-section {
+    margin: 0 0 28px;
+  }
+
+  .card-block {
+    width: 100%;
+    min-height: 265px;
+    padding: 16px;
+    border: 0;
+  }
+
+  .mail-drops .copy,
+  .artist .copy {
+    width: auto;
+  }
+
+  footer {
+    margin-top: 0;
+  }
+
+  .mail-drops {
+    margin-bottom: 45px;
+  }
+
+  .collage {
+    width: 220px;
+    max-height: 190px;
+    margin: 9px auto 0;
+  }
+
+  .collective {
+    margin-bottom: 38px;
+  }
+
+  .artist {
+    margin-bottom: 34px;
+  }
+
+  .artist-image {
+    width: 110px;
+    max-height: 160px;
+    margin: 18px auto 0;
+  }
+
+  .faq {
+    margin-bottom: 42px;
+  }
+
+  h1,
+  h2 {
+    font-size: 1.9rem;
+  }
+
+  .signup-intro {
+    font-size: 0.8rem;
+    max-width: 260px;
+  }
+
+  .signup-form {
+    margin-top: 6px;
+  }
+
+  .signup-form input {
+    height: 27px;
+  }
+
+  .field-note {
+    font-size: 0.75rem;
+    margin-bottom: 6px;
+  }
+
+  .signup-form button {
+    margin-top: 14px;
+  }
+
+  .mail-drops,
+  .artist {
+    display: block;
+    min-height: 0;
+  }
+}
+
+@media (max-width: 700px) {
   .cloud {
     width: 125px;
   }
@@ -767,9 +885,6 @@ footer p {
     right: -110px;
   }
 
-  .card-section {
-    margin: 0 0 28px;
-  }
 
   .cloud-form {
     top: 35px;
@@ -790,79 +905,6 @@ footer p {
     right: -125px;
   }
 
-  .card-block {
-    width: 100%;
-    min-height: 265px;
-    padding: 16px;
-    border: 0;
-  }
-
-  h1,
-  h2 {
-    font-size: 1.9rem;
-  }
-
-  .signup-intro {
-    font-size: 0.8rem;
-    max-width: 260px;
-  }
-
-  .signup-form {
-    margin-top: 6px;
-  }
-
-  .signup-form input {
-    height: 27px;
-  }
-
-  .field-note {
-    font-size: 0.75rem;
-    margin-bottom: 6px;
-  }
-
-  .signup-form button {
-    margin-top: 14px;
-  }
-
-  .mail-drops,
-  .artist {
-    display: block;
-    min-height: 0;
-  }
-
-  .mail-drops .copy,
-  .artist .copy {
-    width: auto;
-  }
-
-  .mail-drops {
-    margin-bottom: 45px;
-  }
-
-  .collage {
-    width: 220px;
-    max-height: 190px;
-    margin: 9px auto 0;
-  }
-
-  .collective {
-    margin-bottom: 38px;
-  }
-
-  .artist {
-    margin-bottom: 34px;
-  }
-
-  .artist-image {
-    width: 110px;
-    max-height: 160px;
-    margin: 18px auto 0;
-  }
-
-  .faq {
-    margin-bottom: 42px;
-  }
-
   .cloud-mail {
     top: 174px;
     right: -48px;
@@ -871,10 +913,6 @@ footer p {
   .cloud-artist {
     bottom: 15px;
     left: -50px;
-  }
-
-  footer {
-    margin-top: 0;
   }
 
   .footer-logo {
@@ -972,40 +1010,4 @@ footer p {
 
 .subscription-copy .subline {
   margin: 0 0 0 6px;
-}
-
-@media (max-width: 700px) {
-  .subscription-page {
-    width: 100%;
-  }
-
-  .subscription-page>.cloud {
-    display: none;
-  }
-
-  .subscription-banner {
-    padding: 16px 14px 14px;
-  }
-
-  .subscription-selection {
-    margin: 48px auto;
-  }
-
-  .subscription-card {
-    width: 100%;
-  }
-
-  .plan-list {
-    gap: 16px;
-    margin-top: 24px;
-  }
-
-  .plan-list button {
-    gap: 10px;
-    padding: 12px 10px;
-  }
-
-  .subscription-copy {
-    padding-bottom: 70px;
-  }
 }
