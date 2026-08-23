@@ -7,6 +7,7 @@ export default defineConfig({
         main: "index.html",
         registered: "registered/index.html",
         success: "success/index.html",
+        allocatePayment: "allocate-payment/index.html",
       },
     },
   },

@@ -598,7 +598,7 @@ footer p {
     width: 100%;
   }
 
-  .subscription-page>.cloud {
+  .subscription-page > .cloud {
     display: none;
   }
 
@@ -627,7 +627,6 @@ footer p {
   .subscription-copy {
     padding-bottom: 70px;
   }
-
 
   .card-section {
     margin: 0 0 28px;
@@ -885,7 +884,6 @@ footer p {
     right: -110px;
   }
 
-
   .cloud-form {
     top: 35px;
     right: -60px;
@@ -952,6 +950,11 @@ footer p {
 }
 
 .subscription-selection {
+  margin: 48px auto;
+}
+
+.allocate-payment-card {
+  position: static;
   margin: 48px auto;
 }
 

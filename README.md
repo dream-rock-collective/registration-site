@@ -21,5 +21,6 @@ bun run build
 
 The production build is written to `dist/`.
 
-The payment pages are available at `/registered/` and `/success/`. Configure
-the backend Checkout `success_url` and `cancel_url` with those paths.
+The payment pages are available at `/registered/`, `/success/`, and
+`/allocate-payment/`. Configure the backend Checkout `success_url` to use
+`/allocate-payment/` and the `cancel_url` with the appropriate payment page.
