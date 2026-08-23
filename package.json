@@ -6,6 +6,7 @@
   "scripts": {
     "dev": "vite",
     "build": "tsc && vite build",
+    "format": "prettier --write \"**/*.{html,css,ts}\"",
     "lint": "stylelint \"src/**/*.css\"",
     "preview": "vite preview"
   },

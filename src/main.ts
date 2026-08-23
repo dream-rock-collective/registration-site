@@ -1,11 +1,12 @@
 import "./style.css";
 import { formatPlan, getMember, saveRegistration } from "./member";
 
-const isLocalSite = window.location.hostname === "localhost" ||
+const isLocalSite =
+  window.location.hostname === "localhost" ||
   window.location.hostname === "127.0.0.1";
-const API_BASE_URL = import.meta.env["VITE_API_BASE_URL"] || (isLocalSite
-  ? "http://localhost:6942"
-  : "https://api.dreamrock.co");
+const API_BASE_URL =
+  import.meta.env["VITE_API_BASE_URL"] ||
+  (isLocalSite ? "http://localhost:6942" : "https://api.dreamrock.co");
 
 const form = document.querySelector<HTMLFormElement>("#signup-form");
 const submitButton =
@@ -89,7 +90,8 @@ form?.addEventListener("submit", async (event) => {
 
     saveRegistration(registration.name);
 
-    const registrationId = body.registrationId ?? body.id ?? body.registration?.id;
+    const registrationId =
+      body.registrationId ?? body.id ?? body.registration?.id;
     if (!registrationId) {
       setFormMessage("Registration saved, but we could not start payment.");
       submitButton.disabled = false;

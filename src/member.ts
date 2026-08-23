@@ -16,7 +16,7 @@ type PendingPlan = {
 function readStorage<T>(key: string): T | null {
   try {
     const value = window.localStorage.getItem(key);
-    return value ? JSON.parse(value) as T : null;
+    return value ? (JSON.parse(value) as T) : null;
   } catch {
     return null;
   }
@@ -67,11 +67,10 @@ export function formatPlan(member: Member): string {
   if (member.plan === "monthly") return "monthly";
   if (member.plan === "yearly") return "yearly";
 
-  const date = member.paymentDate
-    ? new Date(member.paymentDate)
-    : null;
-  const formattedDate = date && !Number.isNaN(date.valueOf())
-    ? new Intl.DateTimeFormat("en-US", { dateStyle: "long" }).format(date)
-    : "date unavailable";
+  const date = member.paymentDate ? new Date(member.paymentDate) : null;
+  const formattedDate =
+    date && !Number.isNaN(date.valueOf())
+      ? new Intl.DateTimeFormat("en-US", { dateStyle: "long" }).format(date)
+      : "date unavailable";
   return `one time — paid ${formattedDate}`;
 }

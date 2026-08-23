@@ -1,17 +1,17 @@
 import "./style.css";
 import { getMember, savePendingPlan } from "./member";
 
-const isLocalSite = window.location.hostname === "localhost" ||
+const isLocalSite =
+  window.location.hostname === "localhost" ||
   window.location.hostname === "127.0.0.1";
-const API_BASE_URL = import.meta.env["VITE_API_BASE_URL"] || (isLocalSite
-  ? "http://localhost:6942"
-  : "https://api.dreamrock.co");
+const API_BASE_URL =
+  import.meta.env["VITE_API_BASE_URL"] ||
+  (isLocalSite ? "http://localhost:6942" : "https://api.dreamrock.co");
 const registrationId = new URLSearchParams(window.location.search).get(
   "registrationId",
 );
-const checkoutButtons = document.querySelectorAll<HTMLButtonElement>(
-  "[data-plan]",
-);
+const checkoutButtons =
+  document.querySelectorAll<HTMLButtonElement>("[data-plan]");
 const greeting = document.querySelector<HTMLElement>("#subscription-thanks");
 const member = getMember();
 if (greeting && member?.name) {
@@ -22,7 +22,9 @@ if (greeting && member?.name) {
 checkoutButtons.forEach((button) => {
   button.addEventListener("click", async () => {
     if (!registrationId) {
-      window.alert("We could not find your registration. Please register again.");
+      window.alert(
+        "We could not find your registration. Please register again.",
+      );
       return;
     }
 
@@ -45,9 +47,11 @@ checkoutButtons.forEach((button) => {
       window.location.href = body.url;
     } catch (error) {
       button.disabled = false;
-      window.alert(error instanceof Error
-        ? error.message
-        : "We could not start checkout. Please try again.");
+      window.alert(
+        error instanceof Error
+          ? error.message
+          : "We could not start checkout. Please try again.",
+      );
     }
   });
 });
