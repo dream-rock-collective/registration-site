@@ -1,18 +1,30 @@
 import "./style.css";
+import { formatPlan, getMember, saveRegistration } from "./member";
 
 const isLocalSite = window.location.hostname === "localhost" ||
   window.location.hostname === "127.0.0.1";
-const API_BASE_URL = isLocalSite
+const API_BASE_URL = import.meta.env["VITE_API_BASE_URL"] || (isLocalSite
   ? "http://localhost:6942"
-  : "https://api.dreamrock.co";
+  : "https://api.dreamrock.co");
 
 const form = document.querySelector<HTMLFormElement>("#signup-form");
 const submitButton =
   document.querySelector<HTMLButtonElement>("#signup-submit");
 const healthBanner = document.querySelector<HTMLElement>(".health-banner");
 const formMessage = document.querySelector<HTMLElement>("#form-message");
+const memberBanner = document.querySelector<HTMLElement>("#member-banner");
+const memberHeading = document.querySelector<HTMLElement>("#member-heading");
+const memberPlan = document.querySelector<HTMLElement>("#member-plan");
 
 let apiHealthy = false;
+
+const existingMember = getMember();
+if (existingMember && memberBanner && memberHeading && memberPlan) {
+  const firstName = existingMember.name.trim().split(/\s+/)[0];
+  memberHeading.textContent = `Thanks for being a member, ${firstName}`;
+  memberPlan.textContent = formatPlan(existingMember);
+  memberBanner.classList.remove("is-hidden");
+}
 
 function setHealthState(healthy: boolean) {
   apiHealthy = healthy;
@@ -75,8 +87,16 @@ form?.addEventListener("submit", async (event) => {
       return;
     }
 
-    form.reset();
-    setFormMessage("Thanks! Your registration has been saved.");
+    saveRegistration(registration.name);
+
+    const registrationId = body.registrationId ?? body.id ?? body.registration?.id;
+    if (!registrationId) {
+      setFormMessage("Registration saved, but we could not start payment.");
+      submitButton.disabled = false;
+      return;
+    }
+
+    window.location.href = `/registered/?registrationId=${encodeURIComponent(String(registrationId))}`;
   } catch {
     setFormMessage(
       "We could not reach the registration service. Please try again.",
