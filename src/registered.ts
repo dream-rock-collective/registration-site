@@ -1,4 +1,5 @@
 import "./style.css";
+import { savePendingPlan } from "./member";
 
 const isLocalSite = window.location.hostname === "localhost" ||
   window.location.hostname === "127.0.0.1";
@@ -32,6 +33,8 @@ checkoutButtons.forEach((button) => {
       if (!response.ok || typeof body.url !== "string") {
         throw new Error(body.error || "Checkout is unavailable.");
       }
+
+      savePendingPlan(button.dataset["plan"]);
 
       window.location.href = body.url;
     } catch (error) {

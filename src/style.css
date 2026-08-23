@@ -136,6 +136,32 @@ img {
   padding: 8px 0 0;
 }
 
+.member-banner.is-hidden {
+  display: none;
+}
+
+.member-banner {
+  width: min(760px, calc(100% - 40px));
+  box-sizing: border-box;
+  margin: 20px auto 0;
+  padding: 12px 18px;
+  display: flex;
+  flex-direction: column;
+  gap: 3px;
+  text-align: center;
+  background-color: #445B85;
+  color: white;
+}
+
+.member-banner strong {
+  font-size: 1.2rem;
+}
+
+.member-banner span {
+  color: #d3d3d3;
+  font-size: 1.15rem;
+}
+
 .signup-form p {
   margin: 0;
   color: white;
