@@ -563,7 +563,7 @@ footer p {
   }
 }
 
-@media (max-width: 700px) {
+@media (max-width: 450px) {
   body {
     font-size: 0.875rem;
   }
