@@ -1,3 +1,537 @@
-@font-face{font-family:Fraunces;src:url('/fonts/fraunces-variable.woff') format('woff');font-weight:100 900;font-display:swap}@font-face{font-family:Fraunces;src:url('/fonts/fraunces-italic-variable.woff') format('woff');font-style:italic;font-weight:100 900;font-display:swap}
-:root{--blue:#b9dcfa;--ink:#050505;--font:Fraunces,Georgia,serif}*{box-sizing:border-box}html{background:#f3f3f3}body{margin:0;color:var(--ink);font-family:var(--font);font-optical-sizing:auto;font-size:12px}button,input{font:inherit}img{max-width:100%}.site-shell{position:relative;isolation:isolate;overflow:hidden;width:min(100%,900px);min-height:100vh;margin:0 auto;padding:70px 0 34px;background:var(--blue)}.hero{position:relative;width:470px;height:185px;margin:0 auto}.hero-rock{position:absolute;left:0;bottom:-25px;width:145px;z-index:-1}.logo,.footer-logo{display:flex;flex-direction:column;align-items:center;position:relative;z-index:1}.logo img:first-child{width:216px;margin-top:8px}.logo img:last-child{width:269px;margin-top:7px}.cloud{position:absolute;z-index:-1;width:155px;height:auto;pointer-events:none}.cloud-a{top:0;left:-32px}.cloud-b{top:48px;right:-38px;width:180px}.cloud-c{top:315px;left:-44px}.cloud-d{top:455px;right:-35px}.cloud-e{top:780px;left:-50px;width:170px}.cloud-f{top:1080px;right:-45px;width:175px}.cloud-g{top:1430px;left:-55px;width:165px}.signup-section{position:relative;z-index:1;display:flex;justify-content:center;margin:-18px auto 56px}.cloud-form{top:-58px;right:120px;width:145px;z-index:-2}.signup-block{width:374px;min-height:297px;padding:14px 41px;background:#fff;border:1px solid #111}h1,h2{font-weight:800;line-height:.98}h1{margin:0 0 7px;font-size:25px}h2{margin:0 0 11px;font-size:25px}p{margin:0 0 10px;line-height:1.35}ul{margin:0 0 12px;padding-left:20px;line-height:1.25}.signup-intro{max-width:290px;font-size:10px;line-height:1.15}.signup-form{display:flex;flex-direction:column;margin-top:11px}.signup-form label{position:absolute;width:1px;height:1px;overflow:hidden;clip:rect(0 0 0 0)}.signup-form input{width:100%;height:30px;margin-top:6px;padding:4px 8px;border:0;border-bottom:2px solid #222;border-radius:0;outline:0;background:transparent;color:#222}.signup-form input::placeholder{color:#bcbcbc;opacity:1}.field-note{margin:1px 8px 5px;color:#888;font-size:9px;line-height:1.15}.health-banner{padding:5px;background:#f3d36b;text-align:center;line-height:1.2}.health-banner.is-hidden{display:none}.signup-form button{align-self:center;min-width:106px;margin-top:25px;padding:7px 18px;border:2px solid #111;border-bottom-width:4px;background:#fff;cursor:pointer}.signup-form button span{margin-left:12px;font-size:23px;line-height:10px;vertical-align:-2px}.signup-form button:disabled{cursor:not-allowed;opacity:.55}.form-message{min-height:1em;margin-top:8px;text-align:center}.content-section{position:relative;z-index:1;width:575px;margin-left:auto;margin-right:auto}.mail-drops{display:flex;align-items:center;justify-content:space-between;min-height:205px;margin-bottom:27px}.mail-drops .copy{width:320px}.section-image{display:block;object-fit:contain}.collage{width:213px;max-height:215px}.collective{margin-bottom:42px}.artist{display:flex;align-items:center;justify-content:space-between;min-height:185px;margin-bottom:34px}.artist .copy{width:350px}.artist-image{width:110px;max-height:160px;margin-right:0}.faq{margin-bottom:40px}.faq-item{margin:15px 0}.faq-question{margin-bottom:0;font-weight:800}footer{position:relative;z-index:1;margin-top:18px;text-align:center}footer p{font-weight:700}.footer-logo{gap:2px;margin-top:28px}.footer-logo img:first-child{width:130px}.footer-logo img:last-child{width:180px}.cloud-mail{top:35px;right:-95px;z-index:-1}.cloud-artist{bottom:-45px;left:-105px;z-index:-1}
-@media(max-width:700px){body{font-size:10px}.site-shell{width:100%;padding-top:24px}.hero{width:100%;height:122px}.hero-rock{width:86px;left:-8px;bottom:-9px}.logo img:first-child{width:125px;margin-top:2px}.logo img:last-child{width:165px;margin-top:3px}.cloud{width:125px}.cloud-a{left:-45px;top:-8px}.cloud-b{top:5px;right:-47px}.cloud-c{top:188px;left:-44px}.cloud-d{top:430px;right:-48px}.cloud-e{top:710px;left:-48px}.cloud-f{top:1010px;right:-47px}.cloud-g{top:1320px;left:-50px}.signup-section{margin:0 0 28px}.cloud-form{top:35px;right:-60px}.signup-block{width:100%;min-height:265px;padding:14px 22px 13px;border:0}h1,h2{font-size:23px}.signup-intro{font-size:9px;max-width:260px}.signup-form{margin-top:6px}.signup-form input{height:27px}.field-note{font-size:8px;margin-bottom:6px}.signup-form button{margin-top:14px}.content-section,.mail-drops,.artist{width:auto;margin-left:16px;margin-right:16px}.mail-drops,.artist{display:block;min-height:0}.mail-drops .copy,.artist .copy{width:auto}.mail-drops{margin-bottom:45px}.collage{width:220px;max-height:190px;margin:9px auto 0}.collective{margin-bottom:38px}.artist{margin-bottom:34px}.artist-image{width:110px;max-height:160px;margin:18px auto 0}.faq{margin-bottom:42px}.cloud-mail{top:174px;right:-48px}.cloud-artist{bottom:15px;left:-50px}footer{margin-top:0}.footer-logo{margin-top:22px}}
+@font-face {
+  font-family: Fraunces;
+  src: url("/fonts/fraunces-variable.woff") format("woff");
+  font-weight: 100 900;
+  font-display: swap;
+}
+@font-face {
+  font-family: Fraunces;
+  src: url("/fonts/fraunces-italic-variable.woff") format("woff");
+  font-style: italic;
+  font-weight: 100 900;
+  font-display: swap;
+}
+:root {
+  --blue: #b9dcfa;
+  --ink: #050505;
+  --font: Fraunces, Georgia, serif;
+}
+* {
+  box-sizing: border-box;
+}
+html {
+  background: #f3f3f3;
+}
+body {
+  margin: 0;
+  color: var(--ink);
+  font-family: var(--font);
+  font-optical-sizing: auto;
+  font-size: 0.875rem;
+}
+button,
+input {
+  font: inherit;
+}
+img {
+  max-width: 100%;
+}
+.site-shell {
+  position: relative;
+  isolation: isolate;
+  overflow: hidden;
+  width: 100%;
+  min-height: 100vh;
+  margin: 0 auto;
+  padding: 70px 0 34px;
+  background: var(--blue);
+}
+.hero {
+  position: relative;
+  width: 470px;
+  height: 185px;
+  margin: 0 auto;
+}
+.hero-rock {
+  position: absolute;
+  left: 0;
+  bottom: -65px;
+  width: 145px;
+  z-index: -1;
+}
+.logo,
+.footer-logo {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  position: relative;
+  z-index: 1;
+}
+.logo img:first-child {
+  width: 216px;
+  margin-top: 8px;
+}
+.logo img:last-child {
+  width: 269px;
+  margin-top: 7px;
+}
+.cloud {
+  position: absolute;
+  z-index: -1;
+  width: 180px;
+  height: auto;
+  pointer-events: none;
+  transform: scale(1.25);
+}
+.cloud-a {
+  top: 0;
+  left: 1%;
+}
+.cloud-b {
+  top: 48px;
+  right: 1%;
+  width: 180px;
+}
+.cloud-c {
+  top: 315px;
+  left: 2%;
+}
+.cloud-d {
+  top: 455px;
+  right: 2%;
+}
+.cloud-e {
+  top: 780px;
+  left: 3%;
+  width: 170px;
+}
+.cloud-f {
+  top: 1080px;
+  right: 3%;
+  width: 175px;
+}
+.cloud-g {
+  top: 1430px;
+  left: 4%;
+  width: 165px;
+}
+.cloud-h {
+  top: 190px;
+  left: 3%;
+  width: 135px;
+}
+.cloud-i {
+  top: 610px;
+  right: 3%;
+  width: 165px;
+}
+.cloud-j {
+  top: 890px;
+  right: 1%;
+  width: 145px;
+}
+.cloud-k {
+  top: 1190px;
+  left: 1%;
+  width: 180px;
+}
+.cloud-l {
+  top: 1370px;
+  right: 3%;
+  width: 140px;
+}
+.cloud-m {
+  top: 1660px;
+  left: 3%;
+  width: 155px;
+}
+.cloud-n {
+  top: 1760px;
+  right: 4%;
+  width: 180px;
+}
+.cloud-o { top: 520px; left: 8%; width: 150px; }
+.cloud-p { top: 720px; right: 7%; width: 160px; }
+.cloud-q { top: 1010px; left: 10%; width: 145px; }
+.cloud-r { top: 1280px; right: 8%; width: 175px; }
+.cloud-s { top: 1510px; left: 2%; width: 150px; }
+.cloud-t { top: 1840px; left: 3%; width: 165px; }
+.cloud-u { top: 2010px; right: 3%; width: 155px; }
+.signup-section {
+  position: relative;
+  z-index: 1;
+  display: flex;
+  justify-content: center;
+  margin: -18px auto 56px;
+}
+.cloud-form {
+  top: -58px;
+  right: 3%;
+  width: 145px;
+  z-index: -2;
+}
+.signup-block {
+  width: 450px;
+  min-height: 330px;
+  padding: 18px 33px;
+  background: #fff;
+  border: 1px solid #111;
+}
+h1,
+h2 {
+  font-weight: 800;
+  line-height: 0.98;
+}
+h1 {
+  margin: 0 0 9px;
+  font-size: 2.2rem;
+}
+h2 {
+  margin: 0 0 11px;
+  font-size: 2rem;
+}
+p {
+  margin: 0 0 10px;
+  line-height: 1.35;
+}
+ul {
+  margin: 0 0 12px;
+  padding-left: 20px;
+  line-height: 1.25;
+}
+.signup-intro {
+  max-width: 355px;
+  font-size: 0.875rem;
+  line-height: 1.2;
+}
+.signup-form {
+  display: flex;
+  flex-direction: column;
+  margin-top: 11px;
+}
+.signup-form label {
+  position: absolute;
+  width: 1px;
+  height: 1px;
+  overflow: hidden;
+  clip: rect(0 0 0 0);
+}
+.signup-form input {
+  width: 100%;
+  height: 34px;
+  margin-top: 8px;
+  padding: 4px 8px;
+  border: 0;
+  border-bottom: 2px solid #222;
+  border-radius: 0;
+  outline: 0;
+  background: transparent;
+  color: #222;
+  font-size: 0.875rem;
+}
+.signup-form input::placeholder {
+  color: #bcbcbc;
+  opacity: 1;
+}
+.field-note {
+  margin: 2px 8px 8px;
+  color: #888;
+  font-size: 0.75rem;
+  line-height: 1.2;
+}
+.health-banner {
+  padding: 5px;
+  background: #f3d36b;
+  text-align: center;
+  line-height: 1.2;
+}
+.health-banner.is-hidden {
+  display: none;
+}
+.signup-form button {
+  align-self: center;
+  min-width: 106px;
+  margin-top: 25px;
+  padding: 7px 18px;
+  border: 2px solid #111;
+  border-bottom-width: 4px;
+  background: #fff;
+  cursor: pointer;
+}
+.signup-form button span {
+  margin-left: 12px;
+  font-size: 1.7rem;
+  line-height: 10px;
+  vertical-align: -2px;
+}
+.signup-form button:disabled {
+  cursor: not-allowed;
+  opacity: 0.55;
+}
+.form-message {
+  min-height: 1em;
+  margin-top: 8px;
+  text-align: center;
+}
+.content-section {
+  position: relative;
+  z-index: 1;
+  width: 700px;
+  margin-left: auto;
+  margin-right: auto;
+}
+.mail-drops {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  min-height: 205px;
+  margin-bottom: 27px;
+}
+.mail-drops .copy {
+  width: 420px;
+}
+.section-image {
+  display: block;
+  object-fit: contain;
+}
+.collage {
+  width: 240px;
+  max-height: 240px;
+}
+.collective {
+  margin-bottom: 42px;
+}
+.artist {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  min-height: 185px;
+  margin-bottom: 34px;
+}
+.artist .copy {
+  width: 450px;
+}
+.artist-image {
+  width: 110px;
+  max-height: 160px;
+  margin-right: 0;
+}
+.faq {
+  margin-bottom: 40px;
+}
+.faq-item {
+  margin: 15px 0;
+}
+.faq-question {
+  margin-bottom: 0;
+  font-weight: 800;
+}
+footer {
+  position: relative;
+  z-index: 1;
+  margin-top: 18px;
+  text-align: center;
+}
+footer p {
+  font-weight: 700;
+}
+.footer-logo {
+  gap: 2px;
+  margin-top: 28px;
+}
+.footer-logo img:first-child {
+  width: 130px;
+}
+.footer-logo img:last-child {
+  width: 180px;
+}
+.cloud-mail {
+  top: 35px;
+  right: -95px;
+  z-index: -1;
+}
+.cloud-artist {
+  bottom: -45px;
+  left: -105px;
+  z-index: -1;
+}
+@media (max-width: 700px) {
+  body {
+    font-size: 0.875rem;
+  }
+  .site-shell {
+    width: 100%;
+    padding-top: 24px;
+  }
+  .hero {
+    width: 100%;
+    height: 122px;
+  }
+  .hero-rock {
+    width: 86px;
+    left: -8px;
+    bottom: -28px;
+  }
+  .logo img:first-child {
+    width: 125px;
+    margin-top: 2px;
+  }
+  .logo img:last-child {
+    width: 165px;
+    margin-top: 3px;
+  }
+  .cloud {
+    width: 125px;
+  }
+  .cloud-a {
+    left: -45px;
+    top: -8px;
+  }
+  .cloud-b {
+    top: 5px;
+    right: -47px;
+  }
+  .cloud-c {
+    top: 188px;
+    left: -44px;
+  }
+  .cloud-d {
+    top: 430px;
+    right: -48px;
+  }
+  .cloud-e {
+    top: 710px;
+    left: -48px;
+  }
+  .cloud-f {
+    top: 1010px;
+    right: -47px;
+  }
+  .cloud-g {
+    top: 1320px;
+    left: -50px;
+  }
+  .cloud-h {
+    top: 320px;
+    right: -45px;
+    left: auto;
+  }
+  .cloud-i {
+    top: 585px;
+    left: -43px;
+    right: auto;
+  }
+  .cloud-j {
+    top: 890px;
+    right: -47px;
+  }
+  .cloud-k {
+    top: 1160px;
+    left: -55px;
+  }
+  .cloud-l {
+    top: 1390px;
+    right: -45px;
+  }
+  .cloud-m {
+    top: 1570px;
+    left: -45px;
+  }
+  .cloud-n {
+    top: 1740px;
+    right: -50px;
+  }
+  .cloud-o { top: 490px; left: -48px; }
+  .cloud-p { top: 760px; right: -48px; }
+  .cloud-q { top: 970px; left: -48px; }
+  .cloud-r { top: 1210px; right: -48px; }
+  .cloud-s { top: 1450px; left: -48px; }
+  .cloud-t { top: 1660px; right: -48px; }
+  .cloud-u { top: 1900px; left: -48px; }
+  .signup-section {
+    margin: 0 0 28px;
+  }
+  .cloud-form {
+    top: 35px;
+    right: -60px;
+  }
+  .signup-block {
+    width: 100%;
+    min-height: 265px;
+    padding: 14px 22px 13px;
+    border: 0;
+  }
+  h1,
+  h2 {
+    font-size: 1.9rem;
+  }
+  .signup-intro {
+    font-size: 0.8rem;
+    max-width: 260px;
+  }
+  .signup-form {
+    margin-top: 6px;
+  }
+  .signup-form input {
+    height: 27px;
+  }
+  .field-note {
+    font-size: 0.75rem;
+    margin-bottom: 6px;
+  }
+  .signup-form button {
+    margin-top: 14px;
+  }
+  .content-section,
+  .mail-drops,
+  .artist {
+    width: auto;
+    margin-left: 16px;
+    margin-right: 16px;
+  }
+  .mail-drops,
+  .artist {
+    display: block;
+    min-height: 0;
+  }
+  .mail-drops .copy,
+  .artist .copy {
+    width: auto;
+  }
+  .mail-drops {
+    margin-bottom: 45px;
+  }
+  .collage {
+    width: 220px;
+    max-height: 190px;
+    margin: 9px auto 0;
+  }
+  .collective {
+    margin-bottom: 38px;
+  }
+  .artist {
+    margin-bottom: 34px;
+  }
+  .artist-image {
+    width: 110px;
+    max-height: 160px;
+    margin: 18px auto 0;
+  }
+  .faq {
+    margin-bottom: 42px;
+  }
+  .cloud-mail {
+    top: 174px;
+    right: -48px;
+  }
+  .cloud-artist {
+    bottom: 15px;
+    left: -50px;
+  }
+  footer {
+    margin-top: 0;
+  }
+  .footer-logo {
+    margin-top: 22px;
+  }
+}
