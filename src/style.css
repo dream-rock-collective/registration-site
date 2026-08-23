@@ -54,7 +54,7 @@ img {
 }
 .hero-rock {
   position: absolute;
-  left: 0;
+  left: 48px;
   bottom: -65px;
   width: 145px;
   z-index: -1;
@@ -157,12 +157,60 @@ img {
 .cloud-s { top: 1510px; left: 2%; width: 150px; }
 .cloud-t { top: 1840px; left: 3%; width: 165px; }
 .cloud-u { top: 2010px; right: 3%; width: 155px; }
+.cloud-v { top: 260px; left: 1%; width: 170px; }
+.cloud-w { top: 560px; right: 0; width: 180px; }
+.cloud-x { top: 940px; left: 0; width: 165px; }
+.cloud-y { top: 1240px; right: 1%; width: 175px; }
+.cloud-z { top: 1580px; left: 0; width: 180px; }
+.cloud-aa { top: 1930px; right: 0; width: 170px; }
+.cloud-a,
+.cloud-c,
+.cloud-e,
+.cloud-g,
+.cloud-k,
+.cloud-m,
+.cloud-o,
+.cloud-q,
+.cloud-s,
+.cloud-v,
+.cloud-x,
+.cloud-z {
+  left: -80px;
+}
+.cloud-b,
+.cloud-d,
+.cloud-f,
+.cloud-i,
+.cloud-j,
+.cloud-l,
+.cloud-n,
+.cloud-p,
+.cloud-r,
+.cloud-t,
+.cloud-u,
+.cloud-w,
+.cloud-y,
+.cloud-aa {
+  right: -80px;
+}
 .signup-section {
   position: relative;
   z-index: 1;
   display: flex;
   justify-content: center;
-  margin: -18px auto 56px;
+  margin: -18px auto 32px;
+}
+.cloud-form-left,
+.cloud-form-right {
+  top: 30px;
+  width: 235px;
+  z-index: -1;
+}
+.cloud-form-left {
+  left: calc(50% - 390px);
+}
+.cloud-form-right {
+  right: calc(50% - 390px);
 }
 .cloud-form {
   top: -58px;
@@ -355,6 +403,11 @@ footer p {
   left: -105px;
   z-index: -1;
 }
+@media (min-width: 701px) {
+  .hero-rock {
+    left: 35px;
+  }
+}
 @media (max-width: 700px) {
   body {
     font-size: 0.875rem;
@@ -369,7 +422,7 @@ footer p {
   }
   .hero-rock {
     width: 86px;
-    left: -8px;
+    left: 18px;
     bottom: -28px;
   }
   .logo img:first-child {
@@ -448,12 +501,59 @@ footer p {
   .cloud-s { top: 1450px; left: -48px; }
   .cloud-t { top: 1660px; right: -48px; }
   .cloud-u { top: 1900px; left: -48px; }
+  .cloud-v { top: 260px; left: -50px; }
+  .cloud-w { top: 540px; right: -50px; }
+  .cloud-x { top: 900px; left: -50px; }
+  .cloud-y { top: 1190px; right: -50px; }
+  .cloud-z { top: 1510px; left: -50px; }
+  .cloud-aa { top: 1840px; right: -50px; }
+  .cloud-a,
+  .cloud-c,
+  .cloud-e,
+  .cloud-g,
+  .cloud-k,
+  .cloud-m,
+  .cloud-o,
+  .cloud-q,
+  .cloud-s,
+  .cloud-v,
+  .cloud-x,
+  .cloud-z {
+    left: -110px;
+  }
+  .cloud-b,
+  .cloud-d,
+  .cloud-f,
+  .cloud-i,
+  .cloud-j,
+  .cloud-l,
+  .cloud-n,
+  .cloud-p,
+  .cloud-r,
+  .cloud-t,
+  .cloud-u,
+  .cloud-w,
+  .cloud-y,
+  .cloud-aa {
+    right: -110px;
+  }
   .signup-section {
     margin: 0 0 28px;
   }
   .cloud-form {
     top: 35px;
     right: -60px;
+  }
+  .cloud-form-left,
+  .cloud-form-right {
+    top: 42px;
+    width: 170px;
+  }
+  .cloud-form-left {
+    left: -125px;
+  }
+  .cloud-form-right {
+    right: -125px;
   }
   .signup-block {
     width: 100%;
