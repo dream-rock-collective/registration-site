@@ -45,10 +45,11 @@ form?.addEventListener("submit", async (event) => {
     name: String(formData.get("name") || "").trim(),
     email: String(formData.get("email") || "").trim(),
     address: String(formData.get("address") || "").trim(),
+    birthday: String(formData.get("birthday") || "").trim(),
   };
 
   if (Object.values(registration).some((value) => !value)) {
-    setFormMessage("Please provide your name, email, and address.");
+    setFormMessage("Please provide your name, email, address, and birthday.");
     return;
   }
 
