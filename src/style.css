@@ -653,10 +653,10 @@ footer p {
   position: relative;
   isolation: isolate;
   overflow: hidden;
-  width: min(100%, 760px);
+  width: 100%;
   min-height: 100vh;
   margin: 0 auto;
-  padding: 18px 0 42px;
+  padding: 0 0 42px;
   background: var(--blue);
 }
 .subscription-banner {
@@ -673,7 +673,7 @@ footer p {
 .subscription-cloud-band,
 .subscription-cloud-strip {
   position: relative;
-  display: flex;
+  display: none;
   justify-content: space-between;
   height: 94px;
   overflow: hidden;
@@ -690,7 +690,8 @@ footer p {
 .subscription-card {
   position: relative;
   z-index: 1;
-  margin: -1px 0 0;
+  width: min(644px, calc(100% - 40px));
+  margin: 115px auto 0;
   padding: 34px 46px 56px;
   background: #fff;
 }
@@ -713,7 +714,9 @@ footer p {
 .subscription-copy {
   position: relative;
   z-index: 1;
-  padding: 44px 28px 80px;
+  width: min(1400px, calc(100% - 160px));
+  margin: 0 auto;
+  padding: 158px 0 80px;
 }
 .subscription-copy h2 { margin-bottom: 26px; font-size: 2.75rem; }
 .subscription-copy p,
@@ -725,14 +728,18 @@ footer p {
 .subscription-edge-cloud img { width: 260px; transform: scale(1.25); }
 @media (max-width: 700px) {
   .subscription-page { width: 100%; padding-top: 16px; }
+  .subscription-page > .cloud { display: none; }
   .subscription-banner { padding: 16px 14px 14px; }
   .subscription-banner strong { font-size: 1.8rem; }
   .subscription-banner span { font-size: 1rem; }
   .subscription-cloud-band,
-  .subscription-cloud-strip { height: 78px; }
+  .subscription-cloud-strip {
+    display: flex;
+    height: 78px;
+  }
   .subscription-cloud-band img,
   .subscription-cloud-strip img { width: 150px; }
-  .subscription-card { padding: 30px 24px 44px; }
+  .subscription-card { margin: -1px 0 0; padding: 30px 24px 44px; }
   .subscription-card h1,
   .subscription-copy h2 { font-size: 2.25rem; }
   .subscription-card > p,
@@ -741,7 +748,7 @@ footer p {
   .plan-list { gap: 16px; margin-top: 24px; }
   .plan-list button { gap: 10px; padding: 12px 10px; font-size: 1.1rem; }
   .plan-list button b { font-size: 1.7rem; }
-  .subscription-copy { padding: 34px 20px 70px; }
+  .subscription-copy { width: auto; margin: 0; padding: 34px 20px 70px; }
   .subscription-copy h3 { font-size: 1.1rem; }
   .subscription-edge-cloud { right: -100px; bottom: 190px; }
 }
