@@ -6,6 +6,7 @@ export type MemberPlan = "free" | "monthly" | "once" | "yearly";
 export type Member = {
   name: string;
   plan: MemberPlan;
+  registrationId?: string;
   paymentDate?: string;
 };
 
@@ -35,8 +36,12 @@ export function getMember(): Member | null {
   return member?.name && member.plan ? member : null;
 }
 
-export function saveRegistration(name: string) {
-  writeStorage(MEMBER_STORAGE_KEY, { name, plan: "free" satisfies MemberPlan });
+export function saveRegistration(name: string, registrationId?: string) {
+  writeStorage(MEMBER_STORAGE_KEY, {
+    name,
+    plan: "free" satisfies MemberPlan,
+    registrationId,
+  });
 }
 
 export function savePendingPlan(plan: string | undefined) {

@@ -88,8 +88,6 @@ form?.addEventListener("submit", async (event) => {
       return;
     }
 
-    saveRegistration(registration.name);
-
     const registrationId =
       body.registrationId ?? body.id ?? body.registration?.id;
     if (!registrationId) {
@@ -97,6 +95,8 @@ form?.addEventListener("submit", async (event) => {
       submitButton.disabled = false;
       return;
     }
+
+    saveRegistration(registration.name, String(registrationId));
 
     window.location.href = `/registered/?registrationId=${encodeURIComponent(String(registrationId))}`;
   } catch {
