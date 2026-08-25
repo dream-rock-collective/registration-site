@@ -21,7 +21,6 @@ const ORGANIZATIONS = [
   "indigenousClimateAction",
   "otayMesaDetentionResistance",
 ] as const;
-const MINIMUM_SLOT_COUNT = 4;
 type Organization = (typeof ORGANIZATIONS)[number];
 
 const member = getMember();
@@ -87,7 +86,7 @@ function render() {
         column.querySelector<HTMLButtonElement>(".allocation-add");
       if (emptySlots) {
         emptySlots.innerHTML = Array.from(
-          { length: Math.max(MINIMUM_SLOT_COUNT - amount, 0) },
+          { length: Math.max(budget - amount, 0) },
           () => '<span class="allocation-slot allocation-drop-target"></span>',
         ).join("");
       }

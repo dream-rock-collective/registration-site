@@ -1129,13 +1129,11 @@ footer p {
 .allocation-slots {
   display: flex;
   flex-direction: column;
-  gap: 6px;
 }
 
 .allocation-filled-slots {
   display: flex;
   flex-direction: column;
-  gap: 6px;
 }
 
 .allocation-slot,
@@ -1151,6 +1149,7 @@ footer p {
 }
 
 .allocation-slot {
+  margin-bottom: 6px;
   color: #777;
 }
 
@@ -1166,7 +1165,7 @@ footer p {
 
 .allocation-add {
   flex: 0 0 auto;
-  margin: 6px 0;
+  margin: 0 0 6px;
   padding: 0;
   cursor: pointer;
   font-size: 1.1rem;
@@ -1315,18 +1314,18 @@ footer p {
     margin-top: 24px;
   }
 
-  .allocation-slots {
-    gap: 5px;
-  }
-
-  .allocation-filled-slots {
-    gap: 5px;
-  }
-
   .allocation-slot,
   .allocation-add {
     height: 23px;
     line-height: 23px;
+  }
+
+  .allocation-slot {
+    margin-bottom: 5px;
+  }
+
+  .allocation-add {
+    margin-bottom: 5px;
   }
 
   .allocation-column h2 {
