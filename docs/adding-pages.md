@@ -13,6 +13,9 @@ This project uses static HTML entry points with shared styles in `src/style.css`
    ```
 
 4. Keep page behavior in a dedicated `src/<page>.ts` file. Do not duplicate checkout, member, or shared form logic.
+5. Add `<script type="module" src="/src/<page>.ts"></script>` to the HTML entrypoint.
+
+The page's HTML is the source of truth for copy and structure. Its TypeScript module is the source of truth for behavior. Keep those responsibilities separate.
 
 ## Required layout structure
 
@@ -73,3 +76,5 @@ npm run build
 ```
 
 Check the page at desktop width and at a narrow mobile width. Confirm that the new page reuses the shared card/content dimensions, that clouds do not cover readable content, and that existing pages remain unchanged.
+
+Also confirm that the production build contains the new route under `dist/`, that all public assets resolve from root-relative paths, and that the page has a useful title, viewport metadata, heading hierarchy, and keyboard-accessible controls.

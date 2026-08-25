@@ -3,6 +3,12 @@
 Production API base URL: `https://api.dreamrock.co`.
 Local API base URL: `http://localhost:6942`.
 
+The frontend selects `VITE_API_BASE_URL` when set; otherwise it uses the local URL on localhost and the production URL on other hosts. The backend implementation and deployment live in the separate `drc-backend` repository. This document describes the contract the frontend relies on.
+
+## Health check
+
+`GET /health` is called by the landing page before enabling registration. The frontend considers the API healthy only when the response is successful and the JSON body contains `{ "status": "ok" }`. Network errors and any other response leave registration disabled.
+
 ## Registration
 
 `POST /register` accepts:
@@ -39,6 +45,8 @@ The successful `201` response includes the stable registration identifier:
 
 `POST /create-checkout-session` accepts `{ "registrationId": 42, "plan":
 "once" | "monthly" | "yearly" }` and returns `{ "url": "..." }`.
+
+The frontend reads `registrationId` from `/registered/?registrationId=...`, sends the selected plan, saves the plan locally, and redirects the browser to the returned Stripe URL. A missing URL or unsuccessful response is treated as a checkout error.
 
 After payment, Stripe returns the browser to `/allocate-payment/`. The
 backend only accepts allocations after the signed Stripe webhook has marked
@@ -79,6 +87,11 @@ Submissions are historical and immutable. Retrying or changing an allocation
 creates another submission; it does not overwrite an earlier one. Invalid
 input returns `400`, an unknown registration returns `404`, and an unpaid
 registration returns `403`, each with an `error` string.
+
+The frontend sends the registration id as the `userId` string and owns the plan
+budget and organization list. The backend validates numeric payload shape and
+payment/registration status but does not calculate the budget or interpret the
+organization keys.
 
 ## Admin allocation data
 
