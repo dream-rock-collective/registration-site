@@ -88,7 +88,7 @@ function render() {
       if (emptySlots) {
         emptySlots.innerHTML = Array.from(
           { length: Math.max(MINIMUM_SLOT_COUNT - amount, 0) },
-          () => '<span class="allocation-slot"></span>',
+          () => '<span class="allocation-slot allocation-drop-target"></span>',
         ).join("");
       }
       if (allocatedSlots) {
@@ -99,7 +99,56 @@ function render() {
       }
       if (addButton) addButton.disabled = !hasPayment || allocated >= budget;
     });
+  bindDraggableDollars();
   if (submitButton) submitButton.disabled = !hasPayment || allocated !== budget;
+}
+
+function bindDropTargets() {
+  document
+    .querySelectorAll<HTMLElement>(".allocation-column")
+    .forEach((column) => {
+      column.addEventListener("dragover", (event) => {
+        if (!hasPayment) return;
+        event.preventDefault();
+        column.classList.add("is-drag-over");
+      });
+      column.addEventListener("dragleave", (event) => {
+        if (!column.contains(event.relatedTarget as Node | null)) {
+          column.classList.remove("is-drag-over");
+        }
+      });
+      column.addEventListener("drop", (event) => {
+        event.preventDefault();
+        column.classList.remove("is-drag-over");
+        const organization = column.dataset["organization"] as Organization;
+        const allocated = Object.values(allocation).reduce(
+          (total, value) => total + value,
+          0,
+        );
+        if (organization && allocated < budget) {
+          allocation[organization] += 1;
+          render();
+        }
+      });
+    });
+}
+
+function bindDraggableDollars() {
+  document
+    .querySelectorAll<HTMLElement>(".allocation-dollar:not(.is-allocated)")
+    .forEach((dollar) => {
+      dollar.setAttribute("draggable", "true");
+      dollar.addEventListener("dragstart", (event) => {
+        event.dataTransfer?.setData("text/plain", "one-dollar");
+        dollar.classList.add("is-dragging");
+      });
+      dollar.addEventListener("dragend", () => {
+        dollar.classList.remove("is-dragging");
+        document
+          .querySelectorAll<HTMLElement>(".allocation-column.is-drag-over")
+          .forEach((column) => column.classList.remove("is-drag-over"));
+      });
+    });
 }
 
 document
@@ -172,3 +221,4 @@ submitButton?.addEventListener("click", async () => {
 });
 
 render();
+bindDropTargets();
