@@ -40,7 +40,11 @@ if (existingMember && memberBanner && memberHeading && memberPlan) {
 }
 if (existingMember && memberOverlay && memberOverlayHeading) {
   const firstName = existingMember.name.trim().split(/\s+/)[0];
-  memberOverlayHeading.textContent = `Thanks ${firstName}! You're a ${formatPlanLabel(existingMember)} member`;
+  memberOverlayHeading.textContent = `Thanks ${firstName}!`;
+  memberOverlayHeading.append(
+    document.createElement("br"),
+    `You're a ${formatPlanLabel(existingMember)} member`,
+  );
   memberOverlay.removeAttribute("hidden");
 }
 
