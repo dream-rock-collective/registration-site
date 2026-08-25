@@ -31,6 +31,7 @@ const ALLOCATION_DRAG_TYPE = "application/x-drc-allocation";
 
 type AllocationDragData = {
   source: Organization | null;
+  dollarIndex?: number;
 };
 
 const member = getMember();
@@ -38,6 +39,10 @@ const budget = member && member.plan !== "free" ? PLAN_BUDGETS[member.plan] : 0;
 const allocation = Object.fromEntries(
   ORGANIZATIONS.map((organization) => [organization, 0]),
 ) as Record<Organization, number>;
+const dollarAssignments: Array<Organization | null> = Array.from(
+  { length: budget },
+  () => null,
+);
 const savedAllocation = member?.allocation;
 const savedTotal = ORGANIZATIONS.reduce(
   (total, organization) => total + (savedAllocation?.[organization] || 0),
@@ -47,15 +52,19 @@ let hasSavedAllocation = false;
 if (
   savedAllocation &&
   savedTotal <= budget &&
-  ORGANIZATIONS.every(
-    (organization) => {
-      const value = savedAllocation[organization];
-      return typeof value === "number" && Number.isInteger(value) && value >= 0;
-    },
-  )
+  ORGANIZATIONS.every((organization) => {
+    const value = savedAllocation[organization];
+    return typeof value === "number" && Number.isInteger(value) && value >= 0;
+  })
 ) {
+  let dollarIndex = 0;
   ORGANIZATIONS.forEach((organization) => {
-    allocation[organization] = savedAllocation[organization] ?? 0;
+    const amount = savedAllocation[organization] ?? 0;
+    allocation[organization] = amount;
+    for (let index = 0; index < amount; index += 1) {
+      dollarAssignments[dollarIndex] = organization;
+      dollarIndex += 1;
+    }
   });
   hasSavedAllocation = savedTotal === budget;
 }
@@ -76,9 +85,8 @@ const unavailableOverlay = document.querySelector<HTMLElement>(
 const successOverlay = document.querySelector<HTMLElement>(
   "#allocation-success",
 );
-const changeButton = document.querySelector<HTMLButtonElement>(
-  "#allocation-change",
-);
+const changeButton =
+  document.querySelector<HTMLButtonElement>("#allocation-change");
 const hasPayment = Boolean(member && member.plan !== "free");
 
 if (!hasPayment) {
@@ -116,10 +124,12 @@ function render() {
     0,
   );
   if (pool) {
-    pool.innerHTML = Array.from({ length: budget }, (_, index) => {
-      const isAllocated = index < allocated;
-      return `<span class="allocation-dollar${isAllocated ? " is-allocated" : ""}" aria-hidden="true">$1</span>`;
-    }).join("");
+    pool.innerHTML = dollarAssignments
+      .map((assignment, index) => {
+        const isAllocated = assignment !== null;
+        return `<span class="allocation-dollar${isAllocated ? " is-allocated" : ""}" data-dollar-index="${index}" aria-hidden="true">$1</span>`;
+      })
+      .join("");
     pool.setAttribute("aria-label", `${budget - allocated} dollars available`);
   }
 
@@ -141,14 +151,16 @@ function render() {
         ).join("");
       }
       if (allocatedSlots) {
-        allocatedSlots.innerHTML = Array.from(
-          { length: amount },
-          () =>
-            `<span class="allocation-slot is-allocated" draggable="true" data-organization="${organization}">$1</span>`,
-        ).join("");
+        allocatedSlots.innerHTML = dollarAssignments
+          .map((assignment, index) =>
+            assignment === organization
+              ? `<span class="allocation-slot is-allocated" draggable="true" data-organization="${organization}" data-dollar-index="${index}">$1</span>`
+              : "",
+          )
+          .join("");
       }
       if (addButton) addButton.disabled = !hasPayment || allocated >= budget;
-  });
+    });
   bindDraggableDollars();
   bindDraggableAllocatedSlots();
   if (submitButton) submitButton.disabled = !hasPayment || allocated !== budget;
@@ -184,14 +196,27 @@ function bindDropTargets() {
           dragData.source !== organization &&
           allocation[dragData.source] > 0
         ) {
-          allocation[dragData.source] -= 1;
-          allocation[organization] += 1;
-          render();
+          const dollarIndex =
+            dragData.dollarIndex !== undefined &&
+            dollarAssignments[dragData.dollarIndex] === dragData.source
+              ? dragData.dollarIndex
+              : dollarAssignments.findIndex(
+                  (assignment) => assignment === dragData.source,
+                );
+          if (dollarIndex >= 0) {
+            dollarAssignments[dollarIndex] = organization;
+            allocation[dragData.source] -= 1;
+            allocation[organization] += 1;
+            render();
+          }
         } else if (
           organization &&
           dragData?.source === null &&
+          dragData.dollarIndex !== undefined &&
+          dollarAssignments[dragData.dollarIndex] === null &&
           allocated < budget
         ) {
+          dollarAssignments[dragData.dollarIndex] = organization;
           allocation[organization] += 1;
           render();
         }
@@ -203,9 +228,11 @@ function bindDraggableDollars() {
   document
     .querySelectorAll<HTMLElement>(".allocation-dollar:not(.is-allocated)")
     .forEach((dollar) => {
+      const dollarIndex = Number(dollar.dataset["dollarIndex"]);
+      if (!Number.isInteger(dollarIndex)) return;
       dollar.setAttribute("draggable", "true");
       dollar.addEventListener("dragstart", (event) => {
-        setDragData(event, { source: null });
+        setDragData(event, { source: null, dollarIndex });
         dollar.classList.add("is-dragging");
       });
       dollar.addEventListener("dragend", () => {
@@ -246,8 +273,12 @@ function bindDraggableAllocatedSlots() {
     .querySelectorAll<HTMLElement>(".allocation-slot.is-allocated")
     .forEach((slot) => {
       const source = slot.dataset["organization"] as Organization;
+      const dollarIndex = Number(slot.dataset["dollarIndex"]);
       slot.addEventListener("dragstart", (event) => {
-        setDragData(event, { source });
+        setDragData(event, {
+          source,
+          ...(Number.isInteger(dollarIndex) ? { dollarIndex } : {}),
+        });
         slot.classList.add("is-dragging");
       });
       slot.addEventListener("dragend", () => {
@@ -270,7 +301,13 @@ document
         (total, value) => total + value,
         0,
       );
-      if (organization && allocated < budget) allocation[organization] += 1;
+      const dollarIndex = dollarAssignments.findIndex(
+        (assignment) => assignment === null,
+      );
+      if (organization && dollarIndex >= 0 && allocated < budget) {
+        dollarAssignments[dollarIndex] = organization;
+        allocation[organization] += 1;
+      }
       render();
     });
   });
@@ -279,6 +316,7 @@ resetButton?.addEventListener("click", () => {
   ORGANIZATIONS.forEach((organization) => {
     allocation[organization] = 0;
   });
+  dollarAssignments.fill(null);
   setMessage("");
   render();
 });
@@ -288,9 +326,12 @@ distributeButton?.addEventListener("click", () => {
   ORGANIZATIONS.forEach((organization) => {
     allocation[organization] = 0;
   });
+  dollarAssignments.fill(null);
   for (let index = 0; index < budget; index += 1) {
+    const dollarIndex = index;
     const organization =
       ORGANIZATIONS[Math.floor(Math.random() * ORGANIZATIONS.length)]!;
+    dollarAssignments[dollarIndex] = organization;
     allocation[organization] += 1;
   }
   render();
