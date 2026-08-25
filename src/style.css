@@ -1045,16 +1045,26 @@ footer p {
   place-items: center;
   width: 52px;
   height: 52px;
-  border: 2px dotted #111;
+  border: 2px solid #000;
   border-radius: 50%;
+  background: #000;
+  color: #fff;
   font-size: 1rem;
 }
 
-.allocation-dollar.is-available {
-  border-style: solid;
+.allocation-dollar.is-allocated {
+  border-style: dotted;
+  background: #fff;
+  color: #111;
 }
 
-.split-evenly,
+.allocation-slot.is-allocated {
+  border-color: #000;
+  background: #000;
+  color: #fff;
+}
+
+.distribute-randomly,
 .allocation-reset {
   display: block;
   margin: 0 auto;
@@ -1084,7 +1094,12 @@ footer p {
   display: flex;
   flex-direction: column;
   gap: 6px;
-  min-height: 126px;
+}
+
+.allocation-filled-slots {
+  display: flex;
+  flex-direction: column;
+  gap: 6px;
 }
 
 .allocation-slot,
@@ -1105,6 +1120,7 @@ footer p {
 
 .allocation-add {
   flex: 0 0 auto;
+  margin: 6px 0;
   padding: 0;
   cursor: pointer;
   font-size: 1.1rem;
@@ -1118,19 +1134,6 @@ footer p {
 .allocation-add:disabled {
   cursor: not-allowed;
   opacity: 0.45;
-}
-
-.allocation-total {
-  height: 27px;
-  margin-top: 4px;
-  border-radius: 18px;
-  background: #000;
-  color: #fff;
-  line-height: 27px;
-}
-
-.allocation-total.is-empty {
-  display: none;
 }
 
 .allocation-column h2 {
@@ -1267,13 +1270,15 @@ footer p {
   }
 
   .allocation-slots {
-    min-height: 108px;
+    gap: 5px;
+  }
+
+  .allocation-filled-slots {
     gap: 5px;
   }
 
   .allocation-slot,
-  .allocation-add,
-  .allocation-total {
+  .allocation-add {
     height: 23px;
     line-height: 23px;
   }

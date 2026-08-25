@@ -35,7 +35,9 @@ const submitButton =
   document.querySelector<HTMLButtonElement>("#allocation-submit");
 const resetButton =
   document.querySelector<HTMLButtonElement>("#allocation-reset");
-const splitButton = document.querySelector<HTMLButtonElement>("#split-evenly");
+const distributeButton = document.querySelector<HTMLButtonElement>(
+  "#distribute-randomly",
+);
 const bannerName = document.querySelector<HTMLElement>("#subscription-thanks");
 const bannerType = document.querySelector<HTMLElement>("#subscription-type");
 const unavailableOverlay = document.querySelector<HTMLElement>(
@@ -66,8 +68,8 @@ function render() {
   );
   if (pool) {
     pool.innerHTML = Array.from({ length: budget }, (_, index) => {
-      const available = index >= allocated;
-      return `<span class="allocation-dollar${available ? " is-available" : ""}" aria-hidden="true">$1</span>`;
+      const isAllocated = index < allocated;
+      return `<span class="allocation-dollar${isAllocated ? " is-allocated" : ""}" aria-hidden="true">$1</span>`;
     }).join("");
     pool.setAttribute("aria-label", `${budget - allocated} dollars available`);
   }
@@ -77,20 +79,23 @@ function render() {
     .forEach((column) => {
       const organization = column.dataset["organization"] as Organization;
       const amount = allocation[organization];
-      const slots = column.querySelector<HTMLElement>(".allocation-slots");
-      const total = column.querySelector<HTMLElement>(".allocation-total");
+      const emptySlots = column.querySelector<HTMLElement>(".allocation-slots");
+      const allocatedSlots = column.querySelector<HTMLElement>(
+        ".allocation-filled-slots",
+      );
       const addButton =
         column.querySelector<HTMLButtonElement>(".allocation-add");
-      if (slots) {
-        slots.innerHTML = Array.from(
-          { length: Math.max(MINIMUM_SLOT_COUNT, amount) },
-          (_, index) =>
-            `<span class="allocation-slot">${index < amount ? "$1" : ""}</span>`,
+      if (emptySlots) {
+        emptySlots.innerHTML = Array.from(
+          { length: Math.max(MINIMUM_SLOT_COUNT - amount, 0) },
+          () => '<span class="allocation-slot"></span>',
         ).join("");
       }
-      if (total) {
-        total.textContent = amount ? `$${amount}` : "";
-        total.classList.toggle("is-empty", amount === 0);
+      if (allocatedSlots) {
+        allocatedSlots.innerHTML = Array.from(
+          { length: amount },
+          () => '<span class="allocation-slot is-allocated">$1</span>',
+        ).join("");
       }
       if (addButton) addButton.disabled = !hasPayment || allocated >= budget;
     });
@@ -121,13 +126,14 @@ resetButton?.addEventListener("click", () => {
   render();
 });
 
-splitButton?.addEventListener("click", () => {
+distributeButton?.addEventListener("click", () => {
   if (!hasPayment) return;
   ORGANIZATIONS.forEach((organization) => {
     allocation[organization] = 0;
   });
   for (let index = 0; index < budget; index += 1) {
-    const organization = ORGANIZATIONS[index % ORGANIZATIONS.length]!;
+    const organization =
+      ORGANIZATIONS[Math.floor(Math.random() * ORGANIZATIONS.length)]!;
     allocation[organization] += 1;
   }
   render();
@@ -141,7 +147,7 @@ submitButton?.addEventListener("click", async () => {
   }
   submitButton.disabled = true;
   resetButton?.setAttribute("disabled", "true");
-  splitButton?.setAttribute("disabled", "true");
+  distributeButton?.setAttribute("disabled", "true");
   setMessage("Submitting your allocation…");
   try {
     const response = await fetch(`${API_BASE_URL}/submit-allocation`, {
@@ -161,7 +167,7 @@ submitButton?.addEventListener("click", async () => {
     );
     submitButton.disabled = false;
     resetButton?.removeAttribute("disabled");
-    splitButton?.removeAttribute("disabled");
+    distributeButton?.removeAttribute("disabled");
   }
 });
 

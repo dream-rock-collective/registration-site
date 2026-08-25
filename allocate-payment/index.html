@@ -89,8 +89,12 @@
             id="allocation-pool"
             aria-label="Available dollars"
           ></div>
-          <button class="split-evenly" id="split-evenly" type="button">
-            Split Evenly
+          <button
+            class="distribute-randomly"
+            id="distribute-randomly"
+            type="button"
+          >
+            Distrubte Randomly
           </button>
           <div class="allocation-columns">
             <article class="allocation-column" data-organization="weAllWeGotSd">
@@ -99,7 +103,7 @@
                 <span aria-hidden="true">+</span>
                 <span class="sr-only">Add one dollar to We All We Got SD</span>
               </button>
-              <div class="allocation-total"></div>
+              <div class="allocation-filled-slots" aria-hidden="true"></div>
               <h2>
                 <a href="https://www.weallwegotsd.com/home">We All We Got SD</a>
               </h2>
@@ -115,7 +119,7 @@
                   >Add one dollar to Indigenous Climate Action</span
                 >
               </button>
-              <div class="allocation-total"></div>
+              <div class="allocation-filled-slots" aria-hidden="true"></div>
               <h2>
                 <a href="https://www.indigenousclimateaction.com/"
                   >Indigenous Climate Action</a
@@ -133,7 +137,7 @@
                   >Add one dollar to Otay Mesa Detention Resistance</span
                 >
               </button>
-              <div class="allocation-total"></div>
+              <div class="allocation-filled-slots" aria-hidden="true"></div>
               <h2>
                 <a href="https://otaymesadetentionresistance.org/"
                   >Otay Mesa Detention Resistance</a
