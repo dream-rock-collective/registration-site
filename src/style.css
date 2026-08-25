@@ -1082,7 +1082,8 @@ footer p {
 }
 
 .distribute-randomly,
-.allocation-reset {
+.allocation-reset,
+.allocation-change {
   display: block;
   margin: 0 auto;
   padding: 0;
@@ -1091,6 +1092,17 @@ footer p {
   color: inherit;
   cursor: pointer;
   text-decoration: underline;
+}
+
+.allocation-change {
+  font-size: 0.85rem;
+  font-weight: 400;
+}
+
+.allocation-success-content {
+  display: grid;
+  gap: 8px;
+  justify-items: center;
 }
 
 .allocation-columns {

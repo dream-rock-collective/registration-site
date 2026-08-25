@@ -43,6 +43,7 @@ const savedTotal = ORGANIZATIONS.reduce(
   (total, organization) => total + (savedAllocation?.[organization] || 0),
   0,
 );
+let hasSavedAllocation = false;
 if (
   savedAllocation &&
   savedTotal <= budget &&
@@ -56,6 +57,7 @@ if (
   ORGANIZATIONS.forEach((organization) => {
     allocation[organization] = savedAllocation[organization] ?? 0;
   });
+  hasSavedAllocation = savedTotal === budget;
 }
 const pool = document.querySelector<HTMLElement>("#allocation-pool");
 const message = document.querySelector<HTMLElement>("#allocation-message");
@@ -74,11 +76,21 @@ const unavailableOverlay = document.querySelector<HTMLElement>(
 const successOverlay = document.querySelector<HTMLElement>(
   "#allocation-success",
 );
+const changeButton = document.querySelector<HTMLButtonElement>(
+  "#allocation-change",
+);
 const hasPayment = Boolean(member && member.plan !== "free");
 
 if (!hasPayment) {
   unavailableOverlay?.removeAttribute("hidden");
 }
+if (hasPayment && hasSavedAllocation) {
+  successOverlay?.removeAttribute("hidden");
+}
+
+changeButton?.addEventListener("click", () => {
+  successOverlay?.setAttribute("hidden", "true");
+});
 
 if (member?.name && bannerName) {
   bannerName.textContent = `Thanks ${member.name.trim().split(/\s+/)[0]}!`;
