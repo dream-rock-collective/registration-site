@@ -1,172 +1,278 @@
 <!doctype html>
 <html lang="en">
-
-<head>
-  <meta charset="UTF-8" />
-  <link rel="icon" type="image/png" sizes="64x64" href="/favicon/rock.png" />
-  <link rel="icon" href="/favicon/rock.ico" sizes="any" />
-  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>Dream-Rock Collective</title>
-  <meta property="og:title" content="Dream-Rock Collective" />
-  <meta property="og:type" content="website" />
-  <meta property="og:description" content="Dream-Rock Collective" />
-  <meta property="og:image" content="/rock.png" />
-  <meta property="og:image:alt" content="A rock with googly eyes" />
-</head>
-
-<body>
-  <p class="construction"><b>!!!!!!!!!this site is under construction</b></p>
-
-  <div class="logo">
-    <img src="/logo.png" class="logo" alt="Dream-Rock Collective logo" />
-  </div>
-
-  <img src="/rock.png" alt="" class="rock">
-
-  <section class="signup-section">
-    <div class="price-badge" aria-label="$10">
-      <img src="/star.svg" alt="">
-      <span>$10</span>
-    </div>
-    <div class="signup-block">
-      <img src="/social-impact-mail-club.png" alt="Social Impact Mail Club - Become a Member" class="card-image">
-
-      <h2>Become a Member</h2>
-      <p class="health-banner is-hidden" role="status" aria-live="polite">Registration is temporarily unavailable. Email
-        leeyaappleby@gmail.com for assistance.</p>
-      <form class="signup-form" id="signup-form">
-        <label for="name">Name</label>
-        <input id="name" type="text" name="name" placeholder="Name" maxlength="200" required>
-        <label for="email">Email</label>
-        <input id="email" type="email" name="email" placeholder="Email" maxlength="320" required>
-        <label for="address">Address</label>
-        <input id="address" type="text" name="address" placeholder="Address" maxlength="500" required>
-        <p class="subscription-note">Subscriptions are managed through Stripe. The next screen brings you to the payment
-          options.</p>
-        <button type="submit" id="signup-submit" disabled>Subscribe</button>
-        <p class="form-message" id="form-message" role="alert" aria-live="polite"></p>
-      </form>
-    </div>
-  </section>
-
-  <section class="whats-included info-section mt-20">
-    <div class="section-inner">
-      <div class="leading-blurb">
-        <h2>What&rsquo;s Included</h2>
-
+  <head>
+    <meta charset="UTF-8" />
+    <link rel="icon" type="image/png" sizes="64x64" href="/favicon/rock.png" />
+    <link rel="icon" href="/favicon/rock.ico" sizes="any" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Dream-Rock Collective</title>
+    <meta property="og:title" content="Dream-Rock Collective" />
+    <meta property="og:type" content="website" />
+    <meta property="og:description" content="Dream-Rock Collective" />
+    <meta property="og:image" content="/rock.png" />
+    <meta property="og:image:alt" content="A rock with googly eyes" />
+  </head>
+  <body>
+    <main class="site-shell">
+      <img class="cloud cloud-a" src="/cloud.png" alt="" /><img
+        class="cloud cloud-b"
+        src="/cloud.png"
+        alt=""
+      /><img class="cloud cloud-c" src="/cloud.png" alt="" /><img
+        class="cloud cloud-d"
+        src="/cloud.png"
+        alt=""
+      /><img class="cloud cloud-e" src="/cloud.png" alt="" /><img
+        class="cloud cloud-f"
+        src="/cloud.png"
+        alt=""
+      /><img class="cloud cloud-g" src="/cloud.png" alt="" /><img
+        class="cloud cloud-h"
+        src="/cloud.png"
+        alt=""
+      /><img class="cloud cloud-i" src="/cloud.png" alt="" /><img
+        class="cloud cloud-j"
+        src="/cloud.png"
+        alt=""
+      /><img class="cloud cloud-k" src="/cloud.png" alt="" /><img
+        class="cloud cloud-l"
+        src="/cloud.png"
+        alt=""
+      /><img class="cloud cloud-m" src="/cloud.png" alt="" /><img
+        class="cloud cloud-n"
+        src="/cloud.png"
+        alt=""
+      /><img class="cloud cloud-o" src="/cloud.png" alt="" /><img
+        class="cloud cloud-p"
+        src="/cloud.png"
+        alt=""
+      /><img class="cloud cloud-q" src="/cloud.png" alt="" /><img
+        class="cloud cloud-r"
+        src="/cloud.png"
+        alt=""
+      /><img class="cloud cloud-s" src="/cloud.png" alt="" /><img
+        class="cloud cloud-t"
+        src="/cloud.png"
+        alt=""
+      /><img class="cloud cloud-u" src="/cloud.png" alt="" /><img
+        class="cloud cloud-v"
+        src="/cloud.png"
+        alt=""
+      /><img class="cloud cloud-w" src="/cloud.png" alt="" /><img
+        class="cloud cloud-x"
+        src="/cloud.png"
+        alt=""
+      /><img class="cloud cloud-y" src="/cloud.png" alt="" /><img
+        class="cloud cloud-z"
+        src="/cloud.png"
+        alt=""
+      /><img class="cloud cloud-aa" src="/cloud.png" alt="" />
+      <header class="hero">
+        <img class="hero-rock" src="/rock.png" alt="" />
+        <div class="logo" aria-label="Dream-Rock Collective">
+          <img src="/dream-rock.png" alt="Dream-Rock" /><img
+            src="/collective.png"
+            alt="Collective"
+          />
+        </div>
+      </header>
+      <section class="card-section" aria-labelledby="join-heading">
+        <img class="cloud cloud-form-left" src="/cloud.png" alt="" /><img
+          class="cloud cloud-form-right"
+          src="/cloud.png"
+          alt=""
+        /><img class="cloud cloud-form" src="/cloud.png" alt="" />
+        <div class="card-block registration-card">
+          <div class="member-overlay" id="member-overlay" hidden>
+            <div class="member-overlay-content">
+              <h2 id="member-overlay-heading"></h2>
+              <p>
+                Need to cancel? Payment management happens through Stripe.
+                Other questions?<br />
+                Email
+                <a href="mailto:leeyaappleby@gmail.com"
+                  >leeyaappleby@gmail.com</a
+                >.
+              </p>
+              <button
+                class="allocation-change"
+                id="new-registration"
+                type="button"
+              >
+                New registration
+              </button>
+            </div>
+          </div>
+          <h1 id="join-heading">Join the Club</h1>
+          <p class="signup-intro">
+            Signup to join. On the next page, you’ll be able to purchase mail
+            drops. The choice between a one time payment, monthly, yearly
+          </p>
+          <p class="health-banner is-hidden" role="status" aria-live="polite">
+            Registration is temporarily unavailable. Email
+            leeyaappleby@gmail.com for assistance.
+          </p>
+          <form class="signup-form" id="signup-form">
+            <label for="name">Name</label
+            ><input
+              id="name"
+              type="text"
+              name="name"
+              placeholder="Name"
+              maxlength="200"
+              required
+            />
+            <label for="email">Email</label
+            ><input
+              id="email"
+              type="email"
+              name="email"
+              placeholder="Email"
+              maxlength="320"
+              required
+            />
+            <label for="address">Address</label
+            ><input
+              id="address"
+              type="text"
+              name="address"
+              placeholder="Address"
+              maxlength="500"
+              required
+            />
+            <p class="field-note">Required for Mail Drops</p>
+            <label for="birthday">Birthday</label
+            ><input
+              id="birthday"
+              type="text"
+              name="birthday"
+              placeholder="Birthday"
+              maxlength="100"
+            />
+            <p class="field-note">
+              Optional for monthly &amp; yearly subscribers&rsquo; bonus
+              birthday letter
+            </p>
+            <button type="submit" id="signup-submit" disabled>
+              Next <span aria-hidden="true">→</span>
+            </button>
+            <p
+              class="form-message"
+              id="form-message"
+              role="alert"
+              aria-live="polite"
+            ></p>
+          </form>
+        </div>
+      </section>
+      <section
+        class="content-section mail-drops"
+        aria-labelledby="mail-drops-heading"
+      >
+        <div class="copy">
+          <h2 id="mail-drops-heading">Mail Drops</h2>
+          <p>The monthly letter includes:</p>
+          <ul>
+            <li>postcard,</li>
+            <li>a handwritten letter,</li>
+            <li>a rotating monthly bonus goodie.</li>
+          </ul>
+          <p>
+            Each month, I will share what I am thinking about and learning, a
+            silly poem I have loved or written, or ways to live intentionally
+            and enjoy life.
+          </p>
+          <p>Come and dream with me.</p>
+        </div>
+        <img
+          class="section-image collage"
+          src="/whats-included/collage.png"
+          alt="Examples of Dream-Rock Collective mail drops"
+        /><img class="cloud cloud-mail" src="/cloud.png" alt="" />
+      </section>
+      <section
+        class="content-section collective"
+        aria-labelledby="collective-heading"
+      >
+        <h2 id="collective-heading">About Dream-Rock Collective</h2>
         <p>
-          Inside the monthly envelop includes a postcard with art made by me, a handwritten letter, and a rotating
-          monthly
-          bonus goodie
-
-          Each month the letter might have a different focus on what I am thinking about and learning, or a silly poem I
-          have loved or written, or ways to live intentionally and enjoy life. Come and dream with me.
+          I believe in the power of creativity and imagination, and in the
+          collective power of everyday, average people. Merging the power of art
+          with community reinvestment, Dream-Rock Collective focuses on actively
+          creating the world we want to live in.
         </p>
-      </div>
-
-      <img class="trailing-image" src="/whats-included/collage.png" alt="">
-    </div>
-  </section>
-
-
-  <section class="about-collective info-section text-section mt-20 mb-40">
-    <div class="section-inner">
-      <h2>About Dream-Rock Collective</h2>
-
-      <p>It is only by working together can we create the world we want to live in. I believe in the power of creativity
-        and
-        imagination and collective power of everyday average people. Dream-Rock Collective began as a way to bring the
-        community together and support those impacted by systemic violence. Merging the power of art with community
-        reinvestment, Dream-Rock Collective focus’ on fun and engaged living in the world.</p>
-
-      <p>We are donating 50% of our profits to local mutual aids and nonprofits that can do the work in impacted and
-        underinvested communities. Let’s see if connection and joy can fund programs that need our support!</p>
-
-      <p>50% of profits towards:</p>
-      <ul>
-        <li>Local San Diego initiatives partnering with “We All We Got,” a San Diego mutual aid</li>
-        <li>Climate Justice partnering with Indigenous Climate Action</li>
-        <li>Helping people impacted by ICE partnering with Otay Mesa Detention Resistance</li>
-      </ul>
-
-      <p>As a subscriber, you can determine where your dollars go, dividing up your 50% in equal parts, or whichever you
-        would
-        like to fund.</p>
-
-      <p>Financial transparency is a key value of Dream-Rock, and will be updated quarterly as the mail club grows.</p>
-
-      <p>Want to stay up to date with upcoming news?<br>No filler, just announcements!</p>
-    </div>
-  </section>
-
-  <section class="about-me info-section mt-20 mb-40">
-    <div class="section-inner">
-      <div class="leading-blurb">
-        <h2>About Me</h2>
         <p>
-          Leeya Appleby was raised in Hawaii and has lived in San Diego, California for her entire adult life. She has a
-          BA in Philosophy and BA in Psychology and a Master’s in Peace Studies and Social Justice. She loves to read
-          and
-          write about nature and is always learning more what it means to be alive in this particular time.
-
-          Leeya is an oil painter, printmaker, and collage artist. Her subjects focus on romanticizing the magic of
-          everyday life to art activism focused on climate justice and human rights. Leeya often creates art around the
-          experience it feels being gay and neurodiverse—capturing the joy and complexities that come with being alive.
+          We are donating 50% of our profits to local mutual aids and nonprofits
+          that can do the work in impacted and under-invested communities.
         </p>
-
-      </div>
-
-      <img class="trailing-image" src="/leeya-appleby.jpeg" alt="Leeya Appleby">
-    </div>
-  </section>
-
-  <section class="faq-section info-section text-section mt-20 mb-40">
-    <div class="section-inner">
-      <h2>Frequent Questions</h2>
-
-      <div class="faq-item">
-        <p class="faq-question">Is it cheaper to subscribe for a year?</p>
-        <p>Yes! You get one month for free and one bonus birthday letter.</p>
-      </div>
-
-      <div class="faq-item">
-        <p class="faq-question">Can I pay more per month if I can?</p>
-        <p>Yes! You can choose your subscription rate and pour the extra into nonprofits and mutual aids.</p>
-        <p><strong>We are currently building an option to help pay for part of another subscriber&rsquo;s subscription</strong>
-          for those who cannot afford the full monthly amount. This is another way to help support and grow the community.
-          Stay tuned! Finances will not be a barrier to entering this community.</p>
-      </div>
-
-      <div class="faq-item">
-        <p class="faq-question">Can I give a subscription as a gift?</p>
-        <p>Yes! Just be sure to have their address.</p>
-      </div>
-
-      <div class="faq-item">
-        <p class="faq-question">Have questions or want to reach out?</p>
-        <p>Email <a href="mailto:leeyaappleby@gmail.com">leeyaappleby@gmail.com</a>.</p>
-      </div>
-
-      <div class="faq-item">
-        <p class="faq-question">Want to join our waitlist for discounted letters?</p>
-        <p>There will be no criteria, but trust that if you need it you can have it—other members will help support your
-          membership. I only ask that if/when you are able to, you free up a discounted spot for another by changing your
-          membership price.</p>
-      </div>
-
-    </div>
-  </section>
-
-  <section class="thanks-section info-section text-section mt-20 mb-40">
-    <div class="section-inner">
-      <p>Thank you for your trust and time and for believing that everyday people can support everyday people to thrive
-        🫶🏼</p>
-    </div>
-  </section>
-
-
-
-  <script type="module" src="/src/main.ts"></script>
-</body>
-
+        <p>50% of profits towards:</p>
+        <ul>
+          <li>Food Distribution</li>
+          <li>Climate Justice</li>
+          <li>Supporting neighbors impacted by ICE</li>
+        </ul>
+        <p>
+          As a subscriber, you can determine where your dollars go dividing up
+          your 50% in equal parts, or whichever you would like to fund.
+        </p>
+        <p>
+          Financial transparency is a key value of Dream-Rock, and will be
+          updated quarterly as the mail club grows.
+        </p>
+      </section>
+      <section class="content-section artist" aria-labelledby="artist-heading">
+        <div class="copy">
+          <h2 id="artist-heading">About the Artist</h2>
+          <p>
+            Leeya Appleby was raised in Hawaii and has lived in San Diego,
+            California, for her entire adult life. She has a BA in Philosophy, a
+            BA in Psychology, and a Master’s in Peace Studies and Social
+            Justice. She loves to read and write about nature and is always
+            learning more about what it means to be alive in this particular
+            time.
+          </p>
+          <p>
+            Leeya is an oil painter, print-maker, and collage artist. Her
+            subjects focus on romanticizing the magic of everyday life and art
+            activism focused on climate justice and human rights. Leeya often
+            creates art around the experience of being gay and
+            neurodivergent—capturing the joy and complexities that come with
+            being alive.
+          </p>
+        </div>
+        <img
+          class="section-image artist-image"
+          src="/leeya-appleby.jpeg"
+          alt="Artwork by Leeya Appleby"
+        /><img class="cloud cloud-artist" src="/cloud.png" alt="" />
+      </section>
+      <section class="content-section faq" aria-labelledby="faq-heading">
+        <h2 id="faq-heading">Frequent Questions</h2>
+        <div class="faq-item">
+          <p class="faq-question">Is it cheaper to subscribe for a year?</p>
+          <p>YES! You get one month for free AND one bonus Birthday letter!</p>
+        </div>
+        <div class="faq-item">
+          <p class="faq-question">Can I give a subscription as a gift?</p>
+          <p>YES! Just be sure to have their address</p>
+        </div>
+        <div class="faq-item">
+          <p class="faq-question">
+            Have questions, suggestions, or want to reach out?
+          </p>
+          <p>email leeyaappleby@gmail.com</p>
+        </div>
+      </section>
+      <footer>
+        <p>Thank you for your trust <span aria-hidden="true">🫶</span></p>
+        <div class="footer-logo" aria-label="Dream-Rock Collective">
+          <img src="/dream-rock.png" alt="Dream-Rock" /><img
+            src="/collective.png"
+            alt="Collective"
+          />
+        </div>
+      </footer>
+    </main>
+    <script type="module" src="/src/main.ts"></script>
+  </body>
 </html>

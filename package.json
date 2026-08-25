@@ -6,9 +6,13 @@
   "scripts": {
     "dev": "vite",
     "build": "tsc && vite build",
+    "format": "prettier --write \"**/*.{html,css,ts}\"",
+    "lint": "stylelint \"src/**/*.css\"",
     "preview": "vite preview"
   },
   "devDependencies": {
+    "prettier": "^3.9.6",
+    "stylelint": "^17.14.1",
     "typescript": "~6.0.2",
     "vite": "^8.2.0"
   }
