@@ -53,7 +53,13 @@ if (member?.name && bannerName) {
 }
 if (member?.plan && member.plan !== "free" && bannerType) {
   const labels = { once: "One Time", monthly: "Monthly", yearly: "Yearly" };
-  bannerType.textContent = `You're a ${labels[member.plan]} supporter`;
+  bannerType.replaceChildren(
+    document.createTextNode("You're a "),
+    Object.assign(document.createElement("strong"), {
+      textContent: labels[member.plan],
+    }),
+    document.createTextNode(" supporter"),
+  );
 }
 
 function setMessage(value: string) {

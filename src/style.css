@@ -442,12 +442,16 @@ ul {
   opacity: 0.55;
 }
 
-.signup-form button:hover,
-.signup-form button:focus-visible,
-.plan-list button:hover,
-.plan-list button:focus-visible {
+.signup-form button:hover:not(:disabled),
+.signup-form button:focus-visible:not(:disabled),
+.plan-list button:hover:not(:disabled),
+.plan-list button:focus-visible:not(:disabled) {
   transform: translateY(-3px);
   box-shadow: -6px 6px 0 #111;
+}
+
+button:disabled {
+  box-shadow: none;
 }
 
 .form-message {
@@ -1217,7 +1221,7 @@ footer p {
 }
 
 .allocation-submit:hover:not(:disabled),
-.allocation-submit:focus-visible {
+.allocation-submit:focus-visible:not(:disabled) {
   transform: translateY(-3px);
   box-shadow: -6px 6px 0 #111;
 }
@@ -1225,6 +1229,7 @@ footer p {
 .allocation-submit:disabled {
   cursor: not-allowed;
   opacity: 0.55;
+  border-bottom-width: 1px;
 }
 
 .allocation-message {
@@ -1234,7 +1239,7 @@ footer p {
 }
 
 .allocation-reset {
-  margin-top: 8px;
+  margin-top: 12px;
 }
 
 .allocation-unavailable {
