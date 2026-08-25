@@ -88,10 +88,10 @@ function render() {
             `<span class="allocation-slot">${index < amount ? "$1" : ""}</span>`,
         ).join("");
       }
-    if (total) {
-      total.textContent = amount ? `$${amount}` : "";
-      total.classList.toggle("is-empty", amount === 0);
-    }
+      if (total) {
+        total.textContent = amount ? `$${amount}` : "";
+        total.classList.toggle("is-empty", amount === 0);
+      }
       if (addButton) addButton.disabled = !hasPayment || allocated >= budget;
     });
   if (submitButton) submitButton.disabled = !hasPayment || allocated !== budget;
