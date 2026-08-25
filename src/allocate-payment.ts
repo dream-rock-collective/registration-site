@@ -1,5 +1,10 @@
 import "./style.css";
-import { completePendingPlan, getMember, type MemberPlan } from "./member";
+import {
+  completePendingPlan,
+  getMember,
+  saveAllocation,
+  type MemberPlan,
+} from "./member";
 
 completePendingPlan();
 
@@ -22,12 +27,36 @@ const ORGANIZATIONS = [
   "otayMesaDetentionResistance",
 ] as const;
 type Organization = (typeof ORGANIZATIONS)[number];
+const ALLOCATION_DRAG_TYPE = "application/x-drc-allocation";
+
+type AllocationDragData = {
+  source: Organization | null;
+};
 
 const member = getMember();
 const budget = member && member.plan !== "free" ? PLAN_BUDGETS[member.plan] : 0;
 const allocation = Object.fromEntries(
   ORGANIZATIONS.map((organization) => [organization, 0]),
 ) as Record<Organization, number>;
+const savedAllocation = member?.allocation;
+const savedTotal = ORGANIZATIONS.reduce(
+  (total, organization) => total + (savedAllocation?.[organization] || 0),
+  0,
+);
+if (
+  savedAllocation &&
+  savedTotal <= budget &&
+  ORGANIZATIONS.every(
+    (organization) => {
+      const value = savedAllocation[organization];
+      return typeof value === "number" && Number.isInteger(value) && value >= 0;
+    },
+  )
+) {
+  ORGANIZATIONS.forEach((organization) => {
+    allocation[organization] = savedAllocation[organization] ?? 0;
+  });
+}
 const pool = document.querySelector<HTMLElement>("#allocation-pool");
 const message = document.querySelector<HTMLElement>("#allocation-message");
 const submitButton =
@@ -41,6 +70,9 @@ const bannerName = document.querySelector<HTMLElement>("#subscription-thanks");
 const bannerType = document.querySelector<HTMLElement>("#subscription-type");
 const unavailableOverlay = document.querySelector<HTMLElement>(
   "#allocation-unavailable",
+);
+const successOverlay = document.querySelector<HTMLElement>(
+  "#allocation-success",
 );
 const hasPayment = Boolean(member && member.plan !== "free");
 
@@ -99,12 +131,14 @@ function render() {
       if (allocatedSlots) {
         allocatedSlots.innerHTML = Array.from(
           { length: amount },
-          () => '<span class="allocation-slot is-allocated">$1</span>',
+          () =>
+            `<span class="allocation-slot is-allocated" draggable="true" data-organization="${organization}">$1</span>`,
         ).join("");
       }
       if (addButton) addButton.disabled = !hasPayment || allocated >= budget;
-    });
+  });
   bindDraggableDollars();
+  bindDraggableAllocatedSlots();
   if (submitButton) submitButton.disabled = !hasPayment || allocated !== budget;
 }
 
@@ -126,11 +160,26 @@ function bindDropTargets() {
         event.preventDefault();
         column.classList.remove("is-drag-over");
         const organization = column.dataset["organization"] as Organization;
+        const dragData = getDragData(event);
         const allocated = Object.values(allocation).reduce(
           (total, value) => total + value,
           0,
         );
-        if (organization && allocated < budget) {
+
+        if (
+          organization &&
+          dragData?.source &&
+          dragData.source !== organization &&
+          allocation[dragData.source] > 0
+        ) {
+          allocation[dragData.source] -= 1;
+          allocation[organization] += 1;
+          render();
+        } else if (
+          organization &&
+          dragData?.source === null &&
+          allocated < budget
+        ) {
           allocation[organization] += 1;
           render();
         }
@@ -144,11 +193,53 @@ function bindDraggableDollars() {
     .forEach((dollar) => {
       dollar.setAttribute("draggable", "true");
       dollar.addEventListener("dragstart", (event) => {
-        event.dataTransfer?.setData("text/plain", "one-dollar");
+        setDragData(event, { source: null });
         dollar.classList.add("is-dragging");
       });
       dollar.addEventListener("dragend", () => {
         dollar.classList.remove("is-dragging");
+        document
+          .querySelectorAll<HTMLElement>(".allocation-column.is-drag-over")
+          .forEach((column) => column.classList.remove("is-drag-over"));
+      });
+    });
+}
+
+function getDragData(event: DragEvent): AllocationDragData | null {
+  const value = event.dataTransfer?.getData(ALLOCATION_DRAG_TYPE);
+  if (!value) return null;
+
+  try {
+    const data = JSON.parse(value) as AllocationDragData;
+    if (
+      data.source !== null &&
+      !ORGANIZATIONS.includes(data.source as Organization)
+    ) {
+      return null;
+    }
+    return data;
+  } catch {
+    return null;
+  }
+}
+
+function setDragData(event: DragEvent, data: AllocationDragData) {
+  event.dataTransfer?.setData(ALLOCATION_DRAG_TYPE, JSON.stringify(data));
+  event.dataTransfer?.setData("text/plain", "allocation-dollar");
+  if (event.dataTransfer) event.dataTransfer.effectAllowed = "move";
+}
+
+function bindDraggableAllocatedSlots() {
+  document
+    .querySelectorAll<HTMLElement>(".allocation-slot.is-allocated")
+    .forEach((slot) => {
+      const source = slot.dataset["organization"] as Organization;
+      slot.addEventListener("dragstart", (event) => {
+        setDragData(event, { source });
+        slot.classList.add("is-dragging");
+      });
+      slot.addEventListener("dragend", () => {
+        slot.classList.remove("is-dragging");
         document
           .querySelectorAll<HTMLElement>(".allocation-column.is-drag-over")
           .forEach((column) => column.classList.remove("is-drag-over"));
@@ -212,7 +303,9 @@ submitButton?.addEventListener("click", async () => {
     const body = await response.json().catch(() => ({}));
     if (!response.ok)
       throw new Error(body.error || "We could not save your allocation.");
-    setMessage("Thank you! Your allocation has been saved.");
+    saveAllocation(member.registrationId, allocation);
+    setMessage("");
+    successOverlay?.removeAttribute("hidden");
   } catch (error) {
     setMessage(
       error instanceof Error

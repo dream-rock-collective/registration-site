@@ -20,7 +20,7 @@ The landing page explains the mail club, the collective, the artist, and frequen
 
 ### `/registered/`
 
-This page presents the three plans and starts Stripe Checkout through `POST /create-checkout-session`. The registration id comes from the query string. Before leaving for Stripe, the selected plan is stored as a pending plan in local storage.
+This page presents the three plans and starts Stripe Checkout through `POST /create-checkout-session`. The registration id comes from the query string. Before leaving for Stripe, the selected plan and registration id are stored as a pending plan in local storage.
 
 Current plans are:
 
@@ -42,7 +42,7 @@ This page lets a paid member distribute the plan budget among:
 - `indigenousClimateAction`
 - `otayMesaDetentionResistance`
 
-Members can click the plus controls, drag available dollars, distribute dollars randomly, or reset the current selection. Submit is enabled only when the full budget is allocated. Submission calls `POST /submit-allocation` with the stored registration id.
+Members can click the plus controls, drag available dollars, move allocated dollars between organizations, distribute dollars randomly, or reset the current selection. Submit is enabled only when the full budget is allocated. Submission calls `POST /submit-allocation` with the newest stored member's registration id. After a successful submission, the allocation is saved locally and restored whenever that member's allocation page is loaded.
 
 If no paid member is available in local storage, the page displays a “No payment received” state and disables allocation controls.
 
@@ -50,10 +50,10 @@ If no paid member is available in local storage, the page displays a “No payme
 
 `src/member.ts` owns the local storage schema:
 
-- `dream-rock-member` stores the visitor name, plan, registration id, and optional payment date.
-- `dream-rock-pending-plan` stores the plan selected immediately before Stripe Checkout.
+- `dream-rock-member` stores an array of registered members. Each member includes the visitor name, plan, registration id, registration date, optional payment date, and optional saved allocation. `getMember()` sorts this table by registration date descending and returns the newest member. Existing single-member objects are read as a one-member table for backwards compatibility.
+- `dream-rock-pending-plan` stores the plan and registration id selected immediately before Stripe Checkout, so payment completion updates the correct member. If no id is present in older storage, the newest member is used.
 
-The initial registration has plan `free`. `completePendingPlan()` promotes it to the pending paid plan and records the current browser time as `paymentDate`. This is display state only; payment authorization is enforced by the backend.
+The initial registration has plan `free`. `completePendingPlan()` promotes the matching member to the pending paid plan and records the current browser time as `paymentDate`. This is display state only; payment authorization is enforced by the backend.
 
 ## Product behavior to preserve
 

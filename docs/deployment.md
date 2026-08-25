@@ -48,5 +48,5 @@ The workflow currently uses the production API default because production builds
 - Confirm API paths and payloads still match the backend contract.
 - Run formatting, linting, and the production build.
 - Test the changed route at desktop and narrow mobile widths.
-- For registration/payment changes, verify query-string and local-storage transitions.
+- For registration/payment changes, verify query-string and multi-member local-storage transitions, including newest-member selection.
 - For allocation changes, verify the total budget, organization keys, disabled states, and submission payload.

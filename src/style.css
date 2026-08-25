@@ -1074,6 +1074,11 @@ footer p {
   border-color: #000;
   background: #000;
   color: #fff;
+  cursor: grab;
+}
+
+.allocation-slot.is-dragging {
+  opacity: 0.5;
 }
 
 .distribute-randomly,

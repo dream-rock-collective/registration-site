@@ -43,10 +43,10 @@ The successful `201` response includes the stable registration identifier:
 
 ## Payment and allocation
 
-`POST /create-checkout-session` accepts `{ "registrationId": 42, "plan":
+`POST /create-checkout-session` accepts `{ "userId": 42, "plan":
 "once" | "monthly" | "yearly" }` and returns `{ "url": "..." }`.
 
-The frontend reads `registrationId` from `/registered/?registrationId=...`, sends the selected plan, saves the plan locally, and redirects the browser to the returned Stripe URL. A missing URL or unsuccessful response is treated as a checkout error.
+The frontend reads `registrationId` from `/registered/?registrationId=...`, sends the selected plan, saves the plan and registration id locally, and redirects the browser to the returned Stripe URL. A missing URL or unsuccessful response is treated as a checkout error. The local member table may contain multiple registrations; page-level member access uses the newest registration by `registeredAt`.
 
 After payment, Stripe returns the browser to `/allocate-payment/`. The
 backend only accepts allocations after the signed Stripe webhook has marked

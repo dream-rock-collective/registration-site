@@ -34,7 +34,7 @@ checkoutButtons.forEach((button) => {
       const response = await fetch(`${API_BASE_URL}/create-checkout-session`, {
         method: "POST",
         headers: { "Content-Type": "application/json" },
-        body: JSON.stringify({ registrationId, plan: button.dataset["plan"] }),
+        body: JSON.stringify({ userId: registrationId, plan: button.dataset["plan"] }),
       });
       const body = await response.json();
 
@@ -42,7 +42,7 @@ checkoutButtons.forEach((button) => {
         throw new Error(body.error || "Checkout is unavailable.");
       }
 
-      savePendingPlan(button.dataset["plan"]);
+      savePendingPlan(button.dataset["plan"], registrationId);
 
       window.location.href = body.url;
     } catch (error) {
