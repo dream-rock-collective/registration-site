@@ -327,6 +327,10 @@ img {
   border: 1px solid #111;
 }
 
+.registration-card {
+  position: relative;
+}
+
 h1,
 h2 {
   font-weight: 800;
@@ -1273,7 +1277,45 @@ footer p {
   pointer-events: all;
 }
 
+.member-overlay {
+  position: absolute;
+  z-index: 2;
+  inset: 0;
+  display: grid;
+  place-items: center;
+  padding: 32px;
+  background: rgb(255 255 255 / 76%);
+  color: #333;
+  backdrop-filter: blur(5px);
+  pointer-events: all;
+}
+
+.member-overlay-content {
+  display: grid;
+  gap: 12px;
+  max-width: 340px;
+  text-align: center;
+}
+
+.member-overlay-content h2 {
+  margin: 0;
+  font-size: 1.5rem;
+}
+
+.member-overlay-content p {
+  margin: 0;
+  font-size: 0.9rem;
+}
+
+.member-overlay-content a {
+  color: inherit;
+}
+
 .allocation-unavailable[hidden] {
+  display: none;
+}
+
+.member-overlay[hidden] {
   display: none;
 }
 

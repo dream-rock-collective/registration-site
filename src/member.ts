@@ -155,3 +155,13 @@ export function formatPlan(member: Member): string {
       : "date unavailable";
   return `one time — paid ${formattedDate}`;
 }
+
+export function formatPlanLabel(member: Member): string {
+  const labels: Record<MemberPlan, string> = {
+    free: "Free",
+    monthly: "Monthly",
+    once: "One Time",
+    yearly: "Yearly",
+  };
+  return labels[member.plan];
+}

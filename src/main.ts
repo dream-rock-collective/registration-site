@@ -1,5 +1,10 @@
 import "./style.css";
-import { formatPlan, getMember, saveRegistration } from "./member";
+import {
+  formatPlan,
+  formatPlanLabel,
+  getMember,
+  saveRegistration,
+} from "./member";
 
 const isLocalSite =
   window.location.hostname === "localhost" ||
@@ -16,6 +21,13 @@ const formMessage = document.querySelector<HTMLElement>("#form-message");
 const memberBanner = document.querySelector<HTMLElement>("#member-banner");
 const memberHeading = document.querySelector<HTMLElement>("#member-heading");
 const memberPlan = document.querySelector<HTMLElement>("#member-plan");
+const memberOverlay = document.querySelector<HTMLElement>("#member-overlay");
+const memberOverlayHeading = document.querySelector<HTMLElement>(
+  "#member-overlay-heading",
+);
+const newRegistrationButton = document.querySelector<HTMLButtonElement>(
+  "#new-registration",
+);
 
 let apiHealthy = false;
 
@@ -26,6 +38,15 @@ if (existingMember && memberBanner && memberHeading && memberPlan) {
   memberPlan.textContent = formatPlan(existingMember);
   memberBanner.classList.remove("is-hidden");
 }
+if (existingMember && memberOverlay && memberOverlayHeading) {
+  const firstName = existingMember.name.trim().split(/\s+/)[0];
+  memberOverlayHeading.textContent = `Thanks ${firstName}! You're a ${formatPlanLabel(existingMember)} member`;
+  memberOverlay.removeAttribute("hidden");
+}
+
+newRegistrationButton?.addEventListener("click", () => {
+  memberOverlay?.setAttribute("hidden", "true");
+});
 
 function setHealthState(healthy: boolean) {
   apiHealthy = healthy;
