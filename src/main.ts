@@ -92,17 +92,16 @@ form?.addEventListener("submit", async (event) => {
       return;
     }
 
-    const registrationId =
-      body.registrationId ?? body.id ?? body.registration?.id;
-    if (!registrationId) {
+    const userId = body.userId ?? body.id ?? body.registration?.id;
+    if (!userId) {
       setFormMessage("Registration saved, but we could not start payment.");
       submitButton.disabled = false;
       return;
     }
 
-    saveRegistration(registration.name, String(registrationId));
+    saveRegistration(registration.name, String(userId));
 
-    window.location.href = `/registered/?registrationId=${encodeURIComponent(String(registrationId))}`;
+    window.location.href = `/registered/?userId=${encodeURIComponent(String(userId))}`;
   } catch {
     setFormMessage(
       "We could not reach the registration service. Please try again.",

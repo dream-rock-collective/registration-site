@@ -46,7 +46,7 @@ The successful `201` response includes the stable registration identifier:
 `POST /create-checkout-session` accepts `{ "userId": 42, "plan":
 "once" | "monthly" | "yearly" }` and returns `{ "url": "..." }`.
 
-The frontend reads `registrationId` from `/registered/?registrationId=...`, sends the selected plan, saves the plan and registration id locally, and redirects the browser to the returned Stripe URL. A missing URL or unsuccessful response is treated as a checkout error. The local member table may contain multiple registrations; page-level member access uses the newest registration by `registeredAt`.
+The frontend reads `userId` from `/registered/?userId=...`, sends the selected plan, saves the plan and user id locally, and redirects the browser to the returned Stripe URL. A missing URL or unsuccessful response is treated as a checkout error. The local member table may contain multiple registrations; page-level member access uses the newest registration by `registeredAt`.
 
 After payment, Stripe returns the browser to `/allocate-payment/`. The
 backend only accepts allocations after the signed Stripe webhook has marked
@@ -72,7 +72,7 @@ Request:
 }
 ```
 
-`userId` is the registration id returned by `/register`. `allocation` is a
+`userId` is the user id returned by `/register`. `allocation` is a
 generic JSON object whose keys and totals are controlled by the frontend. Each
 value must be a whole, nonnegative number. The backend does not maintain a
 charity allowlist, interpret charity keys, or calculate plan budgets.
@@ -88,7 +88,7 @@ creates another submission; it does not overwrite an earlier one. Invalid
 input returns `400`, an unknown registration returns `404`, and an unpaid
 registration returns `403`, each with an `error` string.
 
-The frontend sends the registration id as the `userId` string and owns the plan
+The frontend sends the user id as the `userId` string and owns the plan
 budget and organization list. The backend validates numeric payload shape and
 payment/registration status but does not calculate the budget or interpret the
 organization keys.

@@ -286,7 +286,7 @@ distributeButton?.addEventListener("click", () => {
 
 submitButton?.addEventListener("click", async () => {
   if (!hasPayment) return;
-  if (!member?.registrationId) {
+  if (!member?.userId) {
     setMessage("We could not find your registration. Please register again.");
     return;
   }
@@ -298,12 +298,12 @@ submitButton?.addEventListener("click", async () => {
     const response = await fetch(`${API_BASE_URL}/submit-allocation`, {
       method: "POST",
       headers: { "Content-Type": "application/json" },
-      body: JSON.stringify({ userId: member.registrationId, allocation }),
+      body: JSON.stringify({ userId: member.userId, allocation }),
     });
     const body = await response.json().catch(() => ({}));
     if (!response.ok)
       throw new Error(body.error || "We could not save your allocation.");
-    saveAllocation(member.registrationId, allocation);
+    saveAllocation(member.userId, allocation);
     setMessage("");
     successOverlay?.removeAttribute("hidden");
   } catch (error) {

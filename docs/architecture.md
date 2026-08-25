@@ -27,10 +27,10 @@ Adding a directory and an HTML file is not sufficient for a production build: th
 ## Runtime module responsibilities
 
 - `main.ts` checks API health, validates and submits registration data, saves the registration locally, and navigates to subscription selection.
-- `registered.ts` reads the registration id from the URL, starts checkout, and saves the pending plan with that member id.
+- `registered.ts` reads the user id from the URL, starts checkout, and saves the pending plan with that member id.
 - `success.ts` completes the pending plan locally.
 - `allocate-payment.ts` computes the plan budget, restores/renders/edits the allocation, submits it, and saves successful choices locally.
-- `member.ts` is the shared browser-state helper. It stores the member table, selects the newest registration, associates pending plans with registration ids, and persists allocations. Keep local-storage reads/writes there rather than duplicating the schema in page modules.
+- `member.ts` is the shared browser-state helper. It stores the member table, selects the newest registration, associates pending plans with user ids, and persists allocations. Keep local-storage reads/writes there rather than duplicating the schema in page modules.
 
 ## Styling model
 

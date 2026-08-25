@@ -7,8 +7,8 @@ const isLocalSite =
 const API_BASE_URL =
   import.meta.env["VITE_API_BASE_URL"] ||
   (isLocalSite ? "http://localhost:6942" : "https://api.dreamrock.co");
-const registrationId = new URLSearchParams(window.location.search).get(
-  "registrationId",
+const userId = new URLSearchParams(window.location.search).get(
+  "userId",
 );
 const checkoutButtons =
   document.querySelectorAll<HTMLButtonElement>("[data-plan]");
@@ -21,7 +21,7 @@ if (greeting && member?.name) {
 
 checkoutButtons.forEach((button) => {
   button.addEventListener("click", async () => {
-    if (!registrationId) {
+    if (!userId) {
       window.alert(
         "We could not find your registration. Please register again.",
       );
@@ -34,7 +34,7 @@ checkoutButtons.forEach((button) => {
       const response = await fetch(`${API_BASE_URL}/create-checkout-session`, {
         method: "POST",
         headers: { "Content-Type": "application/json" },
-        body: JSON.stringify({ userId: registrationId, plan: button.dataset["plan"] }),
+        body: JSON.stringify({ userId, plan: button.dataset["plan"] }),
       });
       const body = await response.json();
 
@@ -42,7 +42,7 @@ checkoutButtons.forEach((button) => {
         throw new Error(body.error || "Checkout is unavailable.");
       }
 
-      savePendingPlan(button.dataset["plan"], registrationId);
+      savePendingPlan(button.dataset["plan"], userId);
 
       window.location.href = body.url;
     } catch (error) {

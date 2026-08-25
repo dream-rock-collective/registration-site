@@ -6,7 +6,7 @@ export type MemberPlan = "free" | "monthly" | "once" | "yearly";
 export type Member = {
   name: string;
   plan: MemberPlan;
-  registrationId?: string;
+  userId?: string;
   paymentDate?: string;
   registeredAt?: string;
   allocation?: Record<string, number>;
@@ -14,8 +14,11 @@ export type Member = {
 
 type PendingPlan = {
   plan: Exclude<MemberPlan, "free">;
-  registrationId?: string;
+  userId?: string;
 };
+
+type LegacyMember = Member & { registrationId?: string };
+type LegacyPendingPlan = PendingPlan & { registrationId?: string };
 
 function readStorage<T>(key: string): T | null {
   try {
@@ -35,14 +38,19 @@ function writeStorage(key: string, value: unknown) {
 }
 
 function readMembers(): Member[] {
-  const stored = readStorage<Member | Member[]>(MEMBER_STORAGE_KEY);
+  const stored = readStorage<LegacyMember | LegacyMember[]>(MEMBER_STORAGE_KEY);
   const members = Array.isArray(stored)
     ? stored
     : stored?.name && stored.plan
       ? [stored]
-    : [];
+      : [];
 
   return members
+    .map(({ registrationId, ...member }) =>
+      member.userId || !registrationId
+        ? member
+        : { ...member, userId: registrationId },
+    )
     .filter((member) => member.name && member.plan)
     .sort((left, right) => {
       const leftDate = getMemberDate(left);
@@ -62,38 +70,44 @@ export function getMember(): Member | null {
   return readMembers()[0] || null;
 }
 
-export function saveRegistration(name: string, registrationId?: string) {
+export function saveRegistration(name: string, userId?: string) {
   const members = readMembers();
   const member: Member = {
     name,
     plan: "free" satisfies MemberPlan,
     registeredAt: new Date().toISOString(),
   };
-  if (registrationId !== undefined) member.registrationId = registrationId;
+  if (userId !== undefined) member.userId = userId;
   members.push(member);
   writeStorage(MEMBER_STORAGE_KEY, members);
 }
 
 export function savePendingPlan(
   plan: string | undefined,
-  registrationId?: string,
+  userId?: string,
 ) {
   if (plan !== "monthly" && plan !== "once" && plan !== "yearly") return;
   const pending: PendingPlan = {
     plan,
   };
-  if (registrationId !== undefined) pending.registrationId = registrationId;
+  if (userId !== undefined) pending.userId = userId;
   writeStorage(PENDING_PLAN_STORAGE_KEY, pending);
 }
 
 export function completePendingPlan() {
-  const pending = readStorage<PendingPlan>(PENDING_PLAN_STORAGE_KEY);
+  const storedPending = readStorage<LegacyPendingPlan>(
+    PENDING_PLAN_STORAGE_KEY,
+  );
+  const pending = storedPending && {
+    ...storedPending,
+    userId: storedPending.userId ?? storedPending.registrationId,
+  };
   if (!pending || !pending.plan) return;
 
   const members = readMembers();
-  const memberIndex = pending.registrationId
+  const memberIndex = pending.userId
     ? members.findIndex(
-        (member) => member.registrationId === pending.registrationId,
+        (member) => member.userId === pending.userId,
       )
     : 0;
   if (memberIndex < 0 || !members[memberIndex]) return;
@@ -113,12 +127,12 @@ export function completePendingPlan() {
 }
 
 export function saveAllocation(
-  registrationId: string,
+  userId: string,
   allocation: Record<string, number>,
 ) {
   const members = readMembers();
   const memberIndex = members.findIndex(
-    (member) => member.registrationId === registrationId,
+    (member) => member.userId === userId,
   );
   if (memberIndex < 0 || !members[memberIndex]) return;
 
