@@ -1108,6 +1108,15 @@ footer p {
   gap: 8px;
   justify-items: center;
   text-align: center;
+  font-weight: 400;
+}
+
+.allocation-success-subtext {
+  font-size: 0.85rem;
+}
+
+.allocation-success-title {
+  font-weight: 800;
 }
 
 .allocation-columns {

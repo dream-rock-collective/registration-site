@@ -1,165 +1,258 @@
 <!doctype html>
 <html lang="en">
-
-<head>
-  <meta charset="UTF-8" />
-  <link rel="icon" href="/favicon/rock.ico" sizes="any" />
-  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>Allocate your payment — Dream-Rock Collective</title>
-</head>
-
-<body>
-  <main class="site-shell subscription-page">
-    <img class="cloud cloud-a" src="/cloud.png" alt="" /><img class="cloud cloud-b" src="/cloud.png" alt="" /><img
-      class="cloud cloud-c" src="/cloud.png" alt="" /><img class="cloud cloud-d" src="/cloud.png" alt="" /><img
-      class="cloud cloud-e" src="/cloud.png" alt="" /><img class="cloud cloud-f" src="/cloud.png" alt="" /><img
-      class="cloud cloud-g" src="/cloud.png" alt="" /><img class="cloud cloud-h" src="/cloud.png" alt="" /><img
-      class="cloud cloud-i" src="/cloud.png" alt="" /><img class="cloud cloud-j" src="/cloud.png" alt="" /><img
-      class="cloud cloud-k" src="/cloud.png" alt="" /><img class="cloud cloud-l" src="/cloud.png" alt="" /><img
-      class="cloud cloud-m" src="/cloud.png" alt="" /><img class="cloud cloud-n" src="/cloud.png" alt="" /><img
-      class="cloud cloud-o" src="/cloud.png" alt="" /><img class="cloud cloud-p" src="/cloud.png" alt="" /><img
-      class="cloud cloud-q" src="/cloud.png" alt="" /><img class="cloud cloud-r" src="/cloud.png" alt="" /><img
-      class="cloud cloud-s" src="/cloud.png" alt="" /><img class="cloud cloud-t" src="/cloud.png" alt="" /><img
-      class="cloud cloud-u" src="/cloud.png" alt="" /><img class="cloud cloud-v" src="/cloud.png" alt="" /><img
-      class="cloud cloud-w" src="/cloud.png" alt="" /><img class="cloud cloud-x" src="/cloud.png" alt="" /><img
-      class="cloud cloud-y" src="/cloud.png" alt="" /><img class="cloud cloud-z" src="/cloud.png" alt="" /><img
-      class="cloud cloud-aa" src="/cloud.png" alt="" />
-    <section class="subscription-banner" aria-labelledby="subscription-thanks">
-      <strong id="subscription-thanks">Thanks!</strong><span id="subscription-type">You're a supporter</span>
-    </section>
-    <section class="card-section allocate-payment-card" aria-labelledby="allocation-heading">
-      <div class="card-block allocation-card">
-        <div class="allocation-unavailable" id="allocation-unavailable" hidden>
-          <span>No payment received</span>
-        </div>
-        <div class="allocation-unavailable" id="allocation-success" hidden>
-          <div class="allocation-success-content">
-            <span>Thank You!<br>Your choices have been saved</span>
-            <button class="allocation-change" id="allocation-change" type="button">
-              Change
-            </button>
+  <head>
+    <meta charset="UTF-8" />
+    <link rel="icon" href="/favicon/rock.ico" sizes="any" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Allocate your payment — Dream-Rock Collective</title>
+  </head>
+  <body>
+    <main class="site-shell subscription-page">
+      <img class="cloud cloud-a" src="/cloud.png" alt="" /><img
+        class="cloud cloud-b"
+        src="/cloud.png"
+        alt=""
+      /><img class="cloud cloud-c" src="/cloud.png" alt="" /><img
+        class="cloud cloud-d"
+        src="/cloud.png"
+        alt=""
+      /><img class="cloud cloud-e" src="/cloud.png" alt="" /><img
+        class="cloud cloud-f"
+        src="/cloud.png"
+        alt=""
+      /><img class="cloud cloud-g" src="/cloud.png" alt="" /><img
+        class="cloud cloud-h"
+        src="/cloud.png"
+        alt=""
+      /><img class="cloud cloud-i" src="/cloud.png" alt="" /><img
+        class="cloud cloud-j"
+        src="/cloud.png"
+        alt=""
+      /><img class="cloud cloud-k" src="/cloud.png" alt="" /><img
+        class="cloud cloud-l"
+        src="/cloud.png"
+        alt=""
+      /><img class="cloud cloud-m" src="/cloud.png" alt="" /><img
+        class="cloud cloud-n"
+        src="/cloud.png"
+        alt=""
+      /><img class="cloud cloud-o" src="/cloud.png" alt="" /><img
+        class="cloud cloud-p"
+        src="/cloud.png"
+        alt=""
+      /><img class="cloud cloud-q" src="/cloud.png" alt="" /><img
+        class="cloud cloud-r"
+        src="/cloud.png"
+        alt=""
+      /><img class="cloud cloud-s" src="/cloud.png" alt="" /><img
+        class="cloud cloud-t"
+        src="/cloud.png"
+        alt=""
+      /><img class="cloud cloud-u" src="/cloud.png" alt="" /><img
+        class="cloud cloud-v"
+        src="/cloud.png"
+        alt=""
+      /><img class="cloud cloud-w" src="/cloud.png" alt="" /><img
+        class="cloud cloud-x"
+        src="/cloud.png"
+        alt=""
+      /><img class="cloud cloud-y" src="/cloud.png" alt="" /><img
+        class="cloud cloud-z"
+        src="/cloud.png"
+        alt=""
+      /><img class="cloud cloud-aa" src="/cloud.png" alt="" />
+      <section
+        class="subscription-banner"
+        aria-labelledby="subscription-thanks"
+      >
+        <strong id="subscription-thanks">Thanks!</strong
+        ><span id="subscription-type">You're a supporter</span>
+      </section>
+      <section
+        class="card-section allocate-payment-card"
+        aria-labelledby="allocation-heading"
+      >
+        <div class="card-block allocation-card">
+          <div
+            class="allocation-unavailable"
+            id="allocation-unavailable"
+            hidden
+          >
+            <span>No payment received</span>
           </div>
+          <div
+            class="allocation-unavailable"
+            id="allocation-success"
+            hidden
+          >
+            <div class="allocation-success-content">
+              <span class="allocation-success-title">Thank You!</span>
+              <span class="allocation-success-subtext">Your choices have been saved</span>
+              <button
+                class="allocation-change"
+                id="allocation-change"
+                type="button"
+              >
+                Change
+              </button>
+            </div>
+          </div>
+          <h1 id="allocation-heading">You&rsquo;re Subscribed!</h1>
+          <p class="allocation-intro">
+            As a subscriber, you can determine exactly what your dollars fund
+          </p>
+          <div
+            class="allocation-pool"
+            id="allocation-pool"
+            aria-label="Available dollars"
+          ></div>
+          <button
+            class="distribute-randomly"
+            id="distribute-randomly"
+            type="button"
+          >
+            Distrubte Randomly
+          </button>
+          <div class="allocation-columns">
+            <article class="allocation-column" data-organization="weAllWeGotSd">
+              <div class="allocation-stack">
+                <div class="allocation-slots" aria-hidden="true"></div>
+                <button class="allocation-add" type="button">
+                  <span aria-hidden="true">+</span>
+                  <span class="sr-only"
+                    >Add one dollar to We All We Got SD</span
+                  >
+                </button>
+                <div class="allocation-filled-slots" aria-hidden="true"></div>
+              </div>
+              <h2>
+                <a href="https://www.weallwegotsd.com/home">We All We Got SD</a>
+              </h2>
+            </article>
+            <article
+              class="allocation-column"
+              data-organization="indigenousClimateAction"
+            >
+              <div class="allocation-stack">
+                <div class="allocation-slots" aria-hidden="true"></div>
+                <button class="allocation-add" type="button">
+                  <span aria-hidden="true">+</span>
+                  <span class="sr-only"
+                    >Add one dollar to Indigenous Climate Action</span
+                  >
+                </button>
+                <div class="allocation-filled-slots" aria-hidden="true"></div>
+              </div>
+              <h2>
+                <a href="https://www.indigenousclimateaction.com/"
+                  >Indigenous Climate Action</a
+                >
+              </h2>
+            </article>
+            <article
+              class="allocation-column"
+              data-organization="otayMesaDetentionResistance"
+            >
+              <div class="allocation-stack">
+                <div class="allocation-slots" aria-hidden="true"></div>
+                <button class="allocation-add" type="button">
+                  <span aria-hidden="true">+</span>
+                  <span class="sr-only"
+                    >Add one dollar to Otay Mesa Detention Resistance</span
+                  >
+                </button>
+                <div class="allocation-filled-slots" aria-hidden="true"></div>
+              </div>
+              <h2>
+                <a href="https://otaymesadetentionresistance.org/"
+                  >Otay Mesa Detention Resistance</a
+                >
+              </h2>
+            </article>
+          </div>
+          <button
+            class="allocation-submit"
+            id="allocation-submit"
+            type="button"
+          >
+            Submit
+          </button>
+          <button class="allocation-reset" id="allocation-reset" type="button">
+            Reset
+          </button>
+          <p
+            class="allocation-message"
+            id="allocation-message"
+            role="status"
+            aria-live="polite"
+          ></p>
         </div>
-        <h1 id="allocation-heading">You&rsquo;re Subscribed</h1>
-        <p class="allocation-intro">
-          As a subscriber, you can determine exactly what your dollars fund
-        </p>
-        <div class="allocation-pool" id="allocation-pool" aria-label="Available dollars"></div>
-        <button class="distribute-randomly" id="distribute-randomly" type="button">
-          Distrubte Randomly
-        </button>
-        <div class="allocation-columns">
-          <article class="allocation-column" data-organization="weAllWeGotSd">
-            <div class="allocation-stack">
-              <div class="allocation-slots" aria-hidden="true"></div>
-              <button class="allocation-add" type="button">
-                <span aria-hidden="true">+</span>
-                <span class="sr-only">Add one dollar to We All We Got SD</span>
-              </button>
-              <div class="allocation-filled-slots" aria-hidden="true"></div>
-            </div>
-            <h2>
-              <a href="https://www.weallwegotsd.com/home">We All We Got SD</a>
-            </h2>
-          </article>
-          <article class="allocation-column" data-organization="indigenousClimateAction">
-            <div class="allocation-stack">
-              <div class="allocation-slots" aria-hidden="true"></div>
-              <button class="allocation-add" type="button">
-                <span aria-hidden="true">+</span>
-                <span class="sr-only">Add one dollar to Indigenous Climate Action</span>
-              </button>
-              <div class="allocation-filled-slots" aria-hidden="true"></div>
-            </div>
-            <h2>
-              <a href="https://www.indigenousclimateaction.com/">Indigenous Climate Action</a>
-            </h2>
-          </article>
-          <article class="allocation-column" data-organization="otayMesaDetentionResistance">
-            <div class="allocation-stack">
-              <div class="allocation-slots" aria-hidden="true"></div>
-              <button class="allocation-add" type="button">
-                <span aria-hidden="true">+</span>
-                <span class="sr-only">Add one dollar to Otay Mesa Detention Resistance</span>
-              </button>
-              <div class="allocation-filled-slots" aria-hidden="true"></div>
-            </div>
-            <h2>
-              <a href="https://otaymesadetentionresistance.org/">Otay Mesa Detention Resistance</a>
-            </h2>
-          </article>
-        </div>
-        <button class="allocation-submit" id="allocation-submit" type="button">
-          Submit
-        </button>
-        <button class="allocation-reset" id="allocation-reset" type="button">
-          Reset
-        </button>
-        <p class="allocation-message" id="allocation-message" role="status" aria-live="polite"></p>
-      </div>
-    </section>
-    <section class="content-section allocate-payment-copy">
-      <article>
-        <h2>
-          <a href="https://www.weallwegotsd.com/home">We All We Got SD</a>
-        </h2>
-        <p>Food and resource distribution throughout San Diego county</p>
-        <p>Mutual aid is about solidarity, not charity</p>
-        <ul>
-          <li>Food distribution serving 300 families per month</li>
-          <li>Migrant Aid providing 5-100 meals per day</li>
-          <li>Resource center for community needs throughout San Diego</li>
-        </ul>
-      </article>
-      <article>
-        <h2>
-          <a href="https://www.indigenousclimateaction.com/">Indigenous Climate Action</a>
-        </h2>
-        <p>
-          Indigenous-led organization guided by knowledge keepers, water &amp;
-          land defenders from communities and regions across the country.
-        </p>
-        <p>
-          a) Strategic disruption of harmful colonial practices, policies, and
-          processes and amplify Indigenous modalities of creative expression
-          and storytelling;
-        </p>
-        <p>
-          b) Nurturing community members through understandings of healing
-          justice, community engagement, and strategic climate education and
-          training;
-        </p>
-        <p>
-          c) Exploring new climate solutions with community members at the
-          grassroots, grasstops, and in elected leadership that center
-          Indigenous values to imagine and create a just future.
-        </p>
-      </article>
-      <article>
-        <h2>
-          <a href="https://otaymesadetentionresistance.org/">Otay Mesa Detention Resistance</a>
-        </h2>
-        <p>
-          Organizing against the inhumane detentions and human rights abuses
-          at Otay Mesa Detention Center.
-        </p>
-        <p>The three areas of focus:</p>
-        <ul>
-          <li>
-            Supporting people in detention centers by funding phone calls,
-            contacting family outside, transporting them, and organizing their
-            post-release support
-          </li>
-          <li>Supporting people once released</li>
-          <li>
-            Advocacy, researching federal, state, and local policies, and
-            trainings.
-          </li>
-        </ul>
-      </article>
-    </section>
-  </main>
-  <script type="module" src="/src/allocate-payment.ts"></script>
-</body>
-
+      </section>
+      <section class="content-section allocate-payment-copy">
+        <article>
+          <h2>
+            <a href="https://www.weallwegotsd.com/home">We All We Got SD</a>
+          </h2>
+          <p>Food and resource distribution throughout San Diego county</p>
+          <p>Mutual aid is about solidarity, not charity</p>
+          <ul>
+            <li>Food distribution serving 300 families per month</li>
+            <li>Migrant Aid providing 5-100 meals per day</li>
+            <li>Resource center for community needs throughout San Diego</li>
+          </ul>
+        </article>
+        <article>
+          <h2>
+            <a href="https://www.indigenousclimateaction.com/"
+              >Indigenous Climate Action</a
+            >
+          </h2>
+          <p>
+            Indigenous-led organization guided by knowledge keepers, water &amp;
+            land defenders from communities and regions across the country.
+          </p>
+          <p>
+            a) Strategic disruption of harmful colonial practices, policies, and
+            processes and amplify Indigenous modalities of creative expression
+            and storytelling;
+          </p>
+          <p>
+            b) Nurturing community members through understandings of healing
+            justice, community engagement, and strategic climate education and
+            training;
+          </p>
+          <p>
+            c) Exploring new climate solutions with community members at the
+            grassroots, grasstops, and in elected leadership that center
+            Indigenous values to imagine and create a just future.
+          </p>
+        </article>
+        <article>
+          <h2>
+            <a href="https://otaymesadetentionresistance.org/"
+              >Otay Mesa Detention Resistance</a
+            >
+          </h2>
+          <p>
+            Organizing against the inhumane detentions and human rights abuses
+            at Otay Mesa Detention Center.
+          </p>
+          <p>The three areas of focus:</p>
+          <ul>
+            <li>
+              Supporting people in detention centers by funding phone calls,
+              contacting family outside, transporting them, and organizing their
+              post-release support
+            </li>
+            <li>Supporting people once released</li>
+            <li>
+              Advocacy, researching federal, state, and local policies, and
+              trainings.
+            </li>
+          </ul>
+        </article>
+      </section>
+    </main>
+    <script type="module" src="/src/allocate-payment.ts"></script>
+  </body>
 </html>
