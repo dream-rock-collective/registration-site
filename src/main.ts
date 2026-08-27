@@ -25,6 +25,9 @@ const memberOverlay = document.querySelector<HTMLElement>("#member-overlay");
 const memberOverlayHeading = document.querySelector<HTMLElement>(
   "#member-overlay-heading",
 );
+const memberOverlayPlan = document.querySelector<HTMLElement>(
+  "#member-overlay-plan",
+);
 const newRegistrationButton = document.querySelector<HTMLButtonElement>(
   "#new-registration",
 );
@@ -38,13 +41,15 @@ if (existingMember && memberBanner && memberHeading && memberPlan) {
   memberPlan.textContent = formatPlan(existingMember);
   memberBanner.classList.remove("is-hidden");
 }
-if (existingMember && memberOverlay && memberOverlayHeading) {
+if (
+  existingMember &&
+  memberOverlay &&
+  memberOverlayHeading &&
+  memberOverlayPlan
+) {
   const firstName = existingMember.name.trim().split(/\s+/)[0];
   memberOverlayHeading.textContent = `Thanks ${firstName}!`;
-  memberOverlayHeading.append(
-    document.createElement("br"),
-    `You're a ${formatPlanLabel(existingMember)} member`,
-  );
+  memberOverlayPlan.textContent = `You're a ${formatPlanLabel(existingMember)} member`;
   memberOverlay.removeAttribute("hidden");
 }
 
