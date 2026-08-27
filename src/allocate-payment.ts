@@ -100,7 +100,7 @@ changeButton?.addEventListener("click", () => {
   successOverlay?.setAttribute("hidden", "true");
 });
 
-if (member?.name && bannerName) {
+if (hasPayment && member?.name && bannerName) {
   bannerName.textContent = `Thanks ${member.name.trim().split(/\s+/)[0]}!`;
 }
 if (member?.plan && member.plan !== "free" && bannerType) {
