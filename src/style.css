@@ -427,6 +427,8 @@ ul {
   min-width: 106px;
   margin-top: 25px;
   padding: 7px 18px;
+  color: var(--ink);
+  -webkit-text-fill-color: var(--ink);
 }
 
 .signup-form button span {
