@@ -118,6 +118,49 @@ function setMessage(value: string) {
   if (message) message.textContent = value;
 }
 
+function moveDollar(
+  organization: Organization,
+  dragData: AllocationDragData,
+): boolean {
+  const allocated = Object.values(allocation).reduce(
+    (total, value) => total + value,
+    0,
+  );
+
+  if (
+    dragData.source &&
+    dragData.source !== organization &&
+    allocation[dragData.source] > 0
+  ) {
+    const dollarIndex =
+      dragData.dollarIndex !== undefined &&
+      dollarAssignments[dragData.dollarIndex] === dragData.source
+        ? dragData.dollarIndex
+        : dollarAssignments.findIndex(
+            (assignment) => assignment === dragData.source,
+          );
+    if (dollarIndex >= 0) {
+      dollarAssignments[dollarIndex] = organization;
+      allocation[dragData.source] -= 1;
+      allocation[organization] += 1;
+      return true;
+    }
+  }
+
+  if (
+    dragData.source === null &&
+    dragData.dollarIndex !== undefined &&
+    dollarAssignments[dragData.dollarIndex] === null &&
+    allocated < budget
+  ) {
+    dollarAssignments[dragData.dollarIndex] = organization;
+    allocation[organization] += 1;
+    return true;
+  }
+
+  return false;
+}
+
 function render() {
   const allocated = Object.values(allocation).reduce(
     (total, value) => total + value,
@@ -185,44 +228,67 @@ function bindDropTargets() {
         column.classList.remove("is-drag-over");
         const organization = column.dataset["organization"] as Organization;
         const dragData = getDragData(event);
-        const allocated = Object.values(allocation).reduce(
-          (total, value) => total + value,
-          0,
-        );
-
-        if (
-          organization &&
-          dragData?.source &&
-          dragData.source !== organization &&
-          allocation[dragData.source] > 0
-        ) {
-          const dollarIndex =
-            dragData.dollarIndex !== undefined &&
-            dollarAssignments[dragData.dollarIndex] === dragData.source
-              ? dragData.dollarIndex
-              : dollarAssignments.findIndex(
-                  (assignment) => assignment === dragData.source,
-                );
-          if (dollarIndex >= 0) {
-            dollarAssignments[dollarIndex] = organization;
-            allocation[dragData.source] -= 1;
-            allocation[organization] += 1;
-            render();
-          }
-        } else if (
-          organization &&
-          dragData?.source === null &&
-          dragData.dollarIndex !== undefined &&
-          dollarAssignments[dragData.dollarIndex] === null &&
-          allocated < budget
-        ) {
-          dollarAssignments[dragData.dollarIndex] = organization;
-          allocation[organization] += 1;
+        if (organization && dragData && moveDollar(organization, dragData)) {
           render();
         }
       });
     });
 }
+
+type TouchDrag = {
+  data: AllocationDragData;
+  element: HTMLElement;
+  pointerId: number;
+  column: HTMLElement | null;
+};
+
+let touchDrag: TouchDrag | null = null;
+
+function startTouchDrag(
+  event: PointerEvent,
+  element: HTMLElement,
+  data: AllocationDragData,
+) {
+  if (!hasPayment || event.pointerType === "mouse") return;
+  event.preventDefault();
+  touchDrag = { data, element, pointerId: event.pointerId, column: null };
+  element.setPointerCapture(event.pointerId);
+  element.classList.add("is-dragging");
+}
+
+function updateTouchDrag(event: PointerEvent) {
+  if (!touchDrag || event.pointerId !== touchDrag.pointerId) return;
+  event.preventDefault();
+  const target = document
+    .elementFromPoint(event.clientX, event.clientY)
+    ?.closest<HTMLElement>(".allocation-column") ?? null;
+  if (touchDrag.column === target) return;
+  touchDrag.column?.classList.remove("is-drag-over");
+  touchDrag.column = target;
+  target?.classList.add("is-drag-over");
+}
+
+function finishTouchDrag(event: PointerEvent, cancelled = false) {
+  if (!touchDrag || event.pointerId !== touchDrag.pointerId) return;
+  event.preventDefault();
+  const { data, element, column } = touchDrag;
+  touchDrag = null;
+  element.classList.remove("is-dragging");
+  column?.classList.remove("is-drag-over");
+  try {
+    element.releasePointerCapture(event.pointerId);
+  } catch {
+    // The pointer may already have been released by the browser.
+  }
+  const organization = column?.dataset["organization"] as Organization;
+  if (!cancelled && organization && moveDollar(organization, data)) render();
+}
+
+document.addEventListener("pointermove", updateTouchDrag);
+document.addEventListener("pointerup", finishTouchDrag);
+document.addEventListener("pointercancel", (event) =>
+  finishTouchDrag(event, true),
+);
 
 function bindDraggableDollars() {
   document
@@ -234,6 +300,9 @@ function bindDraggableDollars() {
       dollar.addEventListener("dragstart", (event) => {
         setDragData(event, { source: null, dollarIndex });
         dollar.classList.add("is-dragging");
+      });
+      dollar.addEventListener("pointerdown", (event) => {
+        startTouchDrag(event, dollar, { source: null, dollarIndex });
       });
       dollar.addEventListener("dragend", () => {
         dollar.classList.remove("is-dragging");
@@ -280,6 +349,12 @@ function bindDraggableAllocatedSlots() {
           ...(Number.isInteger(dollarIndex) ? { dollarIndex } : {}),
         });
         slot.classList.add("is-dragging");
+      });
+      slot.addEventListener("pointerdown", (event) => {
+        startTouchDrag(event, slot, {
+          source,
+          ...(Number.isInteger(dollarIndex) ? { dollarIndex } : {}),
+        });
       });
       slot.addEventListener("dragend", () => {
         slot.classList.remove("is-dragging");

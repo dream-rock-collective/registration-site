@@ -1092,6 +1092,7 @@ footer p {
 
 .allocation-dollar:not(.is-allocated) {
   cursor: grab;
+  touch-action: none;
 }
 
 .allocation-dollar.is-dragging {
@@ -1103,6 +1104,7 @@ footer p {
   background: #000;
   color: #fff;
   cursor: grab;
+  touch-action: none;
 }
 
 .allocation-slot.is-dragging {
