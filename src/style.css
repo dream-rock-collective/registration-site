@@ -24,11 +24,12 @@
 }
 
 html {
-  background: #f3f3f3;
+  background: var(--blue);
 }
 
 body {
   margin: 0;
+  background: var(--blue);
   color: var(--ink);
   font-family: var(--font);
   font-optical-sizing: auto;
