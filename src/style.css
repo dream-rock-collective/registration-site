@@ -110,170 +110,170 @@ img {
 }
 
 .cloud-c {
-  top: 245px;
-  left: -70px;
+  top: 175px;
+  left: 16%;
   width: 170px;
 }
 
 .cloud-d {
-  top: 405px;
-  right: -105px;
+  top: 225px;
+  right: 14%;
   width: 235px;
 }
 
 .cloud-e {
-  top: 625px;
+  top: 395px;
   left: -58px;
   width: 185px;
 }
 
 .cloud-f {
-  top: 835px;
+  top: 455px;
   right: -72px;
   width: 145px;
 }
 
 .cloud-g {
-  top: 1065px;
-  left: -112px;
+  top: 655px;
+  left: 8%;
   width: 245px;
 }
 
 .cloud-h {
-  top: 1285px;
-  right: -55px;
+  top: 700px;
+  right: 9%;
   width: 175px;
 }
 
 .cloud-i {
-  top: 1490px;
+  top: 895px;
   left: -85px;
   width: 150px;
 }
 
 .cloud-j {
-  top: 1695px;
-  right: -98px;
+  top: 955px;
+  right: 11%;
   width: 225px;
 }
 
 .cloud-k {
-  top: 1925px;
-  left: -66px;
+  top: 1165px;
+  left: 18%;
   width: 190px;
 }
 
 .cloud-l {
-  top: 2160px;
-  right: -70px;
+  top: 1225px;
+  right: 16%;
   width: 150px;
 }
 
 .cloud-m {
-  top: 2390px;
+  top: 1435px;
   left: -106px;
   width: 225px;
 }
 
 .cloud-n {
-  top: 2620px;
-  right: -82px;
+  top: 1495px;
+  right: 10%;
   width: 170px;
 }
 
 .cloud-o {
-  top: 2855px;
-  left: -48px;
+  top: 1705px;
+  left: 12%;
   width: 155px;
 }
 
 .cloud-p {
-  top: 3090px;
-  right: -112px;
+  top: 1765px;
+  right: 8%;
   width: 240px;
 }
 
 .cloud-q {
-  top: 3330px;
+  top: 1975px;
   left: -78px;
   width: 180px;
 }
 
 .cloud-r {
-  top: 3570px;
-  right: -62px;
+  top: 2035px;
+  right: 18%;
   width: 145px;
 }
 
 .cloud-s {
-  top: 3810px;
-  left: -105px;
+  top: 2245px;
+  left: 20%;
   width: 230px;
 }
 
 .cloud-t {
-  top: 4050px;
-  right: -90px;
+  top: 2305px;
+  right: 14%;
   width: 175px;
 }
 
 .cloud-u {
-  top: 4290px;
+  top: 2515px;
   left: -52px;
   width: 150px;
 }
 
 .cloud-v {
-  top: 4530px;
-  right: -108px;
+  top: 2575px;
+  right: 7%;
   width: 225px;
 }
 
 .cloud-w {
-  top: 4770px;
-  left: -70px;
+  top: 2785px;
+  left: 14%;
   width: 180px;
 }
 
 .cloud-x {
-  top: 5010px;
-  right: -58px;
+  top: 2845px;
+  right: 12%;
   width: 150px;
 }
 
 .cloud-y {
-  top: 5250px;
+  top: 3055px;
   left: -110px;
   width: 240px;
 }
 
 .cloud-z {
-  top: 5490px;
-  right: -82px;
+  top: 3115px;
+  right: 17%;
   width: 175px;
 }
 
 .cloud-aa {
-  top: 5730px;
-  left: -55px;
+  top: 3325px;
+  left: 18%;
   width: 160px;
 }
 
 .cloud-cluster-a {
-  top: 585px;
-  right: -128px;
+  top: 535px;
+  right: 8%;
   width: 270px;
 }
 
 .cloud-cluster-b {
-  top: 1540px;
-  left: -125px;
+  top: 1455px;
+  right: 8%;
   width: 285px;
 }
 
 .cloud-cluster-c {
-  top: 2760px;
-  right: -135px;
+  top: 2475px;
+  right: 7%;
   width: 290px;
 }
 
@@ -766,6 +766,30 @@ footer p {
 
   .footer-logo {
     margin-top: 22px;
+  }
+}
+
+@media (min-width: 701px) and (max-width: 1000px) {
+  .cloud-c,
+  .cloud-g,
+  .cloud-k,
+  .cloud-o,
+  .cloud-s,
+  .cloud-w,
+  .cloud-aa {
+    left: -125px;
+  }
+
+  .cloud-cluster-a {
+    right: -190px;
+  }
+
+  .cloud-cluster-b {
+    right: -60px;
+  }
+
+  .cloud-cluster-c {
+    right: -205px;
   }
 }
 
