@@ -582,20 +582,20 @@ footer p {
     width: 100%;
   }
 
-  .site-shell > .cloud-b,
-  .site-shell > .cloud-d,
-  .site-shell > .cloud-f,
-  .site-shell > .cloud-h,
-  .site-shell > .cloud-j,
-  .site-shell > .cloud-l,
-  .site-shell > .cloud-n,
-  .site-shell > .cloud-p,
-  .site-shell > .cloud-r,
-  .site-shell > .cloud-t,
-  .site-shell > .cloud-v,
-  .site-shell > .cloud-x,
-  .site-shell > .cloud-z,
-  .site-shell > .cloud-aa {
+  .site-shell>.cloud-b,
+  .site-shell>.cloud-d,
+  .site-shell>.cloud-f,
+  .site-shell>.cloud-h,
+  .site-shell>.cloud-j,
+  .site-shell>.cloud-l,
+  .site-shell>.cloud-n,
+  .site-shell>.cloud-p,
+  .site-shell>.cloud-r,
+  .site-shell>.cloud-t,
+  .site-shell>.cloud-v,
+  .site-shell>.cloud-x,
+  .site-shell>.cloud-z,
+  .site-shell>.cloud-aa {
     display: none;
   }
 
@@ -712,37 +712,184 @@ footer p {
     width: 112px;
   }
 
-  .cloud-a { top: -14px; left: -58px; }
-  .cloud-b { top: 42px; right: -62px; width: 92px; }
-  .cloud-c { top: 205px; left: -54px; width: 104px; }
-  .cloud-d { top: 355px; right: -72px; width: 145px; }
-  .cloud-e { top: 555px; left: -48px; width: 115px; }
-  .cloud-f { top: 765px; right: -52px; width: 88px; }
-  .cloud-g { top: 985px; left: -76px; width: 150px; }
-  .cloud-h { top: 1195px; right: -48px; width: 108px; }
-  .cloud-i { top: 1405px; left: -62px; width: 94px; }
-  .cloud-j { top: 1615px; right: -68px; width: 138px; }
-  .cloud-k { top: 1825px; left: -48px; width: 116px; }
-  .cloud-l { top: 2035px; right: -52px; width: 92px; }
-  .cloud-m { top: 2245px; left: -72px; width: 140px; }
-  .cloud-n { top: 2455px; right: -58px; width: 104px; }
-  .cloud-o { top: 2665px; left: -42px; width: 95px; }
-  .cloud-p { top: 2875px; right: -76px; width: 145px; }
-  .cloud-q { top: 3085px; left: -56px; width: 110px; }
-  .cloud-r { top: 3295px; right: -46px; width: 88px; }
-  .cloud-s { top: 3505px; left: -70px; width: 140px; }
-  .cloud-t { top: 3715px; right: -60px; width: 108px; }
-  .cloud-u { top: 3925px; left: -42px; width: 92px; }
-  .cloud-v { top: 4135px; right: -72px; width: 138px; }
-  .cloud-w { top: 4345px; left: -52px; width: 110px; }
-  .cloud-x { top: 4555px; right: -44px; width: 90px; }
-  .cloud-y { top: 4765px; left: -76px; width: 145px; }
-  .cloud-z { top: 4975px; right: -58px; width: 106px; }
-  .cloud-aa { top: 5185px; left: -44px; width: 94px; }
+  .cloud-a {
+    top: -14px;
+    left: -58px;
+  }
 
-  .cloud-cluster-a { top: 520px; right: -78px; width: 170px; }
-  .cloud-cluster-b { top: 1510px; left: -82px; width: 180px; }
-  .cloud-cluster-c { top: 2700px; right: -86px; width: 185px; }
+  .cloud-b {
+    top: 42px;
+    right: -62px;
+    width: 92px;
+  }
+
+  .cloud-c {
+    top: 205px;
+    left: -54px;
+    width: 104px;
+  }
+
+  .cloud-d {
+    top: 355px;
+    right: -72px;
+    width: 145px;
+  }
+
+  .cloud-e {
+    top: 555px;
+    left: -48px;
+    width: 115px;
+  }
+
+  .cloud-f {
+    top: 765px;
+    right: -52px;
+    width: 88px;
+  }
+
+  .cloud-g {
+    top: 985px;
+    left: -76px;
+    width: 150px;
+  }
+
+  .cloud-h {
+    top: 1195px;
+    right: -48px;
+    width: 108px;
+  }
+
+  .cloud-i {
+    top: 1405px;
+    left: -62px;
+    width: 94px;
+  }
+
+  .cloud-j {
+    top: 1615px;
+    right: -68px;
+    width: 138px;
+  }
+
+  .cloud-k {
+    top: 1825px;
+    left: -48px;
+    width: 116px;
+  }
+
+  .cloud-l {
+    top: 2035px;
+    right: -52px;
+    width: 92px;
+  }
+
+  .cloud-m {
+    top: 2245px;
+    left: -72px;
+    width: 140px;
+  }
+
+  .cloud-n {
+    top: 2455px;
+    right: -58px;
+    width: 104px;
+  }
+
+  .cloud-o {
+    top: 2665px;
+    left: -42px;
+    width: 95px;
+  }
+
+  .cloud-p {
+    top: 2875px;
+    right: -76px;
+    width: 145px;
+  }
+
+  .cloud-q {
+    top: 3085px;
+    left: -56px;
+    width: 110px;
+  }
+
+  .cloud-r {
+    top: 3295px;
+    right: -46px;
+    width: 88px;
+  }
+
+  .cloud-s {
+    top: 3505px;
+    left: -70px;
+    width: 140px;
+  }
+
+  .cloud-t {
+    top: 3715px;
+    right: -60px;
+    width: 108px;
+  }
+
+  .cloud-u {
+    top: 3925px;
+    left: -42px;
+    width: 92px;
+  }
+
+  .cloud-v {
+    top: 4135px;
+    right: -72px;
+    width: 138px;
+  }
+
+  .cloud-w {
+    top: 4345px;
+    left: -52px;
+    width: 110px;
+  }
+
+  .cloud-x {
+    top: 4555px;
+    right: -44px;
+    width: 90px;
+  }
+
+  .cloud-y {
+    top: 4765px;
+    left: -76px;
+    width: 145px;
+  }
+
+  .cloud-z {
+    top: 4975px;
+    right: -58px;
+    width: 106px;
+  }
+
+  .cloud-aa {
+    top: 5185px;
+    left: -44px;
+    width: 94px;
+  }
+
+  .cloud-cluster-a {
+    top: 520px;
+    right: -78px;
+    width: 170px;
+  }
+
+  .cloud-cluster-b {
+    top: 1510px;
+    left: -82px;
+    width: 180px;
+  }
+
+  .cloud-cluster-c {
+    top: 2700px;
+    right: -86px;
+    width: 185px;
+  }
 
   .cloud-form {
     top: 32px;
@@ -770,6 +917,7 @@ footer p {
 }
 
 @media (min-width: 701px) and (max-width: 1000px) {
+
   .cloud-c,
   .cloud-g,
   .cloud-k,
@@ -820,7 +968,7 @@ footer p {
 }
 
 .subscription-subtext {
-  margin-top: 6px;
+  margin-top: 10px;
   color: #dedede;
 }
 
