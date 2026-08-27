@@ -15,6 +15,7 @@
 
 :root {
   --blue: #b9dcfa;
+  --banner-blue: #4d628f;
   --ink: #050505;
   --font: Fraunces, Georgia, serif;
 }
@@ -34,6 +35,11 @@ body {
   font-family: var(--font);
   font-optical-sizing: auto;
   font-size: 0.875rem;
+}
+
+html.subscription-document,
+body.subscription-page-body {
+  background: var(--banner-blue);
 }
 
 button,
@@ -959,7 +965,7 @@ footer p {
   flex-direction: column;
   align-items: center;
   padding: 10px;
-  background: #4d628f;
+  background: var(--banner-blue);
   color: #fff;
   text-align: center;
 }
@@ -969,7 +975,7 @@ footer p {
 }
 
 .subscription-subtext {
-  margin-top: 10px;
+  margin-top: 6px;
   color: #dedede;
 }
 
