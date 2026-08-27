@@ -952,7 +952,7 @@ footer p {
   line-height: 1;
 }
 
-.subscription-banner span {
+.subscription-subtext {
   margin-top: 6px;
   color: #dedede;
 }
@@ -1315,6 +1315,10 @@ footer p {
 .member-overlay-content p {
   margin: 0;
   font-size: 0.9rem;
+}
+
+.member-overlay-content .subscription-subtext {
+  color: #111;
 }
 
 .member-overlay-content a {
