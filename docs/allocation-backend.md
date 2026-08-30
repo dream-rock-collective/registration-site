@@ -22,8 +22,9 @@ The frontend selects `VITE_API_BASE_URL` when set; otherwise it uses the local U
 }
 ```
 
-`name`, `email`, and `address` are required. `birthday` is optional and may
-be `null`; when supplied it is stored as raw text, without date parsing. The
+`name` and `email` are required. `address` is optional and may be `null` or
+omitted; blank values are stored as `null`. `birthday` is optional and may be
+`null`; when supplied it is stored as raw text, without date parsing. The
 maximum birthday length is 100 characters.
 
 The successful `201` response includes the stable registration identifier:

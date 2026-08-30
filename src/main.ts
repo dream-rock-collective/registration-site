@@ -91,12 +91,8 @@ form?.addEventListener("submit", async (event) => {
     birthday: String(formData.get("birthday") || "").trim(),
   };
 
-  if (
-    [registration.name, registration.email, registration.address].some(
-      (value) => !value,
-    )
-  ) {
-    setFormMessage("Please provide your name, email, and address.");
+  if ([registration.name, registration.email].some((value) => !value)) {
+    setFormMessage("Please provide your name and email.");
     return;
   }
 

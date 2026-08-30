@@ -6,7 +6,7 @@ This directory is the operating guide for agents working on the Dream-Rock Colle
 
 This repository is the public frontend for Dream-Rock Collective. It is a Vite multi-page site that lets visitors:
 
-1. Register with their name, email, mailing address, and optional birthday.
+1. Register with their name, email, optional mailing address, and optional birthday.
 2. Choose a one-time, monthly, or yearly subscription.
 3. Complete payment through Stripe Checkout.
 4. Allocate the community-reinvestment portion of their payment among three organizations.

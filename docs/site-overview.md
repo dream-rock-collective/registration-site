@@ -61,4 +61,4 @@ The initial registration has plan `free`. `completePendingPlan()` promotes the m
 - The user id must survive the transition from `/` to `/registered/` and then into allocation submission.
 - The backend accepts allocation objects generically, but the frontend currently controls the organization keys and total budget.
 - Allocation submissions are historical and immutable. A later submission creates another record rather than editing the previous one.
-- The mailing address is required because it is used for mail drops. Birthday is optional and is raw text for the bonus birthday letter.
+- The mailing address is optional for registrations. Birthday is optional and is raw text for the bonus birthday letter.
