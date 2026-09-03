@@ -359,6 +359,47 @@ ul {
   line-height: 1.2;
 }
 
+.signup-type-selector {
+  margin: 20px 0 22px;
+  padding: 0;
+  border: 0;
+}
+
+.signup-type-options {
+  display: grid;
+  grid-template-columns: 1fr 1.45fr;
+  background: #111;
+  border: 2px solid #111;
+}
+
+.signup-type-option {
+  position: absolute;
+  width: 1px;
+  height: 1px;
+  opacity: 0;
+}
+
+.signup-type-label {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  min-height: 38px;
+  padding: 6px 8px;
+  cursor: pointer;
+  background: #fff;
+  text-align: center;
+}
+
+.signup-type-option:checked + .signup-type-label {
+  background: #111;
+  color: #fff;
+}
+
+.signup-type-option:focus-visible + .signup-type-label {
+  outline: 3px solid #4d628f;
+  outline-offset: -5px;
+}
+
 .signup-form {
   display: flex;
   flex-direction: column;
@@ -390,6 +431,15 @@ ul {
 .signup-form input::placeholder {
   color: #bcbcbc;
   opacity: 1;
+}
+
+.signup-maildrops-fields {
+  display: flex;
+  flex-direction: column;
+}
+
+.signup-maildrops-fields[hidden] {
+  display: none;
 }
 
 .field-note {
@@ -431,7 +481,7 @@ ul {
   -webkit-text-fill-color: var(--ink);
 }
 
-.signup-form button span {
+.signup-form button .signup-submit-arrow {
   margin-left: 12px;
   font-size: 1.7rem;
   line-height: 10px;
@@ -690,6 +740,16 @@ footer p {
   .signup-intro {
     font-size: 0.8rem;
     max-width: 260px;
+  }
+
+  .signup-type-selector {
+    margin-bottom: 18px;
+  }
+
+  .signup-type-label {
+    min-height: 34px;
+    padding: 5px 4px;
+    font-size: 0.8rem;
   }
 
   .signup-form {

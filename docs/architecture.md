@@ -4,10 +4,12 @@
 
 ```text
 index.html                         landing-page HTML entrypoint
+newsletter-thanks/index.html      newsletter confirmation entrypoint
 registered/index.html              subscription-selection entrypoint
 success/index.html                 success entrypoint
 allocate-payment/index.html        allocation entrypoint
 src/main.ts                        landing-page behavior
+src/newsletter-thanks.ts           newsletter confirmation behavior
 src/registered.ts                  checkout behavior
 src/success.ts                     success-page state completion
 src/allocate-payment.ts            allocation behavior

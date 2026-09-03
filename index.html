@@ -58,9 +58,20 @@
           </div>
         </div>
         <h1 id="join-heading">Join the Club</h1>
+        <fieldset class="signup-type-selector">
+          <legend class="sr-only">Choose what you&rsquo;d like to subscribe to</legend>
+          <div class="signup-type-options">
+            <input class="signup-type-option" id="signup-type-newsletter" type="radio" name="signup-type"
+              value="newsletter" checked />
+            <label class="signup-type-label" for="signup-type-newsletter">Newsletter only</label>
+            <input class="signup-type-option" id="signup-type-maildrops" type="radio" name="signup-type"
+              value="maildrops" />
+            <label class="signup-type-label" for="signup-type-maildrops">Newsletter &amp; MailDrops</label>
+          </div>
+        </fieldset>
         <p class="signup-intro">
-          Signup to join. On the next page, you’ll be able to purchase mail
-          drops. The choice between a one time payment, monthly, yearly
+          Sign up for email announcements, or include Mail Drops by choosing the
+          option above.
         </p>
         <p class="health-banner is-hidden" role="status" aria-live="polite">
           Registration server is offline while I move it to SF with me!!
@@ -71,17 +82,18 @@
             required />
           <label for="email">Email</label><input id="email" type="email" name="email" placeholder="Email"
             maxlength="320" required />
-          <label for="address">Address</label><input id="address" type="text" name="address" placeholder="Address"
-            maxlength="500" />
-          <p class="field-note">Optional for Mail Drops</p>
-          <label for="birthday">Birthday</label><input id="birthday" type="text" name="birthday" placeholder="Birthday"
-            maxlength="100" />
-          <p class="field-note">
-            Optional for monthly &amp; yearly subscribers&rsquo; bonus
-            birthday letter
-          </p>
+          <div class="signup-maildrops-fields" id="maildrops-fields" hidden>
+            <label for="address">Address</label><input id="address" type="text" name="address" placeholder="Address"
+              maxlength="500" required disabled />
+            <label for="birthday">Birthday</label><input id="birthday" type="text" name="birthday" placeholder="Birthday"
+              maxlength="100" disabled />
+            <p class="field-note">
+              Optional for monthly &amp; yearly subscribers&rsquo; bonus
+              birthday letter
+            </p>
+          </div>
           <button type="submit" id="signup-submit" disabled>
-            Next <span aria-hidden="true">→</span>
+            <span id="signup-submit-label">Submit</span><span id="signup-submit-arrow" aria-hidden="true" hidden>→</span>
           </button>
           <p class="form-message" id="form-message" role="alert" aria-live="polite"></p>
         </form>

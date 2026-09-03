@@ -3,7 +3,8 @@
 ## User journey
 
 ```text
-/                         registration form
+/                         newsletter or MailDrops registration form
+  -> /newsletter-thanks/   newsletter confirmation
   -> /registered/          subscription selection
   -> Stripe Checkout       external payment page
   -> /success/             simple payment-success landing page
@@ -16,7 +17,9 @@ The Stripe Checkout success URL is expected to return to `/allocate-payment/`. T
 
 ### `/`
 
-The landing page explains the mail club, the collective, the artist, and frequently asked questions. Its registration form calls `GET /health` before enabling submission, then calls `POST /register`. A successful registration is stored in browser local storage and the visitor is sent to `/registered/?userId=<id>`.
+The landing page explains the mail club, the collective, the artist, and frequently asked questions. Its registration form defaults to Newsletter and offers Newsletter & MailDrops as a segmented choice. Newsletter submits only name and email, then routes to `/newsletter-thanks/`; MailDrops includes the optional address and birthday fields and continues to `/registered/?userId=<id>`. Both modes call `GET /health` before enabling submission and use the existing `POST /register` endpoint.
+
+The current frontend-only implementation does not send the selected signup type to the backend, so the backend cannot distinguish newsletter-only registrations from MailDrops registrations.
 
 ### `/registered/`
 

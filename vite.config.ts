@@ -8,6 +8,7 @@ export default defineConfig({
         registered: "registered/index.html",
         success: "success/index.html",
         allocatePayment: "allocate-payment/index.html",
+        newsletterThanks: "newsletter-thanks/index.html",
       },
     },
   },
