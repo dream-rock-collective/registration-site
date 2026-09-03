@@ -49,6 +49,9 @@ function setSignupType(type: SignupType) {
   signupType = type;
   const isMailDrops = type === "maildrops";
 
+  signupTypeInputs.forEach((input) => {
+    input.checked = input.value === type;
+  });
   if (maildropsFields) maildropsFields.hidden = !isMailDrops;
   if (addressInput) addressInput.disabled = !isMailDrops;
   if (birthdayInput) birthdayInput.disabled = !isMailDrops;
