@@ -1,5 +1,7 @@
 # Dream-Rock Collective registration site
 
+See the [documentation index](docs/README.md) for engineering guidance and references.
+
 Public frontend for Dream-Rock Collective. The backend and Docker deployment live in the separate `drc-backend` repository.
 
 ## Local development

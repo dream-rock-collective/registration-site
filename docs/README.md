@@ -1,6 +1,9 @@
 # Dream-Rock Collective Site Documentation
 
-This directory is the operating guide for agents working on the Dream-Rock Collective registration site. Start here before searching the source tree.
+Use this index when you need to find a reference. Identify affected code first,
+read only matching sections, and follow known links directly. Links are navigation,
+not automatic imports; reuse unchanged guidance already read during the task.
+Source and configuration own implementation details.
 
 ## What this repository contains
 
@@ -15,12 +18,14 @@ The API and Docker deployment live in the separate `drc-backend` repository. Thi
 
 ## Documentation map
 
+- [TypeScript](typescript.md) — contracts, validation, functions, imports, and absence semantics.
+
 - [Site overview](site-overview.md) — routes, user journey, browser state, plans, and allocation behavior.
 - [Architecture](architecture.md) — source layout, page entrypoints, modules, styling, assets, and environment configuration.
 - [Adding pages](adding-pages.md) — how to create a page and integrate it with the shared visual system.
 - [Backend integration](allocation-backend.md) — API endpoints, request/response contracts, and frontend/backend responsibilities.
 - [Deployment](deployment.md) — local builds, production output, GitHub Pages deployment, and release checks.
-- [Agent workflow](agent-workflow.md) — how to find the right source of truth, make changes safely, and validate them.
+- [Agent workflow](agent-workflow.md) — how to find the right source of truth, make changes safely, choose chunked or one-shot work, maintain task state, and validate changes.
 
 ## Quick commands
 
