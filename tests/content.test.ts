@@ -10,6 +10,12 @@ import { renderInitialPage } from "../src/render-initial-page";
 
 const draft = () => structuredClone(content);
 describe("initial page content", () => {
+  test("Mail Drops retains the published main-branch copy", () => {
+    const mailDrops = content.sections.find((section) => section.title === "Mail Drops");
+    expect(mailDrops?.body).toStartWith("<p>The monthly letter includes:</p><ul><li>postcard,</li>");
+    expect(mailDrops?.body).not.toContain("<li>bullets</li>");
+    expect(content.member.helpBody).toStartWith("<p><br>");
+  });
   test("Vite preserves dollar replacement sequences in editable copy", () => {
     const previousFooter = content.footer.text;
     try {
@@ -94,6 +100,14 @@ describe("initial page content", () => {
     expect(index).toContain(
       'property="og:image:alt" content="A rock with googly eyes"',
     );
+  });
+  test("footer copy owns its emoji", () => {
+    expect(renderInitialPage(draft()).match(/🫶/g)).toHaveLength(1);
+    const copy = draft();
+    copy.footer.text = "See you soon 🌈";
+    const html = renderInitialPage(copy);
+    expect(html).toContain("<p>See you soon 🌈</p>");
+    expect(html).not.toContain("🫶");
   });
   test("templates substitute data without interpreting it", () => {
     expect(

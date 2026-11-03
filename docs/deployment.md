@@ -45,7 +45,7 @@ renderer, and CSS; it does not run registration or member-storage initialization
 Its parent-message protocol lives in `src/preview-messages.ts`; the opaque iframe
 accepts content only from the configured parent origin and matching frame token.
 The backend is responsible for HTML authentication, asset CORS, and restrictive
-CSP. Use the editor's refresh control to rebuild after changing site code/assets;
+CSP. Reload the editor to rebuild after changing site code/assets;
 content edits update by message without a build.
 
 `.github/workflows/deploy-registration-site.yml` runs on pushes to `main` and manual workflow dispatches. The workflow:

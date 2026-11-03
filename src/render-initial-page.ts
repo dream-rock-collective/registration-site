@@ -112,7 +112,7 @@ export function renderInitialPage(content: InitialPageContent): string {
       </section>
       ${sections.map(renderSection).join("\n")}
       <footer>
-        <p>${escapeHtml(footer.text)} <span aria-hidden="true">🫶</span></p>
+        <p>${escapeHtml(footer.text)}</p>
         ${renderLogo("footer-logo")}
       </footer>
     </main>

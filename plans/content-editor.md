@@ -39,7 +39,7 @@ reject traversal, missing dependencies, and source symlinks.
 
 ## Verification
 
-- `bun test`: 13 tests / 60 assertions pass, including content/rendering, dollar replacement sequences in Vite, unsafe HTML/links/images, and preview message boundaries.
+- `bun test`: 14 tests / 63 assertions pass, including content/rendering, dollar replacement sequences in Vite, unsafe HTML/links/images, and preview message boundaries.
 - `bun run lint`: passes.
 - `bun run build`: passes; generated initial HTML contains copy without a runtime content fetch.
 - `bun run build:preview`: passes into separate `dist-preview/`; backend supplies its own temporary output directory.
@@ -57,6 +57,21 @@ lint, normal build, and preview build pass. The primary agent verified the edito
 layout and publish-confirmation flow with a mock publisher and compact browser
 checks; no production content was published.
 
+## Generated HTML comparison against main
+
+Built an isolated snapshot of local `main` and the current editor checkout, then
+compared all four generated public HTML files. Restored the Mail Drops lead-in
+to "The monthly letter includes:" and removed the stray "bullets" list item.
+Also restored the leading line break in member help text. Added a copy regression
+test; 15 tests, lint, build and diff checks pass.
+
+Copy, metadata, image paths/alt text, anchor links and form controls now match
+main on `/`, `/registered/`, `/allocate-payment/`, and `/success/`. The three
+non-initial pages also match normalized markup after asset hashes are ignored.
+The initial page retains intentional JSON section wrappers/classes, generic
+heading IDs, FAQ rich-text markup, editable emoji markup, and whitespace changes;
+this was a generated HTML/content comparison, not a pixel/layout comparison.
+
 ## Remaining limits
 
 The generic image layout preserves existing asset sizing but arbitrary new copy can change page height. Asset existence is checked by the backend image picker/publishing boundary; the site validator restricts paths syntactically. No production GitHub push/Pages deployment was tested. Other pages and image uploads remain deferred.
@@ -64,3 +79,5 @@ The generic image layout preserves existing asset sizing but arbitrary new copy 
 ## Editor scope refinement
 
 Removed metadata, branding, and planLabels from the editable document and strict schema. The original site/social title and metadata remain in `index.html`; logo labels and alt text stay in the renderer; initial-page plan labels reuse `member.ts`. Preview uses the fixed site title. Existing drafts containing the removed groups require discarding or migration by the admin editor before publication.
+
+Footer text includes its emoji in JSON so the editor can display, replace, or remove it; the renderer does not append a fixed emoji.

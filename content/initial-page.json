@@ -28,7 +28,7 @@
   "member": {
     "overlayHeading": "Thanks {firstName}!",
     "overlayPlan": "You're a {plan} member",
-    "helpBody": "<p>Need to cancel or have other questions?<br>Email <a href=\"mailto:leeyaappleby@gmail.com\">leeyaappleby@gmail.com</a>.</p>",
+    "helpBody": "<p><br>Need to cancel or have other questions?<br>Email <a href=\"mailto:leeyaappleby@gmail.com\">leeyaappleby@gmail.com</a>.</p>",
     "newRegistration": "New registration"
   },
   "messages": {
@@ -41,7 +41,7 @@
   "sections": [
     {
       "title": "Mail Drops",
-      "body": "<p>The monthly letter including:</p><ul><li>bullets</li></ul><ul><li>postcard,</li><li>a handwritten letter,</li><li>a rotating monthly bonus goodie.</li></ul><p>Each month, I will share what I am thinking about and learning, a silly poem I have loved or written, or ways to live intentionally and enjoy life.</p><p>Come and dream with me.</p>",
+      "body": "<p>The monthly letter includes:</p><ul><li>postcard,</li><li>a handwritten letter,</li><li>a rotating monthly bonus goodie.</li></ul><p>Each month, I will share what I am thinking about and learning, a silly poem I have loved or written, or ways to live intentionally and enjoy life.</p><p>Come and dream with me.</p>",
       "image": {
         "src": "/whats-included/collage.png",
         "alt": "Examples of Dream-Rock Collective mail drops"
@@ -65,6 +65,6 @@
     }
   ],
   "footer": {
-    "text": "Thank you for your trust"
+    "text": "Thank you for your trust 🫶"
   }
 }
