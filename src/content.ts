@@ -4,8 +4,6 @@ export type ContentSection = {
   image?: { src: string; alt: string };
 };
 export type InitialPageContent = {
-  metadata: { title: string; description: string; imageAlt: string };
-  branding: { label: string; dreamRockAlt: string; collectiveAlt: string };
   join: {
     title: string;
     subtitle: string;
@@ -19,7 +17,6 @@ export type InitialPageContent = {
     >;
   };
   member: {
-    heading: string;
     overlayHeading: string;
     overlayPlan: string;
     helpBody: string;
@@ -32,7 +29,6 @@ export type InitialPageContent = {
     paymentFailed: string;
     networkFailed: string;
   };
-  planLabels: Record<"free" | "monthly" | "once" | "yearly", string>;
   sections: ContentSection[];
   footer: { text: string };
 };
@@ -128,28 +124,8 @@ function strings(value: unknown, keys: string[], path: string): void {
 export function validateInitialPageContent(value: unknown): InitialPageContent {
   const root = object(
     value,
-    [
-      "metadata",
-      "branding",
-      "join",
-      "member",
-      "messages",
-      "sections",
-      "planLabels",
-      "footer",
-    ],
+    ["join", "member", "messages", "sections", "footer"],
     "content",
-  );
-  strings(
-    root["planLabels"],
-    ["free", "monthly", "once", "yearly"],
-    "planLabels",
-  );
-  strings(root["metadata"], ["title", "description", "imageAlt"], "metadata");
-  strings(
-    root["branding"],
-    ["label", "dreamRockAlt", "collectiveAlt"],
-    "branding",
   );
   const joinKeys = [
     "title",
@@ -172,7 +148,7 @@ export function validateInitialPageContent(value: unknown): InitialPageContent {
     strings(fields[key], ["label", "placeholder"], `join.fields.${key}`);
   strings(
     root["member"],
-    ["heading", "overlayHeading", "overlayPlan", "helpBody", "newRegistration"],
+    ["overlayHeading", "overlayPlan", "helpBody", "newRegistration"],
     "member",
   );
   strings(
@@ -209,7 +185,6 @@ export function validateInitialPageContent(value: unknown): InitialPageContent {
   const content = value as InitialPageContent;
   validateRichText(content.member.helpBody);
   for (const [key, allowed] of [
-    ["heading", ["firstName"]],
     ["overlayHeading", ["firstName"]],
     ["overlayPlan", ["plan"]],
   ] as const) {

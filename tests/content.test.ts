@@ -6,28 +6,27 @@ import {
   validateInitialPageContent,
   validateRichText,
 } from "../src/content";
-import {
-  renderInitialHead,
-  renderInitialPage,
-} from "../src/render-initial-page";
+import { renderInitialPage } from "../src/render-initial-page";
 
 const draft = () => structuredClone(content);
 describe("initial page content", () => {
   test("Vite preserves dollar replacement sequences in editable copy", () => {
-    const previousTitle = content.metadata.title;
     const previousFooter = content.footer.text;
     try {
-      content.metadata.title = "$& $` $'";
       content.footer.text = "$& $` $'";
       const plugin = config.plugins?.[0] as {
-        transformIndexHtml: (html: string, context: { filename: string; path: string }) => string;
+        transformIndexHtml: (
+          html: string,
+          context: { filename: string; path: string },
+        ) => string;
       };
-      const html = plugin.transformIndexHtml("<head><!-- initial-head --></head><body><!-- initial-page --></body>", { filename: "/site/index.html", path: "/index.html" });
-      expect(html).toContain(renderInitialHead(content));
+      const html = plugin.transformIndexHtml(
+        "<body><!-- initial-page --></body>",
+        { filename: "/site/index.html", path: "/index.html" },
+      );
       expect(html).toContain(renderInitialPage(content));
       expect(html).not.toContain("<!-- initial-");
     } finally {
-      content.metadata.title = previousTitle;
       content.footer.text = previousFooter;
     }
   });
@@ -71,14 +70,30 @@ describe("initial page content", () => {
     expect(html).toContain('name="address"');
     expect(html).toContain('name="birthday"');
   });
-  test("plain copy is escaped in markup and metadata", () => {
+  test("plain copy is escaped in markup", () => {
     const copy = draft();
     copy.join.title = '<script>alert("test")</script>';
-    copy.metadata.title = '" onload="alert(1)';
     expect(renderInitialPage(copy)).toContain(
       "&lt;script&gt;alert(&quot;test&quot;)&lt;/script&gt;",
     );
-    expect(renderInitialHead(copy)).not.toContain('content="" onload=');
+  });
+  test("metadata, branding and plan labels remain code-owned", async () => {
+    for (const key of ["metadata", "branding", "planLabels"]) {
+      expect(() =>
+        validateInitialPageContent({ ...draft(), [key]: {} }),
+      ).toThrow();
+    }
+    const html = renderInitialPage(draft());
+    expect(html).toContain('aria-label="Dream-Rock Collective"');
+    expect(html).toContain('src="/dream-rock.png" alt="Dream-Rock"');
+    expect(html).toContain('src="/collective.png" alt="Collective"');
+    const index = await Bun.file(
+      new URL("../index.html", import.meta.url),
+    ).text();
+    expect(index).toContain("<title>Dream-Rock Collective</title>");
+    expect(index).toContain(
+      'property="og:image:alt" content="A rock with googly eyes"',
+    );
   });
   test("templates substitute data without interpreting it", () => {
     expect(

@@ -27,7 +27,7 @@ Vite treats each HTML file listed in `vite.config.ts` as a separate Rollup input
 
 Adding a directory and an HTML file is not sufficient for a production build: the new HTML entry must also be added to `build.rollupOptions.input`. See [Adding a New Page](adding-pages.md) for the complete process.
 
-The initial page uses `<!-- initial-head -->` and `<!-- initial-page -->` markers. The Vite HTML plugin replaces them with validated JSON content in development and production; generated HTML is not committed. All initial-page copy belongs in `content/initial-page.json`. Section order is array order, and every section uses the same title, restricted HTML body, and optional image shape. Form field names, validation, and API contracts remain code-owned.
+The initial page uses the `<!-- initial-page -->` marker. The Vite HTML plugin replaces it with validated JSON content in development and production; generated HTML is not committed. Editable initial-page copy belongs in `content/initial-page.json`. Site title/social metadata, logo labels/alt text, and membership plan labels remain fixed in code. Section order is array order, and every section uses the same title, restricted HTML body, and optional image shape. Form field names, validation, and API contracts remain code-owned.
 
 ## Runtime module responsibilities
 

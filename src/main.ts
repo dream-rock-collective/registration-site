@@ -1,7 +1,7 @@
 import "./style.css";
 import initialContent from "../content/initial-page.json";
 import { formatContentTemplate, validateInitialPageContent } from "./content";
-import { getMember, saveRegistration } from "./member";
+import { formatPlanLabel, getMember, saveRegistration } from "./member";
 
 const content = validateInitialPageContent(initialContent);
 
@@ -43,7 +43,7 @@ if (
   );
   memberOverlayPlan.textContent = formatContentTemplate(
     content.member.overlayPlan,
-    { plan: content.planLabels[existingMember.plan] },
+    { plan: formatPlanLabel(existingMember) },
   );
   memberOverlay.removeAttribute("hidden");
 }

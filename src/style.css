@@ -1467,7 +1467,7 @@ footer p {
   max-height: 240px;
 }
 
-.editable-section .section-image[src="/leeya-appleby.jpeg"] {
+.editable-section .section-image[src$="/leeya-appleby.jpeg"] {
   max-width: 110px;
   max-height: 160px;
 }

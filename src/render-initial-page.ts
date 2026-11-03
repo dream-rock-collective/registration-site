@@ -17,27 +17,11 @@ const initialClouds =
     )
     .join("\n");
 
-export function renderInitialHead(content: InitialPageContent): string {
-  validateInitialPageContent(content);
-  const { title, description, imageAlt } = content.metadata;
+function renderLogo(className: string): string {
   return `
-    <title>${escapeHtml(title)}</title>
-    <meta property="og:title" content="${escapeHtml(title)}">
-    <meta property="og:type" content="website">
-    <meta property="og:description" content="${escapeHtml(description)}">
-    <meta property="og:image" content="/rock.png">
-    <meta property="og:image:alt" content="${escapeHtml(imageAlt)}">
-  `;
-}
-
-function renderLogo(
-  branding: InitialPageContent["branding"],
-  className: string,
-): string {
-  return `
-    <div class="${className}" aria-label="${escapeHtml(branding.label)}">
-      <img src="/dream-rock.png" alt="${escapeHtml(branding.dreamRockAlt)}">
-      <img src="/collective.png" alt="${escapeHtml(branding.collectiveAlt)}">
+    <div class="${className}" aria-label="Dream-Rock Collective">
+      <img src="/dream-rock.png" alt="Dream-Rock">
+      <img src="/collective.png" alt="Collective">
     </div>
   `;
 }
@@ -89,13 +73,13 @@ function renderSection(section: ContentSection, index: number): string {
 
 export function renderInitialPage(content: InitialPageContent): string {
   validateInitialPageContent(content);
-  const { branding, join, member, sections, footer } = content;
+  const { join, member, sections, footer } = content;
   return `
     <main class="site-shell">
       ${initialClouds}
       <header class="hero">
         <img class="hero-rock" src="/rock.png" alt="">
-        ${renderLogo(branding, "logo")}
+        ${renderLogo("logo")}
       </header>
       <section class="card-section" aria-labelledby="join-heading">
         <img class="cloud cloud-form-left" src="/cloud.png" alt="">
@@ -129,7 +113,7 @@ export function renderInitialPage(content: InitialPageContent): string {
       ${sections.map(renderSection).join("\n")}
       <footer>
         <p>${escapeHtml(footer.text)} <span aria-hidden="true">🫶</span></p>
-        ${renderLogo(branding, "footer-logo")}
+        ${renderLogo("footer-logo")}
       </footer>
     </main>
   `;

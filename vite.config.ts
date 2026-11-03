@@ -1,9 +1,6 @@
 import { defineConfig } from "vite";
 import content from "./content/initial-page.json" with { type: "json" };
-import {
-  renderInitialHead,
-  renderInitialPage,
-} from "./src/render-initial-page.ts";
+import { renderInitialPage } from "./src/render-initial-page.ts";
 
 export default defineConfig({
   plugins: [
@@ -15,9 +12,9 @@ export default defineConfig({
           context.path !== "/index.html"
         )
           return html;
-        return html
-          .replace("<!-- initial-head -->", () => renderInitialHead(content))
-          .replace("<!-- initial-page -->", () => renderInitialPage(content));
+        return html.replace("<!-- initial-page -->", () =>
+          renderInitialPage(content),
+        );
       },
     },
   ],
