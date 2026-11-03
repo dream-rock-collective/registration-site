@@ -3,7 +3,10 @@
 ## Repository layout
 
 ```text
-index.html                         landing-page HTML entrypoint
+index.html                         landing-page HTML template
+content/initial-page.json          editable initial-page copy
+src/content.ts                     content types and runtime validation
+src/render-initial-page.ts         shared static/preview HTML renderer
 registered/index.html              subscription-selection entrypoint
 success/index.html                 success entrypoint
 allocate-payment/index.html        allocation entrypoint
@@ -23,6 +26,8 @@ vite.config.ts                     Vite multi-page input configuration
 Vite treats each HTML file listed in `vite.config.ts` as a separate Rollup input. Each page loads one TypeScript entry module with a `<script type="module">` tag. The TypeScript modules import `src/style.css` where styling is needed.
 
 Adding a directory and an HTML file is not sufficient for a production build: the new HTML entry must also be added to `build.rollupOptions.input`. See [Adding a New Page](adding-pages.md) for the complete process.
+
+The initial page uses `<!-- initial-head -->` and `<!-- initial-page -->` markers. The Vite HTML plugin replaces them with validated JSON content in development and production; generated HTML is not committed. All initial-page copy belongs in `content/initial-page.json`. Section order is array order, and every section uses the same title, restricted HTML body, and optional image shape. Form field names, validation, and API contracts remain code-owned.
 
 ## Runtime module responsibilities
 

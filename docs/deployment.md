@@ -31,6 +31,8 @@ bun run build
 
 Formatting rewrites HTML, CSS, and TypeScript files, so inspect the resulting diff afterward.
 
+Run `bun test tests/content.test.ts` for initial-page content validation and rendering checks. The Vite build validates `content/initial-page.json` and embeds its copy in the generated initial-page HTML. Invalid HTML, unsupported template variables, or invalid content shapes fail the build.
+
 ## GitHub Pages deployment
 
 `.github/workflows/deploy-registration-site.yml` runs on pushes to `main` and manual workflow dispatches. The workflow:

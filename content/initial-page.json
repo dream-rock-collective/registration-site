@@ -1,0 +1,87 @@
+{
+  "metadata": {
+    "title": "Dream-Rock Collective",
+    "description": "Dream-Rock Collective",
+    "imageAlt": "A rock with googly eyes"
+  },
+  "branding": {
+    "label": "Dream-Rock Collective",
+    "dreamRockAlt": "Dream-Rock",
+    "collectiveAlt": "Collective"
+  },
+  "join": {
+    "title": "Join the Club",
+    "subtitle": "Signup to join. On the next page, you’ll be able to purchase mail drops. The choice between a one time payment, monthly, yearly",
+    "addressSubtitle": "Optional for Mail Drops",
+    "birthdaySubtitle": "Optional for monthly & yearly subscribers’ bonus birthday letter",
+    "offlineMessage": "Registration server is offline while I move it to SF with me!! Email leeyaappleby@gmail.com to register or wait until tomorrow.",
+    "submitLabel": "Next",
+    "fields": {
+      "name": {
+        "label": "Name",
+        "placeholder": "Name"
+      },
+      "email": {
+        "label": "Email",
+        "placeholder": "Email"
+      },
+      "address": {
+        "label": "Address",
+        "placeholder": "Address"
+      },
+      "birthday": {
+        "label": "Birthday",
+        "placeholder": "Birthday"
+      }
+    }
+  },
+  "member": {
+    "heading": "Thanks for being a member, {firstName}",
+    "overlayHeading": "Thanks {firstName}!",
+    "overlayPlan": "You're a {plan} member",
+    "helpBody": "<p>Need to cancel or have other questions?<br>Email <a href=\"mailto:leeyaappleby@gmail.com\">leeyaappleby@gmail.com</a>.</p>",
+    "newRegistration": "New registration"
+  },
+  "messages": {
+    "required": "Please provide your name and email.",
+    "submitting": "Submitting your registration…",
+    "saveFailed": "We could not save your registration.",
+    "paymentFailed": "Registration saved, but we could not start payment.",
+    "networkFailed": "We could not reach the registration service. Please try again."
+  },
+  "sections": [
+    {
+      "title": "Mail Drops",
+      "body": "<p>The monthly letter includes:</p><ul><li>postcard,</li><li>a handwritten letter,</li><li>a rotating monthly bonus goodie.</li></ul><p>Each month, I will share what I am thinking about and learning, a silly poem I have loved or written, or ways to live intentionally and enjoy life.</p><p>Come and dream with me.</p>",
+      "image": {
+        "src": "/whats-included/collage.png",
+        "alt": "Examples of Dream-Rock Collective mail drops"
+      }
+    },
+    {
+      "title": "About Dream-Rock Collective",
+      "body": "<p>I believe in the power of creativity and imagination, and in the collective power of everyday, average people. Merging the power of art with community reinvestment, Dream-Rock Collective focuses on actively creating the world we want to live in.</p><p>We are donating 50% of our profits to local mutual aids and nonprofits that can do the work in impacted and under-invested communities.</p><p>50% of profits towards:</p><ul><li>Food Distribution</li><li>Climate Justice</li><li>Supporting neighbors impacted by ICE</li></ul><p>As a subscriber, you can determine where your dollars go dividing up your 50% in equal parts, or whichever you would like to fund.</p><p>Financial transparency is a key value of Dream-Rock, and will be updated quarterly as the mail club grows.</p>"
+    },
+    {
+      "title": "About the Artist",
+      "body": "<p>Leeya Appleby was raised in Hawaii and has lived in San Diego, California, for her entire adult life. She has a BA in Philosophy, a BA in Psychology, and a Master’s in Peace Studies and Social Justice. She loves to read and write about nature and is always learning more about what it means to be alive in this particular time.</p><p>Leeya is an oil painter, print-maker, and collage artist. Her subjects focus on romanticizing the magic of everyday life and art activism focused on climate justice and human rights. Leeya often creates art around the experience of being gay and neurodivergent—capturing the joy and complexities that come with being alive.</p>",
+      "image": {
+        "src": "/leeya-appleby.jpeg",
+        "alt": "Artwork by Leeya Appleby"
+      }
+    },
+    {
+      "title": "Frequent Questions",
+      "body": "<p><strong>Is it cheaper to subscribe for a year?</strong></p><p>YES! You get one month for free AND one bonus Birthday letter!</p><p><strong>Can I give a subscription as a gift?</strong></p><p>YES! Just be sure to have their address</p><p><strong>Have questions, suggestions, or want to reach out?</strong></p><p>email leeyaappleby@gmail.com</p>"
+    }
+  ],
+  "footer": {
+    "text": "Thank you for your trust"
+  },
+  "planLabels": {
+    "free": "Free",
+    "monthly": "Monthly",
+    "once": "One Time",
+    "yearly": "Yearly"
+  }
+}

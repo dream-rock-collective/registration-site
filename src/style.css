@@ -1444,3 +1444,42 @@ footer p {
     padding-bottom: 24px;
   }
 }
+
+/* Every editable section uses the same layout, independent of its array position. */
+.editable-section {
+  margin-bottom: 38px;
+}
+
+.editable-section.with-image {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 30px;
+}
+
+.editable-section.with-image .copy {
+  flex: 1;
+}
+
+.editable-section .section-image {
+  width: auto;
+  max-width: 240px;
+  max-height: 240px;
+}
+
+.editable-section .section-image[src="/leeya-appleby.jpeg"] {
+  max-width: 110px;
+  max-height: 160px;
+}
+
+@media (max-width: 450px) {
+  .editable-section.with-image {
+    display: block;
+  }
+
+  .editable-section .section-image {
+    max-width: 220px;
+    max-height: 190px;
+    margin: 18px auto 0;
+  }
+}

@@ -1,10 +1,9 @@
 import "./style.css";
-import {
-  formatPlan,
-  formatPlanLabel,
-  getMember,
-  saveRegistration,
-} from "./member";
+import initialContent from "../content/initial-page.json";
+import { formatContentTemplate, validateInitialPageContent } from "./content";
+import { getMember, saveRegistration } from "./member";
+
+const content = validateInitialPageContent(initialContent);
 
 const isLocalSite =
   window.location.hostname === "localhost" ||
@@ -18,9 +17,6 @@ const submitButton =
   document.querySelector<HTMLButtonElement>("#signup-submit");
 const healthBanner = document.querySelector<HTMLElement>(".health-banner");
 const formMessage = document.querySelector<HTMLElement>("#form-message");
-const memberBanner = document.querySelector<HTMLElement>("#member-banner");
-const memberHeading = document.querySelector<HTMLElement>("#member-heading");
-const memberPlan = document.querySelector<HTMLElement>("#member-plan");
 const memberOverlay = document.querySelector<HTMLElement>("#member-overlay");
 const memberOverlayHeading = document.querySelector<HTMLElement>(
   "#member-overlay-heading",
@@ -28,19 +24,12 @@ const memberOverlayHeading = document.querySelector<HTMLElement>(
 const memberOverlayPlan = document.querySelector<HTMLElement>(
   "#member-overlay-plan",
 );
-const newRegistrationButton = document.querySelector<HTMLButtonElement>(
-  "#new-registration",
-);
+const newRegistrationButton =
+  document.querySelector<HTMLButtonElement>("#new-registration");
 
 let apiHealthy = false;
 
 const existingMember = getMember();
-if (existingMember && memberBanner && memberHeading && memberPlan) {
-  const firstName = existingMember.name.trim().split(/\s+/)[0];
-  memberHeading.textContent = `Thanks for being a member, ${firstName}`;
-  memberPlan.textContent = formatPlan(existingMember);
-  memberBanner.classList.remove("is-hidden");
-}
 if (
   existingMember &&
   memberOverlay &&
@@ -48,8 +37,14 @@ if (
   memberOverlayPlan
 ) {
   const firstName = existingMember.name.trim().split(/\s+/)[0];
-  memberOverlayHeading.textContent = `Thanks ${firstName}!`;
-  memberOverlayPlan.textContent = `You're a ${formatPlanLabel(existingMember)} member`;
+  memberOverlayHeading.textContent = formatContentTemplate(
+    content.member.overlayHeading,
+    { firstName: firstName ?? "" },
+  );
+  memberOverlayPlan.textContent = formatContentTemplate(
+    content.member.overlayPlan,
+    { plan: content.planLabels[existingMember.plan] },
+  );
   memberOverlay.removeAttribute("hidden");
 }
 
@@ -92,12 +87,12 @@ form?.addEventListener("submit", async (event) => {
   };
 
   if ([registration.name, registration.email].some((value) => !value)) {
-    setFormMessage("Please provide your name and email.");
+    setFormMessage(content.messages.required);
     return;
   }
 
   submitButton.disabled = true;
-  setFormMessage("Submitting your registration…");
+  setFormMessage(content.messages.submitting);
 
   try {
     const response = await fetch(`${API_BASE_URL}/register`, {
@@ -111,16 +106,14 @@ form?.addEventListener("submit", async (event) => {
       const fieldErrors = body.fields
         ? Object.values(body.fields).flat().join(" ")
         : "";
-      setFormMessage(
-        fieldErrors || body.error || "We could not save your registration.",
-      );
+      setFormMessage(fieldErrors || body.error || content.messages.saveFailed);
       submitButton.disabled = false;
       return;
     }
 
     const userId = body.userId ?? body.id ?? body.registration?.id;
     if (!userId) {
-      setFormMessage("Registration saved, but we could not start payment.");
+      setFormMessage(content.messages.paymentFailed);
       submitButton.disabled = false;
       return;
     }
@@ -129,9 +122,7 @@ form?.addEventListener("submit", async (event) => {
 
     window.location.href = `/registered/?userId=${encodeURIComponent(String(userId))}`;
   } catch {
-    setFormMessage(
-      "We could not reach the registration service. Please try again.",
-    );
+    setFormMessage(content.messages.networkFailed);
     submitButton.disabled = false;
   }
 });
