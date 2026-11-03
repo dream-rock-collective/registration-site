@@ -27,6 +27,8 @@ The API and Docker deployment live in the separate `drc-backend` repository. Thi
 - [Deployment](deployment.md) — local builds, production output, GitHub Pages deployment, and release checks.
 - [Agent workflow](agent-workflow.md) — how to find the right source of truth, make changes safely, choose chunked or one-shot work, maintain task state, and validate changes.
 
+- [Feature plans](plans/active/README.md) — proposed feature branches, linked PR boundaries, dependencies, and acceptance checks.
+
 ## Quick commands
 
 ```sh
