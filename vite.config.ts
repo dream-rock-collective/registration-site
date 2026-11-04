@@ -1,6 +1,23 @@
 import { defineConfig } from "vite";
+import content from "./content/initial-page.json" with { type: "json" };
+import { renderInitialPage } from "./src/render-initial-page.ts";
 
 export default defineConfig({
+  plugins: [
+    {
+      name: "initial-page-content",
+      transformIndexHtml(html, context) {
+        if (
+          !context.filename.endsWith("/index.html") ||
+          context.path !== "/index.html"
+        )
+          return html;
+        return html.replace("<!-- initial-page -->", () =>
+          renderInitialPage(content),
+        );
+      },
+    },
+  ],
   build: {
     rollupOptions: {
       input: {

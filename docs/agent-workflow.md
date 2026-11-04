@@ -12,7 +12,9 @@
 
 | Concern | Authoritative location |
 | --- | --- |
-| Route markup and copy | Route `index.html` |
+| Initial-page copy | `content/initial-page.json` |
+| Initial-page markup | `src/render-initial-page.ts` |
+| Other route markup and copy | Route `index.html` |
 | Route behavior and API requests | Matching `src/*.ts` module |
 | Shared browser state | `src/member.ts` |
 | Shared layout and responsive styling | `src/style.css` |

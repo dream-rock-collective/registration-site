@@ -31,7 +31,22 @@ bun run build
 
 Formatting rewrites HTML, CSS, and TypeScript files, so inspect the resulting diff afterward.
 
+Run `bun test tests/content.test.ts` for initial-page content validation and rendering checks. The Vite build validates `content/initial-page.json` and embeds its copy in the generated initial-page HTML. Invalid HTML, unsupported template variables, or invalid content shapes fail the build.
+
 ## GitHub Pages deployment
+
+The admin's embedded preview is built separately with `bun run build:preview`
+(`vite.preview.config.ts`, output `dist-preview/`) and is not included in the public Pages deployment.
+The backend supplies a build-specific base URL and output directory, then serves
+the generated assets. Install this checkout's locked dependencies before enabling
+backend preview builds. Preview only imports the shared content validator,
+renderer, and CSS; it does not run registration or member-storage initialization.
+
+Its parent-message protocol lives in `src/preview-messages.ts`; the opaque iframe
+accepts content only from the configured parent origin and matching frame token.
+The backend is responsible for HTML authentication, asset CORS, and restrictive
+CSP. Reload the editor to rebuild after changing site code/assets;
+content edits update by message without a build.
 
 `.github/workflows/deploy-registration-site.yml` runs on pushes to `main` and manual workflow dispatches. The workflow:
 
