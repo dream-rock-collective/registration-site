@@ -86,15 +86,15 @@ export const pageTemplates = {
           {{body}}
           <div class="plan-list">
             <button type="button" data-plan="once">
-              <span>One Time</span><strong>$12</strong
+              <span>{{once}}</span><strong>$12</strong
               ><b aria-hidden="true">→</b>
             </button>
             <button type="button" data-plan="monthly">
-              <span>Monthly</span><strong>$10/mo</strong
+              <span>{{monthly}}</span><strong>$10/mo</strong
               ><b aria-hidden="true">→</b>
             </button>
             <button type="button" data-plan="yearly">
-              <span>Yearly</span><strong>$110/yr</strong
+              <span>{{yearly}}</span><strong>$110/yr</strong
               ><b aria-hidden="true">→</b>
             </button>
           </div>

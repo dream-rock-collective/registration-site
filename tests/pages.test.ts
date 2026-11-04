@@ -72,3 +72,34 @@ test("rejects empty lists, duplicate keys, invalid keys, URLs and rich text", ()
     expect(() => validateInitialPageContent(copy)).toThrow();
   }
 });
+
+test("subscription labels are editable plain text while prices and plan IDs stay fixed", () => {
+  const copy = validateInitialPageContent(content);
+  copy.subscriptions.planLabels = {
+    once: "Single <letter>",
+    monthly: "Every month",
+    yearly: "A full year",
+  };
+  const html = renderPage(copy, "subscriptions");
+  expect(html).toContain(
+    "<span>Single &lt;letter&gt;</span><strong>$12</strong",
+  );
+  expect(html).toContain("<span>Every month</span><strong>$10/mo</strong");
+  expect(html).toContain("<span>A full year</span><strong>$110/yr</strong");
+  for (const plan of ["once", "monthly", "yearly"])
+    expect(html).toContain(`data-plan="${plan}"`);
+  const { planLabels, ...legacy } = copy.subscriptions;
+  expect(
+    validateInitialPageContent({ ...copy, subscriptions: legacy }).subscriptions
+      .planLabels,
+  ).toEqual(content.subscriptions.planLabels);
+  expect(() =>
+    validateInitialPageContent({
+      ...copy,
+      subscriptions: {
+        ...copy.subscriptions,
+        planLabels: { ...planLabels, monthly: 10 },
+      },
+    }),
+  ).toThrow();
+});

@@ -6,7 +6,12 @@ export type ContentSection = {
 };
 export type CharitySection = ContentSection & { key: string; url: string };
 export type AdditionalPages = {
-  subscriptions: { title: string; body: string; sections: ContentSection[] };
+  subscriptions: {
+    title: string;
+    body: string;
+    sections: ContentSection[];
+    planLabels: Record<"once" | "monthly" | "yearly", string>;
+  };
   donations: { title: string; body: string; sections: CharitySection[] };
   success: { title: string };
 };
@@ -177,7 +182,32 @@ export function validateInitialPageContent(value: unknown): InitialPageContent {
   strings(root["footer"], ["text"], "footer");
   validateSections(root["sections"]);
   for (const page of ["subscriptions", "donations"] as const) {
-    const fields = object(root[page], ["title", "body", "sections"], page);
+    const candidate = root[page];
+    const fields = object(
+      page === "subscriptions" &&
+        candidate &&
+        typeof candidate === "object" &&
+        !Array.isArray(candidate)
+        ? {
+            planLabels: structuredClone(pageDefaults.subscriptions.planLabels),
+            ...candidate,
+          }
+        : candidate,
+      [
+        "title",
+        "body",
+        "sections",
+        ...(page === "subscriptions" ? ["planLabels"] : []),
+      ],
+      page,
+    );
+    root[page] = fields;
+    if (page === "subscriptions")
+      strings(
+        fields["planLabels"],
+        ["once", "monthly", "yearly"],
+        "subscriptions.planLabels",
+      );
     strings(
       { title: fields["title"], body: fields["body"] },
       ["title", "body"],

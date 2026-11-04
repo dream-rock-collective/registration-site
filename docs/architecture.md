@@ -38,7 +38,7 @@ renderers power the isolated admin preview. Generated HTML is not committed.
 The original main-page root fields stay unchanged. Additional root objects are:
 
 ```text
-subscriptions: { title, body, sections: [{ title, body, image? }] }
+subscriptions: { title, body, planLabels: { once, monthly, yearly }, sections: [{ title, body, image? }] }
 donations: { title, body, sections: [{ key, title, url, body, image? }] }
 success: { title }
 image: { src, alt }
@@ -57,7 +57,10 @@ keys require fresh allocation rather than transferring amounts. Historical backe
 records keep their original keys. Confirm the deployed backend accepts new keys
 before publishing added/renamed charities.
 
-Prices, plan identities, payment settings, button/status labels, decorations,
+Subscription option names are editable plain text in `subscriptions.planLabels`;
+missing labels receive the original One Time/Monthly/Yearly defaults.
+
+Prices, plan identities, payment settings, other button/status labels, decorations,
 metadata, and form/API contracts remain code-owned. Add/remove/reorder is supported
 for subscription and donation sections; Success only exposes its heading.
 

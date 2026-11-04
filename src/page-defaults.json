@@ -7,7 +7,12 @@
         "title": "What’s Included",
         "body": "<p>All Tiers include a monthly letter which includes:</p>\n        <ul>\n          <li>postcard</li>\n          <li>a handwritten letter</li>\n          <li>a rotating monthly bonus goody</li>\n        </ul>\n        <p>\n          Each month, I will share what I am thinking about and learning, a\n          silly poem I have loved or written, or ways to live intentionally and\n          enjoy life.\n        </p>\n        <p><strong>One Time Payment – $12</strong></p>\n        <p><strong>Monthly Subscription – $10</strong></p>\n        <p>Bonus birthday letter</p>\n        <p><strong>Yearly Subscription – $110</strong></p>\n        <p>One month free + Bonus Birthday</p>\n        <p>\n          As a subscriber, you can determine where your dollars go by dividing\n          your 50% into equal parts or allocating it to whichever you would like\n          to fund.\n        </p>\n        <p>\n          Financial transparency is a key value of Dream-Rock and will be\n          updated quarterly as the mail club grows.\n        </p>"
       }
-    ]
+    ],
+    "planLabels": {
+      "once": "One Time",
+      "monthly": "Monthly",
+      "yearly": "Yearly"
+    }
   },
   "donations": {
     "title": "You’re Subscribed!",

@@ -23,6 +23,10 @@ export function renderPage(
   };
   if (page === "subscriptions") {
     replacements["body"] = content.subscriptions.body;
+    for (const [plan, label] of Object.entries(
+      content.subscriptions.planLabels,
+    ))
+      replacements[plan] = escapeHtml(label);
     replacements["sections"] = content.subscriptions.sections
       .map((section) => sectionHtml(section, escapeHtml(section.title)))
       .join("\n");
@@ -40,7 +44,7 @@ export function renderPage(
       .join("\n");
   }
   return pageTemplates[page].replace(
-    /\{\{(title|body|sections|columns)\}\}/g,
+    /\{\{(title|body|sections|columns|once|monthly|yearly)\}\}/g,
     (_, key: string) => replacements[key] ?? "",
   );
 }

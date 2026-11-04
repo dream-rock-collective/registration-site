@@ -161,3 +161,43 @@ test("visitors without payment cannot allocate or submit", async ({ page }) => {
     page.getByRole("button", { name: "Submit", exact: true }),
   ).toBeDisabled();
 });
+
+test("edited subscription labels keep the same checkout payload and prices", async ({
+  page,
+}) => {
+  const copy = structuredClone(content);
+  copy.subscriptions.planLabels = {
+    once: "Single letter",
+    monthly: "Every month",
+    yearly: "A full year",
+  };
+  await page.route("**/registered/**", (route) =>
+    route.fulfill({
+      contentType: "text/html",
+      body: `<!doctype html><html><head><meta name="viewport" content="width=device-width,initial-scale=1"></head><body>${renderPage(copy, "subscriptions")}<script type="module" src="/src/registered.ts"></script></body></html>`,
+    }),
+  );
+  await page.route("**/create-checkout-session", (route) =>
+    route.fulfill({ json: { url: "http://127.0.0.1:5181/checkout-fixture" } }),
+  );
+  await page.route("**/checkout-fixture", (route) =>
+    route.fulfill({
+      contentType: "text/html",
+      body: "<p>Checkout fixture</p>",
+    }),
+  );
+  await page.goto("/registered/?userId=test-user");
+  await expect(page.locator('[data-plan="once"]')).toContainText(
+    "Single letter$12",
+  );
+  await expect(page.locator('[data-plan="yearly"]')).toContainText(
+    "A full year$110/yr",
+  );
+  const request = page.waitForRequest("**/create-checkout-session");
+  await page.locator('[data-plan="monthly"]').click();
+  expect((await request).postDataJSON()).toEqual({
+    userId: "test-user",
+    plan: "monthly",
+  });
+  await expect(page).toHaveURL("http://127.0.0.1:5181/checkout-fixture");
+});
