@@ -1,9 +1,16 @@
+import pageDefaults from "./page-defaults.json" with { type: "json" };
 export type ContentSection = {
   title: string;
   body: string;
   image?: { src: string; alt: string };
 };
-export type InitialPageContent = {
+export type CharitySection = ContentSection & { key: string; url: string };
+export type AdditionalPages = {
+  subscriptions: { title: string; body: string; sections: ContentSection[] };
+  donations: { title: string; body: string; sections: CharitySection[] };
+  success: { title: string };
+};
+export type InitialPageContent = AdditionalPages & {
   join: {
     title: string;
     subtitle: string;
@@ -123,8 +130,9 @@ function strings(value: unknown, keys: string[], path: string): void {
 }
 export function validateInitialPageContent(value: unknown): InitialPageContent {
   const root = object(
-    value,
-    ["join", "member", "messages", "sections", "footer"],
+    value && typeof value === "object" && !Array.isArray(value)
+      ? { ...structuredClone(pageDefaults), ...value } : value,
+    ["join", "member", "messages", "sections", "footer", "subscriptions", "donations", "success"],
     "content",
   );
   const joinKeys = [
@@ -157,32 +165,15 @@ export function validateInitialPageContent(value: unknown): InitialPageContent {
     "messages",
   );
   strings(root["footer"], ["text"], "footer");
-  if (!Array.isArray(root["sections"]) || root["sections"].length > 100)
-    throw new Error("sections must be an array (maximum 100)");
-  for (const section of root["sections"]) {
-    const keys =
-      section && typeof section === "object" && "image" in section
-        ? ["title", "body", "image"]
-        : ["title", "body"];
-    const item = object(section, keys, "section");
-    if (
-      typeof item["title"] !== "string" ||
-      item["title"].length > 500 ||
-      typeof item["body"] !== "string" ||
-      item["body"].length > 50000
-    )
-      throw new Error("Invalid section title or body");
-    validateRichText(item["body"]);
-    if (item["image"] !== undefined) {
-      strings(item["image"], ["src", "alt"], "image");
-      const image = item["image"] as { src: string; alt: string };
-      if (!validateImagePath(image.src))
-        throw new Error(
-          "Image must reference an existing root-relative site asset",
-        );
-    }
+  validateSections(root["sections"]);
+  for (const page of ["subscriptions", "donations"] as const) {
+    const fields = object(root[page], ["title", "body", "sections"], page);
+    strings({ title: fields["title"], body: fields["body"] }, ["title", "body"], page);
+    validateRichText(fields["body"] as string);
+    validateSections(fields["sections"], page === "donations");
   }
-  const content = value as InitialPageContent;
+  strings(root["success"], ["title"], "success");
+  const content = root as InitialPageContent;
   validateRichText(content.member.helpBody);
   for (const [key, allowed] of [
     ["overlayHeading", ["firstName"]],
@@ -207,4 +198,46 @@ export function formatContentTemplate(
     /\{([^{}]+)\}/g,
     (_, name: string) => values[name] ?? "",
   );
+}
+
+function validateSections(sections: unknown, charities = false): void {
+  if (!Array.isArray(sections) || sections.length > 100)
+    throw new Error("sections must be an array (maximum 100)");
+  if (charities && sections.length === 0) throw new Error("At least one charity is required");
+  const keysSeen = new Set<string>();
+  for (const section of sections) {
+    const keys =
+      section && typeof section === "object" && "image" in section
+        ? ["title", "body", "image"]
+        : ["title", "body"];
+    if (charities) keys.push("key", "url");
+    const item = object(section, keys, "section");
+    if (charities) {
+      const key = item["key"];
+      if (typeof key !== "string" || !/^[A-Za-z0-9_-]+$/.test(key) || key.length > 100 || keysSeen.has(key))
+        throw new Error("Charity keys must be unique and contain only letters, digits, underscores or hyphens");
+      keysSeen.add(key);
+      const url = item["url"];
+      if (typeof url !== "string" || !/^https?:\/\//i.test(url) || /[\s<>"\\]/.test(url))
+        throw new Error("Charity URL must be an HTTP or HTTPS URL");
+      const destination = new URL(url);
+      if (!destination.hostname || destination.username || destination.password) throw new Error("Invalid charity URL");
+    }
+    if (
+      typeof item["title"] !== "string" ||
+      item["title"].length > 500 ||
+      typeof item["body"] !== "string" ||
+      item["body"].length > 50000
+    )
+      throw new Error("Invalid section title or body");
+    validateRichText(item["body"]);
+    if (item["image"] !== undefined) {
+      strings(item["image"], ["src", "alt"], "image");
+      const image = item["image"] as { src: string; alt: string };
+      if (!validateImagePath(image.src))
+        throw new Error(
+          "Image must reference an existing root-relative site asset",
+        );
+    }
+  }
 }

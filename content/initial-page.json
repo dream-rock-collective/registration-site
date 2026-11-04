@@ -66,5 +66,42 @@
   ],
   "footer": {
     "text": "Thank you for your trust 🫶"
+  },
+  "subscriptions": {
+    "title": "Subscriptions",
+    "body": "<p>\n            Payments are managed through Stripe.<br>Canceling recurring\n            payments will happen on Stripe.\n          </p>",
+    "sections": [
+      {
+        "title": "What’s Included",
+        "body": "<p>All Tiers include a monthly letter which includes:</p>\n        <ul>\n          <li>postcard</li>\n          <li>a handwritten letter</li>\n          <li>a rotating monthly bonus goody</li>\n        </ul>\n        <p>\n          Each month, I will share what I am thinking about and learning, a\n          silly poem I have loved or written, or ways to live intentionally and\n          enjoy life.\n        </p>\n        <p><strong>One Time Payment – $12</strong></p>\n        <p><strong>Monthly Subscription – $10</strong></p>\n        <p>Bonus birthday letter</p>\n        <p><strong>Yearly Subscription – $110</strong></p>\n        <p>One month free + Bonus Birthday</p>\n        <p>\n          As a subscriber, you can determine where your dollars go by dividing\n          your 50% into equal parts or allocating it to whichever you would like\n          to fund.\n        </p>\n        <p>\n          Financial transparency is a key value of Dream-Rock and will be\n          updated quarterly as the mail club grows.\n        </p>"
+      }
+    ]
+  },
+  "donations": {
+    "title": "You’re Subscribed!",
+    "body": "<p>As a subscriber, you can determine exactly what your dollars fund</p>",
+    "sections": [
+      {
+        "key": "weAllWeGotSd",
+        "title": "We All We Got SD",
+        "url": "https://www.weallwegotsd.com/home",
+        "body": "<p>Food and resource distribution throughout San Diego county</p>\n        <p>Mutual aid is about solidarity, not charity</p>\n        <ul>\n          <li>Food distribution serving 300 families per month</li>\n          <li>Migrant Aid providing 5-100 meals per day</li>\n          <li>Resource center for community needs throughout San Diego</li>\n        </ul>"
+      },
+      {
+        "key": "indigenousClimateAction",
+        "title": "Indigenous Climate Action",
+        "url": "https://www.indigenousclimateaction.com/",
+        "body": "<p>\n          Indigenous-led organization guided by knowledge keepers, water &amp;\n          land defenders from communities and regions across the country.\n        </p>\n        <p>\n          a) Strategic disruption of harmful colonial practices, policies, and\n          processes and amplify Indigenous modalities of creative expression\n          and storytelling;\n        </p>\n        <p>\n          b) Nurturing community members through understandings of healing\n          justice, community engagement, and strategic climate education and\n          training;\n        </p>\n        <p>\n          c) Exploring new climate solutions with community members at the\n          grassroots, grasstops, and in elected leadership that center\n          Indigenous values to imagine and create a just future.\n        </p>"
+      },
+      {
+        "key": "otayMesaDetentionResistance",
+        "title": "Otay Mesa Detention Resistance",
+        "url": "https://otaymesadetentionresistance.org/",
+        "body": "<p>\n          Organizing against the inhumane detentions and human rights abuses\n          at Otay Mesa Detention Center.\n        </p>\n        <p>The three areas of focus:</p>\n        <ul>\n          <li>\n            Supporting people in detention centers by funding phone calls,\n            contacting family outside, transporting them, and organizing their\n            post-release support\n          </li>\n          <li>Supporting people once released</li>\n          <li>\n            Advocacy, researching federal, state, and local policies, and\n            trainings.\n          </li>\n        </ul>"
+      }
+    ]
+  },
+  "success": {
+    "title": "You’re all set, check your email."
   }
 }

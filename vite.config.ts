@@ -1,20 +1,16 @@
 import { defineConfig } from "vite";
 import content from "./content/initial-page.json" with { type: "json" };
-import { renderInitialPage } from "./src/render-initial-page.ts";
+import { renderPage } from "./src/render-page.ts";
 
 export default defineConfig({
   plugins: [
     {
       name: "initial-page-content",
       transformIndexHtml(html, context) {
-        if (
-          !context.filename.endsWith("/index.html") ||
-          context.path !== "/index.html"
-        )
-          return html;
-        return html.replace("<!-- initial-page -->", () =>
-          renderInitialPage(content),
-        );
+        const page = context.filename.endsWith("/registered/index.html") ? "subscriptions"
+          : context.filename.endsWith("/allocate-payment/index.html") ? "donations"
+          : context.filename.endsWith("/success/index.html") ? "success" : "main";
+        return html.replace(page === "main" ? "<!-- initial-page -->" : "<!-- editable-page -->", () => renderPage(content, page));
       },
     },
   ],

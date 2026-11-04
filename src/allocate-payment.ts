@@ -1,3 +1,5 @@
+import content from "../content/initial-page.json";
+import { validateInitialPageContent } from "./content";
 import "./style.css";
 import {
   completePendingPlan,
@@ -21,12 +23,8 @@ const PLAN_BUDGETS: Record<Exclude<MemberPlan, "free">, number> = {
   yearly: 5,
 };
 
-const ORGANIZATIONS = [
-  "weAllWeGotSd",
-  "indigenousClimateAction",
-  "otayMesaDetentionResistance",
-] as const;
-type Organization = (typeof ORGANIZATIONS)[number];
+const ORGANIZATIONS = validateInitialPageContent(content).donations.sections.map(section => section.key);
+type Organization = string;
 const ALLOCATION_DRAG_TYPE = "application/x-drc-allocation";
 
 type AllocationDragData = {
@@ -51,6 +49,7 @@ const savedTotal = ORGANIZATIONS.reduce(
 let hasSavedAllocation = false;
 if (
   savedAllocation &&
+  Object.keys(savedAllocation).every(key => ORGANIZATIONS.includes(key)) &&
   savedTotal <= budget &&
   ORGANIZATIONS.every((organization) => {
     const value = savedAllocation[organization];
@@ -130,7 +129,7 @@ function moveDollar(
   if (
     dragData.source &&
     dragData.source !== organization &&
-    allocation[dragData.source] > 0
+    (allocation[dragData.source] ?? 0) > 0
   ) {
     const dollarIndex =
       dragData.dollarIndex !== undefined &&
@@ -141,8 +140,8 @@ function moveDollar(
           );
     if (dollarIndex >= 0) {
       dollarAssignments[dollarIndex] = organization;
-      allocation[dragData.source] -= 1;
-      allocation[organization] += 1;
+      allocation[dragData.source] = (allocation[dragData.source] ?? 0) - 1;
+      allocation[organization] = (allocation[organization] ?? 0) + 1;
       return true;
     }
   }
@@ -154,7 +153,7 @@ function moveDollar(
     allocated < budget
   ) {
     dollarAssignments[dragData.dollarIndex] = organization;
-    allocation[organization] += 1;
+    allocation[organization] = (allocation[organization] ?? 0) + 1;
     return true;
   }
 
@@ -180,7 +179,7 @@ function render() {
     .querySelectorAll<HTMLElement>(".allocation-column")
     .forEach((column) => {
       const organization = column.dataset["organization"] as Organization;
-      const amount = allocation[organization];
+      const amount = allocation[organization] ?? 0;
       const emptySlots = column.querySelector<HTMLElement>(".allocation-slots");
       const allocatedSlots = column.querySelector<HTMLElement>(
         ".allocation-filled-slots",
@@ -381,7 +380,7 @@ document
       );
       if (organization && dollarIndex >= 0 && allocated < budget) {
         dollarAssignments[dollarIndex] = organization;
-        allocation[organization] += 1;
+        allocation[organization] = (allocation[organization] ?? 0) + 1;
       }
       render();
     });
@@ -407,7 +406,7 @@ distributeButton?.addEventListener("click", () => {
     const organization =
       ORGANIZATIONS[Math.floor(Math.random() * ORGANIZATIONS.length)]!;
     dollarAssignments[dollarIndex] = organization;
-    allocation[organization] += 1;
+    allocation[organization] = (allocation[organization] ?? 0) + 1;
   }
   render();
 });

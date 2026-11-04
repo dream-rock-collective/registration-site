@@ -43,6 +43,7 @@ describe("isolated preview messaging", () => {
     const event = { source: parent, origin: settings.parentOrigin, data };
     expect(previewMessage(event, parent, settings)).toEqual({
       content: data.content,
+      page: "main",
     });
     expect(
       previewMessage({ ...event, source: {} }, parent, settings),
