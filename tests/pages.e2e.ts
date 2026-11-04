@@ -23,7 +23,7 @@ async function customCharities(page: Page) {
       url: "https://example.com",
       body: "<p>New local work</p>",
     },
-    ...copy.donations.sections.slice(0, 2).reverse(),
+    ...copy.donations.sections.reverse(),
   ];
   await page.route("**/content/initial-page.json*", (route) =>
     route.fulfill({
@@ -72,7 +72,7 @@ test("charity order matches in both areas and submits the legacy dollar payload"
     route.fulfill({ json: { success: true } }),
   );
   await page.goto("/allocate-payment/");
-  await expect(page.locator(".allocation-column")).toHaveCount(3);
+  await expect(page.locator(".allocation-column")).toHaveCount(4);
   expect(
     await page
       .locator(".allocation-column")
@@ -82,6 +82,7 @@ test("charity order matches in both areas and submits the legacy dollar payload"
   ).toEqual(orderedKeys);
   await expect(page.locator(".allocate-payment-copy h2")).toHaveText([
     "New Charity",
+    "Otay Mesa Detention Resistance",
     "Indigenous Climate Action",
     "We All We Got SD",
   ]);
@@ -93,6 +94,7 @@ test("charity order matches in both areas and submits the legacy dollar payload"
     userId: "test-user",
     allocation: {
       "new-charity": 5,
+      otayMesaDetentionResistance: 0,
       indigenousClimateAction: 0,
       weAllWeGotSd: 0,
     },
@@ -103,7 +105,12 @@ test("charity order matches in both areas and submits the legacy dollar payload"
       () =>
         JSON.parse(localStorage.getItem("dream-rock-member")!)[0].allocation,
     ),
-  ).toEqual({ "new-charity": 5, indigenousClimateAction: 0, weAllWeGotSd: 0 });
+  ).toEqual({
+    "new-charity": 5,
+    otayMesaDetentionResistance: 0,
+    indigenousClimateAction: 0,
+    weAllWeGotSd: 0,
+  });
 });
 
 test("removed or renamed saved charity keys require fresh allocation", async ({
@@ -125,6 +132,7 @@ test("unchanged saved keys restore even when their order changes", async ({
 }) => {
   await member(page, {
     "new-charity": 0,
+    otayMesaDetentionResistance: 0,
     indigenousClimateAction: 2,
     weAllWeGotSd: 3,
   });
