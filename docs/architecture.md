@@ -4,9 +4,12 @@
 
 ```text
 index.html                         landing-page HTML template
-content/initial-page.json          editable initial-page copy
+content/initial-page.json          editable copy for all four pages
 src/content.ts                     content types and runtime validation
-src/render-initial-page.ts         shared static/preview HTML renderer
+src/render-initial-page.ts         main-page HTML renderer
+src/render-page.ts                 shared page renderer for production/preview
+src/page-templates.ts              fixed shells for additional pages
+src/page-defaults.json             backwards-compatible page defaults
 registered/index.html              subscription-selection entrypoint
 success/index.html                 success entrypoint
 allocate-payment/index.html        allocation entrypoint
@@ -27,7 +30,36 @@ Vite treats each HTML file listed in `vite.config.ts` as a separate Rollup input
 
 Adding a directory and an HTML file is not sufficient for a production build: the new HTML entry must also be added to `build.rollupOptions.input`. See [Adding a New Page](adding-pages.md) for the complete process.
 
-The initial page uses the `<!-- initial-page -->` marker. The Vite HTML plugin replaces it with validated JSON content in development and production; generated HTML is not committed. Editable initial-page copy belongs in `content/initial-page.json`. Site title/social metadata, logo labels/alt text, and membership plan labels remain fixed in code. Section order is array order, and every section uses the same title, restricted HTML body, and optional image shape. Form field names, validation, and API contracts remain code-owned.
+The main page uses `<!-- initial-page -->`; the remaining pages use
+`<!-- editable-page -->`. Vite replaces these markers with validated content
+from `content/initial-page.json` in development and production. The same pure
+renderers power the isolated admin preview. Generated HTML is not committed.
+
+The original main-page root fields stay unchanged. Additional root objects are:
+
+```text
+subscriptions: { title, body, sections: [{ title, body, image? }] }
+donations: { title, body, sections: [{ key, title, url, body, image? }] }
+success: { title }
+image: { src, alt }
+```
+
+`body` is restricted HTML; `image` references an existing public asset. Missing
+page objects receive defaults matching the original copy. Array order is display
+order. One donations array drives both allocation controls and charity descriptions.
+Charity keys must be unique, nonempty letters/digits/underscores/hyphens (maximum
+100 characters), and at least one charity is required. URLs must use HTTP(S).
+
+The allocation script uses those editable keys in the existing
+`{ userId, allocation }` dollar request to `/submit-allocation`; no percentage
+format or endpoint change is included. Stored allocations with removed/renamed
+keys require fresh allocation rather than transferring amounts. Historical backend
+records keep their original keys. Confirm the deployed backend accepts new keys
+before publishing added/renamed charities.
+
+Prices, plan identities, payment settings, button/status labels, decorations,
+metadata, and form/API contracts remain code-owned. Add/remove/reorder is supported
+for subscription and donation sections; Success only exposes its heading.
 
 ## Runtime module responsibilities
 
@@ -52,3 +84,12 @@ Use meaningful alt text for informative images and empty alt text for decorative
 ## API URL selection
 
 The page modules use `VITE_API_BASE_URL` when provided. Without it, localhost and `127.0.0.1` use `http://localhost:6942`; other hosts use `https://api.dreamrock.co`. This value is bundled into the frontend at build time.
+
+## Browser tests
+
+Run `bun run test:e2e` (install Chromium once with
+`bunx playwright install chromium`). Playwright starts Vite on port 5181 and
+runs desktop/mobile tests covering rendered pages, charity ordering, new keys in
+legacy dollar submissions, saved allocations, and unavailable payment controls.
+API responses and member state are fixtures; these tests do not contact Stripe
+or the production backend. `bun test` remains the unit-test command.
