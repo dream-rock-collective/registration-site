@@ -131,8 +131,18 @@ function strings(value: unknown, keys: string[], path: string): void {
 export function validateInitialPageContent(value: unknown): InitialPageContent {
   const root = object(
     value && typeof value === "object" && !Array.isArray(value)
-      ? { ...structuredClone(pageDefaults), ...value } : value,
-    ["join", "member", "messages", "sections", "footer", "subscriptions", "donations", "success"],
+      ? { ...structuredClone(pageDefaults), ...value }
+      : value,
+    [
+      "join",
+      "member",
+      "messages",
+      "sections",
+      "footer",
+      "subscriptions",
+      "donations",
+      "success",
+    ],
     "content",
   );
   const joinKeys = [
@@ -168,7 +178,11 @@ export function validateInitialPageContent(value: unknown): InitialPageContent {
   validateSections(root["sections"]);
   for (const page of ["subscriptions", "donations"] as const) {
     const fields = object(root[page], ["title", "body", "sections"], page);
-    strings({ title: fields["title"], body: fields["body"] }, ["title", "body"], page);
+    strings(
+      { title: fields["title"], body: fields["body"] },
+      ["title", "body"],
+      page,
+    );
     validateRichText(fields["body"] as string);
     validateSections(fields["sections"], page === "donations");
   }
@@ -203,7 +217,8 @@ export function formatContentTemplate(
 function validateSections(sections: unknown, charities = false): void {
   if (!Array.isArray(sections) || sections.length > 100)
     throw new Error("sections must be an array (maximum 100)");
-  if (charities && sections.length === 0) throw new Error("At least one charity is required");
+  if (charities && sections.length === 0)
+    throw new Error("At least one charity is required");
   const keysSeen = new Set<string>();
   for (const section of sections) {
     const keys =
@@ -214,14 +229,26 @@ function validateSections(sections: unknown, charities = false): void {
     const item = object(section, keys, "section");
     if (charities) {
       const key = item["key"];
-      if (typeof key !== "string" || !/^[A-Za-z0-9_-]+$/.test(key) || key.length > 100 || keysSeen.has(key))
-        throw new Error("Charity keys must be unique and contain only letters, digits, underscores or hyphens");
+      if (
+        typeof key !== "string" ||
+        !/^[A-Za-z0-9_-]+$/.test(key) ||
+        key.length > 100 ||
+        keysSeen.has(key)
+      )
+        throw new Error(
+          "Charity keys must be unique and contain only letters, digits, underscores or hyphens",
+        );
       keysSeen.add(key);
       const url = item["url"];
-      if (typeof url !== "string" || !/^https?:\/\//i.test(url) || /[\s<>"\\]/.test(url))
+      if (
+        typeof url !== "string" ||
+        !/^https?:\/\//i.test(url) ||
+        /[\s<>"\\]/.test(url)
+      )
         throw new Error("Charity URL must be an HTTP or HTTPS URL");
       const destination = new URL(url);
-      if (!destination.hostname || destination.username || destination.password) throw new Error("Invalid charity URL");
+      if (!destination.hostname || destination.username || destination.password)
+        throw new Error("Invalid charity URL");
     }
     if (
       typeof item["title"] !== "string" ||

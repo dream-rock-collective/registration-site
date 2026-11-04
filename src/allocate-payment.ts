@@ -23,7 +23,9 @@ const PLAN_BUDGETS: Record<Exclude<MemberPlan, "free">, number> = {
   yearly: 5,
 };
 
-const ORGANIZATIONS = validateInitialPageContent(content).donations.sections.map(section => section.key);
+const ORGANIZATIONS = validateInitialPageContent(
+  content,
+).donations.sections.map((section) => section.key);
 type Organization = string;
 const ALLOCATION_DRAG_TYPE = "application/x-drc-allocation";
 
@@ -49,7 +51,7 @@ const savedTotal = ORGANIZATIONS.reduce(
 let hasSavedAllocation = false;
 if (
   savedAllocation &&
-  Object.keys(savedAllocation).every(key => ORGANIZATIONS.includes(key)) &&
+  Object.keys(savedAllocation).every((key) => ORGANIZATIONS.includes(key)) &&
   savedTotal <= budget &&
   ORGANIZATIONS.every((organization) => {
     const value = savedAllocation[organization];
@@ -258,9 +260,10 @@ function startTouchDrag(
 function updateTouchDrag(event: PointerEvent) {
   if (!touchDrag || event.pointerId !== touchDrag.pointerId) return;
   event.preventDefault();
-  const target = document
-    .elementFromPoint(event.clientX, event.clientY)
-    ?.closest<HTMLElement>(".allocation-column") ?? null;
+  const target =
+    document
+      .elementFromPoint(event.clientX, event.clientY)
+      ?.closest<HTMLElement>(".allocation-column") ?? null;
   if (touchDrag.column === target) return;
   touchDrag.column?.classList.remove("is-drag-over");
   touchDrag.column = target;

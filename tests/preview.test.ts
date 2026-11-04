@@ -90,3 +90,40 @@ describe("isolated preview messaging", () => {
     expect(entry).toContain("field.disabled = true");
   });
 });
+
+test("page selectors are validated and missing selectors default to main", () => {
+  const settings = {
+    parentOrigin: "https://admin.example.test",
+    token: "a".repeat(64),
+  };
+  const parent = {};
+  const data = {
+    type: "drc-preview-content",
+    token: settings.token,
+    content: {},
+  };
+  for (const page of ["main", "subscriptions", "donations", "success"]) {
+    expect(
+      previewMessage(
+        {
+          source: parent,
+          origin: settings.parentOrigin,
+          data: { ...data, page },
+        },
+        parent,
+        settings,
+      )?.page,
+    ).toBe(page);
+  }
+  expect(
+    previewMessage(
+      {
+        source: parent,
+        origin: settings.parentOrigin,
+        data: { ...data, page: "unknown" },
+      },
+      parent,
+      settings,
+    ),
+  ).toBeUndefined();
+});

@@ -9,9 +9,11 @@
     "build:preview": "vite build --config vite.preview.config.ts",
     "format": "prettier --write \"**/*.{html,css,ts}\"",
     "lint": "stylelint \"src/**/*.css\"",
-    "preview": "vite preview"
+    "preview": "vite preview",
+    "test:e2e": "playwright test"
   },
   "devDependencies": {
+    "@playwright/test": "^1.64.1",
     "prettier": "^3.9.6",
     "stylelint": "^17.14.1",
     "typescript": "~6.0.2",

@@ -36,8 +36,14 @@ try {
         HTMLInputElement | HTMLButtonElement
       >("input,button"))
         field.disabled = true;
-      document.documentElement.className = message.page === "subscriptions" || message.page === "donations" ? "subscription-document" : "";
-      document.body.className = message.page === "subscriptions" || message.page === "donations" ? "subscription-page-body" : "";
+      document.documentElement.className =
+        message.page === "subscriptions" || message.page === "donations"
+          ? "subscription-document"
+          : "";
+      document.body.className =
+        message.page === "subscriptions" || message.page === "donations"
+          ? "subscription-page-body"
+          : "";
       document.body.replaceChildren(template.content);
       window.parent.postMessage(
         { type: "drc-preview-rendered", token: settings.token },
