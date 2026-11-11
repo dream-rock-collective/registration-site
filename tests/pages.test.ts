@@ -1,3 +1,4 @@
+import config from "../vite.config";
 import { expect, test } from "bun:test";
 import content from "../content/initial-page.json";
 import { validateInitialPageContent } from "../src/content";
@@ -162,4 +163,27 @@ test("divider records reject copy, images, charity keys and unknown types", () =
       validateInitialPageContent({ ...copy, sections: [section] }),
     ).toThrow();
   }
+});
+
+test("shared HTML clouds retain their positions on decorated pages", () => {
+  const plugin = config.plugins?.[0] as {
+    transformIndexHtml: (html: string, context: { filename: string }) => string;
+  };
+  for (const route of ["", "registered/", "allocate-payment/"]) {
+    const html = plugin.transformIndexHtml(
+      route ? "<!-- editable-page -->" : "<!-- initial-page -->",
+      { filename: `/site/${route}index.html` },
+    );
+    expect(html.match(/class="cloud cloud-/g)).toHaveLength(33);
+    expect(html.indexOf('class="cloud cloud-a"')).toBeLessThan(
+      html.indexOf('class="card-section'),
+    );
+    expect(html.indexOf('class="cloud cloud-form-left"')).toBeGreaterThan(
+      html.indexOf('class="card-section'),
+    );
+    expect(html.indexOf('class="cloud cloud-form"')).toBeLessThan(
+      html.indexOf('class="card-block'),
+    );
+  }
+  expect(renderPage(content, "success")).not.toContain('class="cloud ');
 });

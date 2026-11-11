@@ -9,6 +9,8 @@ src/content.ts                     content types and runtime validation
 src/render-initial-page.ts         main-page HTML renderer
 src/render-page.ts                 shared page renderer for production/preview
 src/page-templates.ts              fixed shells for additional pages
+src/clouds.html                     shared decorative page clouds
+src/form-clouds.html                shared decorative form clouds
 src/page-defaults.json             backwards-compatible page defaults
 registered/index.html              subscription-selection entrypoint
 success/index.html                 success entrypoint
@@ -33,7 +35,11 @@ Adding a directory and an HTML file is not sufficient for a production build: th
 The main page uses `<!-- initial-page -->`; the remaining pages use
 `<!-- editable-page -->`. Vite replaces these markers with validated content
 from `content/initial-page.json` in development and production. The same pure
-renderers power the isolated admin preview. Generated HTML is not committed.
+renderers power the isolated admin preview. Cloud markup lives in the shared
+HTML partials `src/clouds.html` and `src/form-clouds.html`. Vite and the admin
+preview insert them at the renderers’ `<!-- page-clouds -->` and
+`<!-- form-clouds -->` markers to keep decorations identical.
+Generated HTML is not committed.
 
 The original main-page root fields stay unchanged. Additional root objects are:
 

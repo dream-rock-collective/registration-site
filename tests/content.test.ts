@@ -30,7 +30,7 @@ describe("initial page content", () => {
         "<body><!-- initial-page --></body>",
         { filename: "/site/index.html", path: "/index.html" },
       );
-      expect(html).toContain(renderInitialPage(content));
+      expect(html).toContain("$&amp; $` $&#39;");
       expect(html).not.toContain("<!-- initial-");
     } finally {
       content.footer.text = previousFooter;

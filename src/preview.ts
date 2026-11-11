@@ -1,3 +1,5 @@
+import clouds from "./clouds.html?raw";
+import formClouds from "./form-clouds.html?raw";
 import "./style.css";
 import { validateInitialPageContent } from "./content.ts";
 import { renderPage } from "./render-page.ts";
@@ -24,7 +26,9 @@ try {
     try {
       const content = validateInitialPageContent(message.content);
       const template = document.createElement("template");
-      template.innerHTML = renderPage(content, message.page);
+      template.innerHTML = renderPage(content, message.page)
+        .replace("<!-- page-clouds -->", () => clouds)
+        .replace("<!-- form-clouds -->", () => formClouds);
       for (const image of template.content.querySelectorAll<HTMLImageElement>(
         "img[src]",
       )) {

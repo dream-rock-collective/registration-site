@@ -1,6 +1,16 @@
+import { readFileSync } from "node:fs";
 import { defineConfig } from "vite";
 import content from "./content/initial-page.json" with { type: "json" };
 import { renderPage } from "./src/render-page.ts";
+
+const clouds = readFileSync(
+  new URL("./src/clouds.html", import.meta.url),
+  "utf8",
+);
+const formClouds = readFileSync(
+  new URL("./src/form-clouds.html", import.meta.url),
+  "utf8",
+);
 
 export default defineConfig({
   plugins: [
@@ -16,7 +26,10 @@ export default defineConfig({
               : "main";
         return html.replace(
           page === "main" ? "<!-- initial-page -->" : "<!-- editable-page -->",
-          () => renderPage(content, page),
+          () =>
+            renderPage(content, page)
+              .replace("<!-- page-clouds -->", () => clouds)
+              .replace("<!-- form-clouds -->", () => formClouds),
         );
       },
     },
