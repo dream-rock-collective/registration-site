@@ -4,19 +4,22 @@ export type ContentSection = {
   body: string;
   image?: { src: string; alt: string };
 };
+type DividerSection = { type: "divider"; key?: never };
+export type SiteSection = (ContentSection & { type?: never }) | DividerSection;
 export type CharitySection = ContentSection & { key: string; url?: string };
 export type DonationSection =
-  | (ContentSection & { key?: never; url?: never })
-  | CharitySection;
+  | DividerSection
+  | (ContentSection & { type?: never; key?: never; url?: never })
+  | (CharitySection & { type?: never });
 export type AdditionalPages = {
   subscriptions: {
     title: string;
     body: string;
-    sections: ContentSection[];
+    sections: SiteSection[];
     planLabels: Record<"once" | "monthly" | "yearly", string>;
   };
   donations: { title: string; body: string; sections: DonationSection[] };
-  success: { title: string };
+  success: { title: string; sections?: SiteSection[] };
 };
 export type InitialPageContent = AdditionalPages & {
   join: {
@@ -44,7 +47,7 @@ export type InitialPageContent = AdditionalPages & {
     paymentFailed: string;
     networkFailed: string;
   };
-  sections: ContentSection[];
+  sections: SiteSection[];
   footer: { text: string };
 };
 
@@ -219,7 +222,14 @@ export function validateInitialPageContent(value: unknown): InitialPageContent {
     validateRichText(fields["body"] as string);
     validateSections(fields["sections"], page === "donations");
   }
-  strings(root["success"], ["title"], "success");
+  const success = root["success"];
+  if (success && typeof success === "object" && "sections" in success) {
+    const fields = object(success, ["title", "sections"], "success");
+    strings({ title: fields["title"] }, ["title"], "success");
+    validateSections(fields["sections"]);
+  } else {
+    strings(success, ["title"], "success");
+  }
   const content = root as InitialPageContent;
   validateRichText(content.member.helpBody);
   for (const [key, allowed] of [
@@ -252,6 +262,15 @@ function validateSections(sections: unknown, donations = false): void {
     throw new Error("sections must be an array (maximum 100)");
   const keysSeen = new Set<string>();
   for (const section of sections) {
+    if (
+      section &&
+      typeof section === "object" &&
+      "type" in section &&
+      section.type === "divider"
+    ) {
+      object(section, ["type"], "divider");
+      continue;
+    }
     const keys =
       section && typeof section === "object" && "image" in section
         ? ["title", "body", "image"]
@@ -284,7 +303,11 @@ function validateSections(sections: unknown, donations = false): void {
         )
           throw new Error("Charity URL must be an HTTP or HTTPS URL");
         const destination = new URL(url);
-        if (!destination.hostname || destination.username || destination.password)
+        if (
+          !destination.hostname ||
+          destination.username ||
+          destination.password
+        )
           throw new Error("Invalid charity URL");
       }
     }

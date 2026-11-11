@@ -1,9 +1,10 @@
 import {
   escapeHtml,
   validateInitialPageContent,
-  type ContentSection,
+  type DonationSection,
+  type SiteSection,
 } from "./content.ts";
-import { renderInitialPage } from "./render-initial-page.ts";
+import { renderInitialPage, sectionDivider } from "./render-initial-page.ts";
 import { pageTemplates } from "./page-templates.ts";
 
 export type EditablePage = "main" | "subscriptions" | "donations" | "success";
@@ -14,8 +15,11 @@ export function renderPage(
   const content = validateInitialPageContent(value);
   if (page === "main") return renderInitialPage(content);
   const fields = content[page];
-  const sectionHtml = (section: ContentSection, heading: string) =>
-    `<article><h2>${heading}</h2>${section.body}${section.image ? `<img src="${escapeHtml(section.image.src)}" alt="${escapeHtml(section.image.alt)}">` : ""}</article>`;
+  const sectionHtml = (section: SiteSection | DonationSection): string => {
+    if (section.type === "divider") return sectionDivider;
+    const heading = donationHeading(section);
+    return `<article><h2>${heading}</h2>${section.body}${section.image ? `<img src="${escapeHtml(section.image.src)}" alt="${escapeHtml(section.image.alt)}">` : ""}</article>`;
+  };
   const donationHeading = (section: { title: string; url?: string }) => {
     const title = escapeHtml(section.title);
     return section.url
@@ -24,6 +28,7 @@ export function renderPage(
   };
   const replacements: Record<string, string> = {
     title: escapeHtml(fields.title),
+    sections: (fields.sections ?? []).map(sectionHtml).join("\n"),
   };
   if (page === "subscriptions") {
     replacements["body"] = content.subscriptions.body;
@@ -31,15 +36,9 @@ export function renderPage(
       content.subscriptions.planLabels,
     ))
       replacements[plan] = escapeHtml(label);
-    replacements["sections"] = content.subscriptions.sections
-      .map((section) => sectionHtml(section, escapeHtml(section.title)))
-      .join("\n");
   }
   if (page === "donations") {
     replacements["body"] = content.donations.body;
-    replacements["sections"] = content.donations.sections
-      .map((section) => sectionHtml(section, donationHeading(section)))
-      .join("\n");
     replacements["columns"] = content.donations.sections
       .filter((section) => section.key !== undefined)
       .map(

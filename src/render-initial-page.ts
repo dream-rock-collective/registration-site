@@ -1,7 +1,7 @@
 import {
   escapeHtml,
   validateInitialPageContent,
-  type ContentSection,
+  type SiteSection,
   type InitialPageContent,
 } from "./content.ts";
 
@@ -51,7 +51,10 @@ function renderFields(join: InitialPageContent["join"]): string {
     .join("\n");
 }
 
-function renderSection(section: ContentSection, index: number): string {
+export const sectionDivider = '<hr class="section-divider">';
+
+function renderSection(section: SiteSection, index: number): string {
+  if (section.type === "divider") return sectionDivider;
   const headingId = `section-${index}-heading`;
   const image = section.image;
   const imageMarkup = image

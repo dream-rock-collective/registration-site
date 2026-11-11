@@ -49,7 +49,7 @@ test("donation copy and charities without URLs render with plain headings", () =
   ];
   const html = renderPage(copy, "donations");
   expect(html.match(/class="allocation-column"/g)).toHaveLength(2);
-  expect(html).toContain('<h2>About donations</h2><p>More information</p><img');
+  expect(html).toContain("<h2>About donations</h2><p>More information</p><img");
   expect(html.match(/<h2>Local charity<\/h2>/g)).toHaveLength(2);
   expect(html.match(/<h2>Other charity<\/h2>/g)).toHaveLength(2);
   copy.donations.sections = copy.donations.sections.slice(0, 1);
@@ -122,4 +122,44 @@ test("subscription labels are editable plain text while prices and plan IDs stay
       },
     }),
   ).toThrow();
+});
+
+test("dividers render as dedicated rules on all pages in section order", () => {
+  for (const page of [
+    "main",
+    "subscriptions",
+    "donations",
+    "success",
+  ] as const) {
+    const copy = validateInitialPageContent(structuredClone(content));
+    const fields = page === "main" ? copy : copy[page];
+    fields.sections = [
+      ...(fields.sections ?? []),
+      { title: "Before divider", body: "<p>Before</p>" },
+      { type: "divider" },
+      { title: "After divider", body: "<p>After</p>" },
+    ];
+    const html = renderPage(copy, page);
+    expect(html).toContain('<hr class="section-divider">');
+    expect(html.indexOf("Before divider")).toBeLessThan(html.indexOf("<hr"));
+    expect(html.indexOf("<hr")).toBeLessThan(html.indexOf("After divider"));
+    if (page === "donations")
+      expect(html.match(/class="allocation-column"/g)).toHaveLength(
+        content.donations.sections.length,
+      );
+  }
+});
+
+test("divider records reject copy, images, charity keys and unknown types", () => {
+  for (const section of [
+    { type: "divider", title: "Unexpected" },
+    { type: "divider", image: { src: "/rock.png", alt: "Unexpected" } },
+    { type: "divider", key: "charity" },
+    { type: "other" },
+  ]) {
+    const copy = structuredClone(content);
+    expect(() =>
+      validateInitialPageContent({ ...copy, sections: [section] }),
+    ).toThrow();
+  }
 });

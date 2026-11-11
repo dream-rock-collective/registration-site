@@ -1,0 +1,19 @@
+.section-divider {
+  height: 2px;
+  margin: 1.5rem auto;
+  border: 0;
+  background: black;
+}
+
+.site-shell > .section-divider {
+  width: min(800px, calc(100% - 32px));
+}
+
+.success-copy {
+  width: min(800px, calc(100% - 32px));
+  margin: 1.5rem auto;
+}
+
+.success-copy img {
+  max-width: 100%;
+}

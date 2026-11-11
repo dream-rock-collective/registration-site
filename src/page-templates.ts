@@ -158,5 +158,6 @@ export const pageTemplates = {
   </main>`,
   success: `<main>
       <h1>{{title}}</h1>
+      <section class="content-section success-copy">{{sections}}</section>
     </main>`,
 };

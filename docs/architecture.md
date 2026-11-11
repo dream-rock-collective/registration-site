@@ -39,16 +39,17 @@ The original main-page root fields stay unchanged. Additional root objects are:
 
 ```text
 subscriptions: { title, body, planLabels: { once, monthly, yearly }, sections: [{ title, body, image? }] }
-donations: { title, body, sections: [DefaultSection | CharitySection] }
+donations: { title, body, sections: [DefaultSection | CharitySection | Divider] }
 DefaultSection: { title, body, image? }
 CharitySection: { key, title, body, image?, url? }
-success: { title }
+success: { title, sections? }
 image: { src, alt }
+Divider: { type: "divider" }
 ```
 
 `body` is restricted HTML; `image` references an existing public asset. Missing
 page objects receive defaults matching the original copy. Array order is display
-order. The Donations page displays both section types in that order. Only charity
+order. The Donations page displays all section types in that order. Only charity
 sections appear in the allocation controls. Charity keys must be unique,
 nonempty letters/digits/underscores/hyphens (maximum 100 characters), and at least
 one charity is required. A charity's optional URL must use HTTP(S) when provided.
@@ -65,7 +66,11 @@ missing labels receive the original One Time/Monthly/Yearly defaults.
 
 Prices, plan identities, payment settings, other button/status labels, decorations,
 metadata, and form/API contracts remain code-owned. Add/remove/reorder is supported
-for subscription and donation sections; Success only exposes its heading.
+for editable sections. Every page supports dividers, rendered as 2px horizontal rules.
+Success exposes its heading and an optional section list. Dividers are encoded as
+`{ type: "divider" }`; the shared preview/build renderer emits
+`<hr class="section-divider">`. Its 2px styling lives in
+`src/section-styles.css`, imported by the shared stylesheet and Success.
 
 ## Runtime module responsibilities
 
