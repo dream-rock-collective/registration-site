@@ -1,6 +1,8 @@
+import clouds from "./clouds.html?raw";
+import formClouds from "./form-clouds.html?raw";
 import "./style.css";
 import { validateInitialPageContent } from "./content.ts";
-import { renderInitialPage } from "./render-initial-page.ts";
+import { renderPage } from "./render-page.ts";
 import { previewMessage, previewSettings } from "./preview-messages.ts";
 
 // Preview deliberately has no registration, payment, or member-storage imports.
@@ -24,7 +26,9 @@ try {
     try {
       const content = validateInitialPageContent(message.content);
       const template = document.createElement("template");
-      template.innerHTML = renderInitialPage(content);
+      template.innerHTML = renderPage(content, message.page)
+        .replace("<!-- page-clouds -->", () => clouds)
+        .replace("<!-- form-clouds -->", () => formClouds);
       for (const image of template.content.querySelectorAll<HTMLImageElement>(
         "img[src]",
       )) {
@@ -36,6 +40,14 @@ try {
         HTMLInputElement | HTMLButtonElement
       >("input,button"))
         field.disabled = true;
+      document.documentElement.className =
+        message.page === "subscriptions" || message.page === "donations"
+          ? "subscription-document"
+          : "";
+      document.body.className =
+        message.page === "subscriptions" || message.page === "donations"
+          ? "subscription-page-body"
+          : "";
       document.body.replaceChildren(template.content);
       window.parent.postMessage(
         { type: "drc-preview-rendered", token: settings.token },

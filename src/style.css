@@ -1,3 +1,5 @@
+@import "./section-styles.css";
+
 @font-face {
   font-family: Fraunces;
   src: url("/fonts/fraunces-variable.woff") format("woff");
@@ -654,7 +656,18 @@ footer p {
     margin-top: 0;
   }
 
-  .mail-drops {
+  .section-divider {
+  height: 2px;
+  margin: 1.5rem auto;
+  border: 0;
+  background: black;
+}
+
+.site-shell > .section-divider {
+  width: min(800px, calc(100% - 32px));
+}
+
+.mail-drops {
     margin-bottom: 45px;
   }
 

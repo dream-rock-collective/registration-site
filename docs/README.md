@@ -46,7 +46,8 @@ The local API defaults to `http://localhost:6942`. Set `VITE_API_BASE_URL` when 
 
 | Task | Start here |
 | --- | --- |
-| Change the content or structure of a route | That route's `index.html` |
+| Change editable copy | `content/initial-page.json` |
+| Change page structure | Main renderer or additional-page templates in `src/` |
 | Change route behavior or API calls | The matching `src/*.ts` module |
 | Change shared visual behavior | `src/style.css` |
 | Add a new route | `docs/adding-pages.md` and `vite.config.ts` |

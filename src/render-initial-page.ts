@@ -1,21 +1,9 @@
 import {
   escapeHtml,
   validateInitialPageContent,
-  type ContentSection,
+  type SiteSection,
   type InitialPageContent,
 } from "./content.ts";
-
-const initialClouds =
-  [..."abcdefghijklmnopqrstuvwxyz", "aa"]
-    .map((name) => `<img class="cloud cloud-${name}" src="/cloud.png" alt="">`)
-    .join("\n") +
-  "\n" +
-  ["a", "b", "c"]
-    .map(
-      (name) =>
-        `<img class="cloud cloud-cluster-${name}" src="/3-cloud-cluster.png" alt="">`,
-    )
-    .join("\n");
 
 function renderLogo(className: string): string {
   return `
@@ -51,7 +39,10 @@ function renderFields(join: InitialPageContent["join"]): string {
     .join("\n");
 }
 
-function renderSection(section: ContentSection, index: number): string {
+export const sectionDivider = '<hr class="section-divider">';
+
+function renderSection(section: SiteSection, index: number): string {
+  if (section.type === "divider") return sectionDivider;
   const headingId = `section-${index}-heading`;
   const image = section.image;
   const imageMarkup = image
@@ -76,15 +67,13 @@ export function renderInitialPage(content: InitialPageContent): string {
   const { join, member, sections, footer } = content;
   return `
     <main class="site-shell">
-      ${initialClouds}
+      <!-- page-clouds -->
       <header class="hero">
         <img class="hero-rock" src="/rock.png" alt="">
         ${renderLogo("logo")}
       </header>
       <section class="card-section" aria-labelledby="join-heading">
-        <img class="cloud cloud-form-left" src="/cloud.png" alt="">
-        <img class="cloud cloud-form-right" src="/cloud.png" alt="">
-        <img class="cloud cloud-form" src="/cloud.png" alt="">
+        <!-- form-clouds -->
         <div class="card-block registration-card">
           <div class="member-overlay" id="member-overlay" hidden>
             <div class="member-overlay-content">
