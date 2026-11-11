@@ -39,16 +39,19 @@ The original main-page root fields stay unchanged. Additional root objects are:
 
 ```text
 subscriptions: { title, body, planLabels: { once, monthly, yearly }, sections: [{ title, body, image? }] }
-donations: { title, body, sections: [{ key, title, url, body, image? }] }
+donations: { title, body, sections: [DefaultSection | CharitySection] }
+DefaultSection: { title, body, image? }
+CharitySection: { key, title, body, image?, url? }
 success: { title }
 image: { src, alt }
 ```
 
 `body` is restricted HTML; `image` references an existing public asset. Missing
 page objects receive defaults matching the original copy. Array order is display
-order. One donations array drives both allocation controls and charity descriptions.
-Charity keys must be unique, nonempty letters/digits/underscores/hyphens (maximum
-100 characters), and at least one charity is required. URLs must use HTTP(S).
+order. The Donations page displays both section types in that order. Only charity
+sections appear in the allocation controls. Charity keys must be unique,
+nonempty letters/digits/underscores/hyphens (maximum 100 characters), and at least
+one charity is required. A charity's optional URL must use HTTP(S) when provided.
 
 The allocation script uses those editable keys in the existing
 `{ userId, allocation }` dollar request to `/submit-allocation`; no percentage

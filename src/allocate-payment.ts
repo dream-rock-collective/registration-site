@@ -25,7 +25,9 @@ const PLAN_BUDGETS: Record<Exclude<MemberPlan, "free">, number> = {
 
 const ORGANIZATIONS = validateInitialPageContent(
   content,
-).donations.sections.map((section) => section.key);
+).donations.sections
+  .filter((section) => section.key !== undefined)
+  .map((section) => section.key);
 type Organization = string;
 const ALLOCATION_DRAG_TYPE = "application/x-drc-allocation";
 

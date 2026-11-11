@@ -36,6 +36,26 @@ test("one ordered charity list renders allocation columns and descriptions", () 
   );
   expect(html).not.toContain("{{");
 });
+test("donation copy and charities without URLs render with plain headings", () => {
+  const copy = validateInitialPageContent(structuredClone(content));
+  copy.donations.sections = [
+    {
+      title: "About donations",
+      body: "<p>More information</p>",
+      image: { src: "/leeya-appleby.jpeg", alt: "About donations" },
+    },
+    { key: "local", title: "Local charity", body: "<p>Local work</p>" },
+    { key: "other", title: "Other charity", body: "", url: "" },
+  ];
+  const html = renderPage(copy, "donations");
+  expect(html.match(/class="allocation-column"/g)).toHaveLength(2);
+  expect(html).toContain('<h2>About donations</h2><p>More information</p><img');
+  expect(html.match(/<h2>Local charity<\/h2>/g)).toHaveLength(2);
+  expect(html.match(/<h2>Other charity<\/h2>/g)).toHaveLength(2);
+  copy.donations.sections = copy.donations.sections.slice(0, 1);
+  expect(() => renderPage(copy, "donations")).toThrow("At least one charity");
+});
+
 test("additional pages escape headings and support editable section lists", () => {
   const copy = validateInitialPageContent(content);
   copy.subscriptions.sections = [

@@ -16,8 +16,12 @@ export function renderPage(
   const fields = content[page];
   const sectionHtml = (section: ContentSection, heading: string) =>
     `<article><h2>${heading}</h2>${section.body}${section.image ? `<img src="${escapeHtml(section.image.src)}" alt="${escapeHtml(section.image.alt)}">` : ""}</article>`;
-  const link = (section: { title: string; url: string }) =>
-    `<a href="${escapeHtml(section.url)}" target="_blank" rel="noopener noreferrer">${escapeHtml(section.title)}</a>`;
+  const donationHeading = (section: { title: string; url?: string }) => {
+    const title = escapeHtml(section.title);
+    return section.url
+      ? `<a href="${escapeHtml(section.url)}" target="_blank" rel="noopener noreferrer">${title}</a>`
+      : title;
+  };
   const replacements: Record<string, string> = {
     title: escapeHtml(fields.title),
   };
@@ -34,12 +38,13 @@ export function renderPage(
   if (page === "donations") {
     replacements["body"] = content.donations.body;
     replacements["sections"] = content.donations.sections
-      .map((section) => sectionHtml(section, link(section)))
+      .map((section) => sectionHtml(section, donationHeading(section)))
       .join("\n");
     replacements["columns"] = content.donations.sections
+      .filter((section) => section.key !== undefined)
       .map(
         (section) =>
-          `<article class="allocation-column" data-organization="${escapeHtml(section.key)}"><div class="allocation-stack"><div class="allocation-slots" aria-hidden="true"></div><button class="allocation-add" type="button"><span aria-hidden="true">+</span><span class="sr-only">Add one dollar to ${escapeHtml(section.title)}</span></button><div class="allocation-filled-slots" aria-hidden="true"></div></div><h2>${link(section)}</h2></article>`,
+          `<article class="allocation-column" data-organization="${escapeHtml(section.key)}"><div class="allocation-stack"><div class="allocation-slots" aria-hidden="true"></div><button class="allocation-add" type="button"><span aria-hidden="true">+</span><span class="sr-only">Add one dollar to ${escapeHtml(section.title)}</span></button><div class="allocation-filled-slots" aria-hidden="true"></div></div><h2>${donationHeading(section)}</h2></article>`,
       )
       .join("\n");
   }

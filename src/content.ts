@@ -4,7 +4,10 @@ export type ContentSection = {
   body: string;
   image?: { src: string; alt: string };
 };
-export type CharitySection = ContentSection & { key: string; url: string };
+export type CharitySection = ContentSection & { key: string; url?: string };
+export type DonationSection =
+  | (ContentSection & { key?: never; url?: never })
+  | CharitySection;
 export type AdditionalPages = {
   subscriptions: {
     title: string;
@@ -12,7 +15,7 @@ export type AdditionalPages = {
     sections: ContentSection[];
     planLabels: Record<"once" | "monthly" | "yearly", string>;
   };
-  donations: { title: string; body: string; sections: CharitySection[] };
+  donations: { title: string; body: string; sections: DonationSection[] };
   success: { title: string };
 };
 export type InitialPageContent = AdditionalPages & {
@@ -244,20 +247,23 @@ export function formatContentTemplate(
   );
 }
 
-function validateSections(sections: unknown, charities = false): void {
+function validateSections(sections: unknown, donations = false): void {
   if (!Array.isArray(sections) || sections.length > 100)
     throw new Error("sections must be an array (maximum 100)");
-  if (charities && sections.length === 0)
-    throw new Error("At least one charity is required");
   const keysSeen = new Set<string>();
   for (const section of sections) {
     const keys =
       section && typeof section === "object" && "image" in section
         ? ["title", "body", "image"]
         : ["title", "body"];
-    if (charities) keys.push("key", "url");
+    const charity =
+      donations && section && typeof section === "object" && "key" in section;
+    if (charity) {
+      keys.push("key");
+      if ("url" in section) keys.push("url");
+    }
     const item = object(section, keys, "section");
-    if (charities) {
+    if (charity) {
       const key = item["key"];
       if (
         typeof key !== "string" ||
@@ -270,15 +276,17 @@ function validateSections(sections: unknown, charities = false): void {
         );
       keysSeen.add(key);
       const url = item["url"];
-      if (
-        typeof url !== "string" ||
-        !/^https?:\/\//i.test(url) ||
-        /[\s<>"\\]/.test(url)
-      )
-        throw new Error("Charity URL must be an HTTP or HTTPS URL");
-      const destination = new URL(url);
-      if (!destination.hostname || destination.username || destination.password)
-        throw new Error("Invalid charity URL");
+      if (url !== undefined && url !== "") {
+        if (
+          typeof url !== "string" ||
+          !/^https?:\/\//i.test(url) ||
+          /[\s<>"\\]/.test(url)
+        )
+          throw new Error("Charity URL must be an HTTP or HTTPS URL");
+        const destination = new URL(url);
+        if (!destination.hostname || destination.username || destination.password)
+          throw new Error("Invalid charity URL");
+      }
     }
     if (
       typeof item["title"] !== "string" ||
@@ -297,4 +305,6 @@ function validateSections(sections: unknown, charities = false): void {
         );
     }
   }
+  if (donations && keysSeen.size === 0)
+    throw new Error("At least one charity is required");
 }
