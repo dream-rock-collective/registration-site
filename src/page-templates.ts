@@ -47,8 +47,8 @@ export const pageTemplates = {
         </div>
         <div class="allocation-unavailable" id="allocation-success" hidden>
           <div class="allocation-success-content">
-            <span class="allocation-success-title">You&rsquo;re all set!</span>
-            <span class="allocation-success-subtext">A letter will be arriving to your address this month</span>
+            <span class="allocation-success-title">{{allocationSuccessTitle}}</span>
+            <span class="allocation-success-subtext">{{allocationSuccessSubtext}}</span>
             <button class="allocation-change" id="allocation-change" type="button">
               Change Allocation
             </button>
@@ -56,9 +56,10 @@ export const pageTemplates = {
         </div>
         <h1 id="allocation-heading">{{title}}</h1>
         <div class="allocation-intro">{{body}}</div>
-        <div class="allocation-pool" id="allocation-pool" aria-label="Available dollars"></div>
+        <p id="allocation-remaining" class="sr-only" role="status" aria-live="polite"></p>
+        <div class="allocation-pool" id="allocation-pool" aria-label="Available percentage bubbles"></div>
         <button class="distribute-randomly" id="distribute-randomly" type="button">
-          Distrubte Randomly
+          Distribute Randomly
         </button>
         <div class="allocation-columns">{{columns}}</div>
         <button class="allocation-submit" id="allocation-submit" type="button">

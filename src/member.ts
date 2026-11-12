@@ -10,6 +10,7 @@ export type Member = {
   paymentDate?: string;
   registeredAt?: string;
   allocation?: Record<string, number>;
+  allocationFormat?: "dollars" | "percentage";
 };
 
 type PendingPlan = {
@@ -82,10 +83,7 @@ export function saveRegistration(name: string, userId?: string) {
   writeStorage(MEMBER_STORAGE_KEY, members);
 }
 
-export function savePendingPlan(
-  plan: string | undefined,
-  userId?: string,
-) {
+export function savePendingPlan(plan: string | undefined, userId?: string) {
   if (plan !== "monthly" && plan !== "once" && plan !== "yearly") return;
   const pending: PendingPlan = {
     plan,
@@ -106,9 +104,7 @@ export function completePendingPlan() {
 
   const members = readMembers();
   const memberIndex = pending.userId
-    ? members.findIndex(
-        (member) => member.userId === pending.userId,
-      )
+    ? members.findIndex((member) => member.userId === pending.userId)
     : 0;
   if (memberIndex < 0 || !members[memberIndex]) return;
 
@@ -131,14 +127,13 @@ export function saveAllocation(
   allocation: Record<string, number>,
 ) {
   const members = readMembers();
-  const memberIndex = members.findIndex(
-    (member) => member.userId === userId,
-  );
+  const memberIndex = members.findIndex((member) => member.userId === userId);
   if (memberIndex < 0 || !members[memberIndex]) return;
 
   members[memberIndex] = {
     ...members[memberIndex],
     allocation: { ...allocation },
+    allocationFormat: "percentage",
   };
   writeStorage(MEMBER_STORAGE_KEY, members);
 }

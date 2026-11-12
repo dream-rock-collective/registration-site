@@ -59,5 +59,5 @@ The local API defaults to `http://localhost:6942`. Set `VITE_API_BASE_URL` when 
 ## Important boundaries
 
 - Do not invent backend behavior from the frontend. Treat [Backend integration](allocation-backend.md) as the contract and coordinate backend changes in `drc-backend`.
-- Plan budgets and organization keys are frontend-owned today. Changing them changes the product behavior and the payload sent to the backend.
+- The frontend uses five 20% bubbles and owns organization keys. The backend validates percentage totals of 100.
 - The site is intentionally built from static HTML entrypoints with shared CSS. Reuse the existing structure before introducing a new component or styling system.

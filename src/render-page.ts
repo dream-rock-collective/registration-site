@@ -39,16 +39,22 @@ export function renderPage(
   }
   if (page === "donations") {
     replacements["body"] = content.donations.body;
+    replacements["allocationSuccessTitle"] = escapeHtml(
+      content.donations.allocationSuccessTitle,
+    );
+    replacements["allocationSuccessSubtext"] = escapeHtml(
+      content.donations.allocationSuccessSubtext,
+    );
     replacements["columns"] = content.donations.sections
       .filter((section) => section.key !== undefined)
       .map(
         (section) =>
-          `<article class="allocation-column" data-organization="${escapeHtml(section.key)}"><div class="allocation-stack"><div class="allocation-slots" aria-hidden="true"></div><button class="allocation-add" type="button"><span aria-hidden="true">+</span><span class="sr-only">Add one dollar to ${escapeHtml(section.title)}</span></button><div class="allocation-filled-slots" aria-hidden="true"></div></div><h2>${donationHeading(section)}</h2></article>`,
+          `<article class="allocation-column" data-organization="${escapeHtml(section.key)}"><div class="allocation-stack"><div class="allocation-slots" aria-hidden="true"></div><button class="allocation-add" type="button"><span aria-hidden="true">+</span><span class="sr-only">Add 20% to ${escapeHtml(section.title)}</span></button><div class="allocation-filled-slots" aria-hidden="true"></div></div><h2>${donationHeading(section)}</h2></article>`,
       )
       .join("\n");
   }
   return pageTemplates[page].replace(
-    /\{\{(title|body|sections|columns|once|monthly|yearly)\}\}/g,
+    /\{\{(title|body|sections|columns|once|monthly|yearly|allocationSuccessTitle|allocationSuccessSubtext)\}\}/g,
     (_, key: string) => replacements[key] ?? "",
   );
 }

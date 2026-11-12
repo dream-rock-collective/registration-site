@@ -45,7 +45,7 @@ The original main-page root fields stay unchanged. Additional root objects are:
 
 ```text
 subscriptions: { title, body, planLabels: { once, monthly, yearly }, sections: [{ title, body, image? }] }
-donations: { title, body, sections: [DefaultSection | CharitySection | Divider] }
+donations: { title, body, allocationSuccessTitle, allocationSuccessSubtext, sections: [DefaultSection | CharitySection | Divider] }
 DefaultSection: { title, body, image? }
 CharitySection: { key, title, body, image?, url? }
 success: { title, sections? }
@@ -61,14 +61,16 @@ nonempty letters/digits/underscores/hyphens (maximum 100 characters), and at lea
 one charity is required. A charity's optional URL must use HTTP(S) when provided.
 
 The allocation script uses those editable keys in the existing
-`{ userId, allocation }` dollar request to `/submit-allocation`; no percentage
-format or endpoint change is included. Stored allocations with removed/renamed
+`{ userId, allocation, format: "percentage" }` request to `/submit-allocation`.
+Five bubbles each represent 20% of the donation share for every paid plan. Stored allocations with removed/renamed
 keys require fresh allocation rather than transferring amounts. Historical backend
 records keep their original keys. Confirm the deployed backend accepts new keys
 before publishing added/renamed charities.
 
 Subscription option names are editable plain text in `subscriptions.planLabels`;
 missing labels receive the original One Time/Monthly/Yearly defaults.
+
+The post-allocation confirmation uses editable plain text in `donations.allocationSuccessTitle` and `donations.allocationSuccessSubtext`; missing fields receive the original copy.
 
 Prices, plan identities, payment settings, other button/status labels, decorations,
 metadata, and form/API contracts remain code-owned. Add/remove/reorder is supported
@@ -83,7 +85,7 @@ Success exposes its heading and an optional section list. Dividers are encoded a
 - `main.ts` checks API health, validates and submits registration data, saves the registration locally, and navigates to subscription selection.
 - `registered.ts` reads the user id from the URL, starts checkout, and saves the pending plan with that member id.
 - `success.ts` completes the pending plan locally.
-- `allocate-payment.ts` computes the plan budget, restores/renders/edits the allocation, submits it, and saves successful choices locally.
+- `allocate-payment.ts` uses five 20% bubbles, restores/renders/edits the allocation, submits it, and saves successful choices locally.
 - `member.ts` is the shared browser-state helper. It stores the member table, selects the newest registration, associates pending plans with user ids, and persists allocations. Keep local-storage reads/writes there rather than duplicating the schema in page modules.
 
 ## Styling model
@@ -107,6 +109,6 @@ The page modules use `VITE_API_BASE_URL` when provided. Without it, localhost an
 Run `bun run test:e2e` (install Chromium once with
 `bunx playwright install chromium`). Playwright starts Vite on port 5181 and
 runs desktop/mobile tests covering rendered pages, charity ordering, new keys in
-legacy dollar submissions, saved allocations, and unavailable payment controls.
+percentage submissions, saved allocations, and unavailable payment controls.
 API responses and member state are fixtures; these tests do not contact Stripe
 or the production backend. `bun test` remains the unit-test command.
