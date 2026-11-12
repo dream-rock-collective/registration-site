@@ -39,6 +39,12 @@ export function renderPage(
   }
   if (page === "donations") {
     replacements["body"] = content.donations.body;
+    replacements["allocationSuccessTitle"] = escapeHtml(
+      content.donations.allocationSuccessTitle,
+    );
+    replacements["allocationSuccessSubtext"] = escapeHtml(
+      content.donations.allocationSuccessSubtext,
+    );
     replacements["columns"] = content.donations.sections
       .filter((section) => section.key !== undefined)
       .map(
@@ -48,7 +54,7 @@ export function renderPage(
       .join("\n");
   }
   return pageTemplates[page].replace(
-    /\{\{(title|body|sections|columns|once|monthly|yearly)\}\}/g,
+    /\{\{(title|body|sections|columns|once|monthly|yearly|allocationSuccessTitle|allocationSuccessSubtext)\}\}/g,
     (_, key: string) => replacements[key] ?? "",
   );
 }

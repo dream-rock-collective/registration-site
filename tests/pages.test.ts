@@ -187,3 +187,35 @@ test("shared HTML clouds retain their positions on decorated pages", () => {
   }
   expect(renderPage(content, "success")).not.toContain('class="cloud ');
 });
+
+test("allocation confirmation copy is validated, escaped and defaulted for legacy content", () => {
+  const copy = validateInitialPageContent(content);
+  copy.donations.allocationSuccessTitle = "Thanks <friend>";
+  copy.donations.allocationSuccessSubtext = "Your letter & more";
+  const html = renderPage(copy, "donations");
+  expect(html).toContain(
+    'class="allocation-success-title">Thanks &lt;friend&gt;</span>',
+  );
+  expect(html).toContain(
+    'class="allocation-success-subtext">Your letter &amp; more</span>',
+  );
+  const { allocationSuccessTitle, allocationSuccessSubtext, ...legacy } =
+    copy.donations;
+  const restored = validateInitialPageContent({ ...copy, donations: legacy });
+  expect(restored.donations.allocationSuccessTitle).toBe(
+    content.donations.allocationSuccessTitle,
+  );
+  expect(restored.donations.allocationSuccessSubtext).toBe(
+    content.donations.allocationSuccessSubtext,
+  );
+  for (const field of ["allocationSuccessTitle", "allocationSuccessSubtext"]) {
+    for (const value of [null, 42, "x".repeat(50001)]) {
+      expect(() =>
+        validateInitialPageContent({
+          ...copy,
+          donations: { ...copy.donations, [field]: value },
+        }),
+      ).toThrow();
+    }
+  }
+});

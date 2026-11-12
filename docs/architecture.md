@@ -45,7 +45,7 @@ The original main-page root fields stay unchanged. Additional root objects are:
 
 ```text
 subscriptions: { title, body, planLabels: { once, monthly, yearly }, sections: [{ title, body, image? }] }
-donations: { title, body, sections: [DefaultSection | CharitySection | Divider] }
+donations: { title, body, allocationSuccessTitle, allocationSuccessSubtext, sections: [DefaultSection | CharitySection | Divider] }
 DefaultSection: { title, body, image? }
 CharitySection: { key, title, body, image?, url? }
 success: { title, sections? }
@@ -69,6 +69,8 @@ before publishing added/renamed charities.
 
 Subscription option names are editable plain text in `subscriptions.planLabels`;
 missing labels receive the original One Time/Monthly/Yearly defaults.
+
+The post-allocation confirmation uses editable plain text in `donations.allocationSuccessTitle` and `donations.allocationSuccessSubtext`; missing fields receive the original copy.
 
 Prices, plan identities, payment settings, other button/status labels, decorations,
 metadata, and form/API contracts remain code-owned. Add/remove/reorder is supported

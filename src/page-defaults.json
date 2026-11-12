@@ -16,6 +16,8 @@
   },
   "donations": {
     "title": "You’re Subscribed!",
+    "allocationSuccessTitle": "You’re all set!",
+    "allocationSuccessSubtext": "A letter will be arriving to your address this month",
     "body": "<p>As a subscriber, you can determine exactly what your dollars fund</p>",
     "sections": [
       {

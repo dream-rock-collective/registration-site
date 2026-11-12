@@ -47,8 +47,8 @@ export const pageTemplates = {
         </div>
         <div class="allocation-unavailable" id="allocation-success" hidden>
           <div class="allocation-success-content">
-            <span class="allocation-success-title">You&rsquo;re all set!</span>
-            <span class="allocation-success-subtext">A letter will be arriving to your address this month</span>
+            <span class="allocation-success-title">{{allocationSuccessTitle}}</span>
+            <span class="allocation-success-subtext">{{allocationSuccessSubtext}}</span>
             <button class="allocation-change" id="allocation-change" type="button">
               Change Allocation
             </button>

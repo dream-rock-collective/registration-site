@@ -18,7 +18,13 @@ export type AdditionalPages = {
     sections: SiteSection[];
     planLabels: Record<"once" | "monthly" | "yearly", string>;
   };
-  donations: { title: string; body: string; sections: DonationSection[] };
+  donations: {
+    title: string;
+    body: string;
+    allocationSuccessTitle: string;
+    allocationSuccessSubtext: string;
+    sections: DonationSection[];
+  };
   success: { title: string; sections?: SiteSection[] };
 };
 export type InitialPageContent = AdditionalPages & {
@@ -190,12 +196,20 @@ export function validateInitialPageContent(value: unknown): InitialPageContent {
   for (const page of ["subscriptions", "donations"] as const) {
     const candidate = root[page];
     const fields = object(
-      page === "subscriptions" &&
-        candidate &&
-        typeof candidate === "object" &&
-        !Array.isArray(candidate)
+      candidate && typeof candidate === "object" && !Array.isArray(candidate)
         ? {
-            planLabels: structuredClone(pageDefaults.subscriptions.planLabels),
+            ...(page === "subscriptions"
+              ? {
+                  planLabels: structuredClone(
+                    pageDefaults.subscriptions.planLabels,
+                  ),
+                }
+              : {
+                  allocationSuccessTitle:
+                    pageDefaults.donations.allocationSuccessTitle,
+                  allocationSuccessSubtext:
+                    pageDefaults.donations.allocationSuccessSubtext,
+                }),
             ...candidate,
           }
         : candidate,
@@ -203,7 +217,9 @@ export function validateInitialPageContent(value: unknown): InitialPageContent {
         "title",
         "body",
         "sections",
-        ...(page === "subscriptions" ? ["planLabels"] : []),
+        ...(page === "subscriptions"
+          ? ["planLabels"]
+          : ["allocationSuccessTitle", "allocationSuccessSubtext"]),
       ],
       page,
     );
@@ -213,6 +229,15 @@ export function validateInitialPageContent(value: unknown): InitialPageContent {
         fields["planLabels"],
         ["once", "monthly", "yearly"],
         "subscriptions.planLabels",
+      );
+    if (page === "donations")
+      strings(
+        {
+          allocationSuccessTitle: fields["allocationSuccessTitle"],
+          allocationSuccessSubtext: fields["allocationSuccessSubtext"],
+        },
+        ["allocationSuccessTitle", "allocationSuccessSubtext"],
+        "donations",
       );
     strings(
       { title: fields["title"], body: fields["body"] },
