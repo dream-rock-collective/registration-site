@@ -56,8 +56,7 @@ export const pageTemplates = {
         </div>
         <h1 id="allocation-heading">{{title}}</h1>
         <div class="allocation-intro">{{body}}</div>
-        <p>Assign five bubbles, each worth 20% of your donation share.</p>
-        <p id="allocation-remaining" role="status" aria-live="polite"></p>
+        <p id="allocation-remaining" class="sr-only" role="status" aria-live="polite"></p>
         <div class="allocation-pool" id="allocation-pool" aria-label="Available percentage bubbles"></div>
         <button class="distribute-randomly" id="distribute-randomly" type="button">
           Distribute Randomly
