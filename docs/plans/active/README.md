@@ -7,7 +7,6 @@ These documents specify future work only. The `plans` branch is based on `main`;
 | [Main-page editor: uploads and discoverability](main-page-editor.md) | `feature/main-page-editor` | Linked PRs in both repositories |
 | [Donation-page content editing](donation-page-editor.md) | `feature/donation-page-editor` | Linked PRs in both repositories |
 | [Monthly mail-art gallery](mail-art-gallery.md) | `feature/mail-art-gallery` | Linked PRs in both repositories |
-| [Allocate donations by percentage](percentage-allocation.md) | `feature/percentage-allocation` | Linked PRs in both repositories |
 | [Editable financial transparency section](financial-transparency.md) | `feature/financial-transparency` | Linked PRs in both repositories |
 | [Manage donation organizations safely](organization-management.md) | `feature/organization-management` | Linked PRs in both repositories |
 | [Larger About the Artist image](artist-image-size.md) | `feature/artist-image-size` | registration-site only |
@@ -22,7 +21,7 @@ These documents specify future work only. The `plans` branch is based on `main`;
 ## Chosen defaults
 
 - Gallery groups contain 1–3 images, newest month first; mobile stacks the selected month's images. No autoplay.
-- Percentage interaction retains drag/drop using twenty 5% tokens. Missing allocation units mean historical dollars.
+- Percentage allocation is implemented with five 20% bubbles; see [the current contract](../../allocation-backend.md).
 - Transparency appears directly on the subscribed screen and is manually authored.
 - Editing covers content, links and images within existing layouts, not a visual layout builder.
 - Documents describe tests to run during implementation; this documentation branch needs link/content review and `git diff --check`, not runtime tests.

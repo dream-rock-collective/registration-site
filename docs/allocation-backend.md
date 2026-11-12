@@ -51,7 +51,7 @@ The frontend reads `userId` from `/registered/?userId=...`, sends the selected p
 
 After payment, Stripe returns the browser to `/allocate-payment/`. The
 backend only accepts allocations after the signed Stripe webhook has marked
-the registration as paid. The frontend owns the plan budget and total.
+the registration as paid. The frontend offers five 20% bubbles for every paid plan; the backend requires percentage submissions to total 100.
 
 ## Submit an allocation
 
@@ -66,16 +66,19 @@ Request:
 {
   "userId": "42",
   "allocation": {
-    "weAllWeGotSd": 2,
-    "indigenousClimateAction": 2,
-    "otayMesaDetentionResistance": 2
-  }
+    "weAllWeGotSd": 40,
+    "indigenousClimateAction": 40,
+    "otayMesaDetentionResistance": 20
+  },
+  "format": "percentage"
 }
 ```
 
 `userId` is the user id returned by `/register`. `allocation` is a
-generic JSON object whose keys and totals are controlled by the frontend. Each
-value must be a whole, nonnegative number. The backend does not maintain a
+generic JSON object whose keys are controlled by the frontend. The site sends
+`format: "percentage"` and nonnegative multiples of 20 totaling exactly 100.
+The backend accepts any whole-percent split totaling 100; omitted format means
+legacy dollars. The backend does not maintain a
 charity allowlist, interpret charity keys, or calculate plan budgets.
 
 Successful response (`201`):
@@ -89,10 +92,11 @@ creates another submission; it does not overwrite an earlier one. Invalid
 input returns `400`, an unknown registration returns `404`, and an unpaid
 registration returns `403`, each with an `error` string.
 
-The frontend sends the user id as the `userId` string and owns the plan
-budget and organization list. The backend validates numeric payload shape and
-payment/registration status but does not calculate the budget or interpret the
-organization keys.
+The frontend sends the user id as the `userId` string and owns the organization
+list. The backend validates the format, numeric shape, percentage total, and
+payment/registration status. Deploy backend migration `0008_allocation_format.ts`
+and the percentage-capable API before this frontend. Prices and donation share
+are unchanged.
 
 ## Admin allocation data
 
@@ -101,10 +105,11 @@ Authenticated `GET /registrations` includes the latest submission only:
 ```json
 {
   "latest_allocation": {
-    "weAllWeGotSd": 2,
-    "indigenousClimateAction": 2,
-    "otayMesaDetentionResistance": 2
-  }
+    "weAllWeGotSd": 40,
+    "indigenousClimateAction": 40,
+    "otayMesaDetentionResistance": 20
+  },
+  "latest_allocation_format": "percentage"
 }
 ```
 
@@ -117,7 +122,8 @@ Authenticated `GET /registrations/:id/allocations` returns complete history:
   "allocations": [
     {
       "id": 17,
-      "allocation": { "weAllWeGotSd": 2, "indigenousClimateAction": 2 },
+      "allocation": { "weAllWeGotSd": 60, "indigenousClimateAction": 40 },
+      "format": "percentage",
       "submitted_at": "2026-08-12T18:10:00.000Z"
     }
   ]
@@ -126,4 +132,4 @@ Authenticated `GET /registrations/:id/allocations` returns complete history:
 
 Authenticated `POST /modify-registration` accepts birthday edits and may
 include an `allocation` object in edit data. An admin allocation edit is
-validated for payload shape and appends a new immutable history entry.
+accompanied by `format: "dollars" | "percentage"`, validated, and appends a new immutable history entry.

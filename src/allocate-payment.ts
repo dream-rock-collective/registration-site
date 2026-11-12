@@ -1,12 +1,7 @@
 import content from "../content/initial-page.json";
 import { validateInitialPageContent } from "./content";
 import "./style.css";
-import {
-  completePendingPlan,
-  getMember,
-  saveAllocation,
-  type MemberPlan,
-} from "./member";
+import { completePendingPlan, getMember, saveAllocation } from "./member";
 
 completePendingPlan();
 
@@ -17,16 +12,11 @@ const API_BASE_URL =
   import.meta.env["VITE_API_BASE_URL"] ||
   (isLocalSite ? "http://localhost:6942" : "https://api.dreamrock.co");
 
-const PLAN_BUDGETS: Record<Exclude<MemberPlan, "free">, number> = {
-  once: 6,
-  monthly: 5,
-  yearly: 5,
-};
+const BUBBLE_COUNT = 5;
+const BUBBLE_PERCENT = 20;
 
-const ORGANIZATIONS = validateInitialPageContent(
-  content,
-).donations.sections
-  .filter((section) => section.key !== undefined)
+const ORGANIZATIONS = validateInitialPageContent(content)
+  .donations.sections.filter((section) => section.key !== undefined)
   .map((section) => section.key);
 type Organization = string;
 const ALLOCATION_DRAG_TYPE = "application/x-drc-allocation";
@@ -37,34 +27,51 @@ type AllocationDragData = {
 };
 
 const member = getMember();
-const budget = member && member.plan !== "free" ? PLAN_BUDGETS[member.plan] : 0;
+const budget = 100;
+let submitting = false;
 const allocation = Object.fromEntries(
   ORGANIZATIONS.map((organization) => [organization, 0]),
 ) as Record<Organization, number>;
 const dollarAssignments: Array<Organization | null> = Array.from(
-  { length: budget },
+  { length: BUBBLE_COUNT },
   () => null,
 );
-const savedAllocation = member?.allocation;
+const storedAllocation: unknown = member?.allocation;
+const savedAllocation =
+  storedAllocation &&
+  typeof storedAllocation === "object" &&
+  !Array.isArray(storedAllocation)
+    ? (storedAllocation as Record<string, unknown>)
+    : undefined;
 const savedTotal = ORGANIZATIONS.reduce(
-  (total, organization) => total + (savedAllocation?.[organization] || 0),
+  (total, organization) =>
+    total +
+    (typeof savedAllocation?.[organization] === "number"
+      ? (savedAllocation[organization] as number)
+      : 0),
   0,
 );
 let hasSavedAllocation = false;
 if (
+  member?.allocationFormat === "percentage" &&
   savedAllocation &&
   Object.keys(savedAllocation).every((key) => ORGANIZATIONS.includes(key)) &&
-  savedTotal <= budget &&
+  savedTotal === budget &&
   ORGANIZATIONS.every((organization) => {
     const value = savedAllocation[organization];
-    return typeof value === "number" && Number.isInteger(value) && value >= 0;
+    return (
+      typeof value === "number" &&
+      Number.isInteger(value) &&
+      value >= 0 &&
+      value % BUBBLE_PERCENT === 0
+    );
   })
 ) {
   let dollarIndex = 0;
   ORGANIZATIONS.forEach((organization) => {
-    const amount = savedAllocation[organization] ?? 0;
+    const amount = savedAllocation[organization] as number;
     allocation[organization] = amount;
-    for (let index = 0; index < amount; index += 1) {
+    for (let index = 0; index < amount / BUBBLE_PERCENT; index += 1) {
       dollarAssignments[dollarIndex] = organization;
       dollarIndex += 1;
     }
@@ -125,6 +132,7 @@ function moveDollar(
   organization: Organization,
   dragData: AllocationDragData,
 ): boolean {
+  if (!hasPayment || submitting) return false;
   const allocated = Object.values(allocation).reduce(
     (total, value) => total + value,
     0,
@@ -144,8 +152,10 @@ function moveDollar(
           );
     if (dollarIndex >= 0) {
       dollarAssignments[dollarIndex] = organization;
-      allocation[dragData.source] = (allocation[dragData.source] ?? 0) - 1;
-      allocation[organization] = (allocation[organization] ?? 0) + 1;
+      allocation[dragData.source] =
+        (allocation[dragData.source] ?? 0) - BUBBLE_PERCENT;
+      allocation[organization] =
+        (allocation[organization] ?? 0) + BUBBLE_PERCENT;
       return true;
     }
   }
@@ -157,7 +167,7 @@ function moveDollar(
     allocated < budget
   ) {
     dollarAssignments[dragData.dollarIndex] = organization;
-    allocation[organization] = (allocation[organization] ?? 0) + 1;
+    allocation[organization] = (allocation[organization] ?? 0) + BUBBLE_PERCENT;
     return true;
   }
 
@@ -173,10 +183,10 @@ function render() {
     pool.innerHTML = dollarAssignments
       .map((assignment, index) => {
         const isAllocated = assignment !== null;
-        return `<span class="allocation-dollar${isAllocated ? " is-allocated" : ""}" data-dollar-index="${index}" aria-hidden="true">$1</span>`;
+        return `<span class="allocation-dollar${isAllocated ? " is-allocated" : ""}" data-dollar-index="${index}" aria-hidden="true">20%</span>`;
       })
       .join("");
-    pool.setAttribute("aria-label", `${budget - allocated} dollars available`);
+    pool.setAttribute("aria-label", `${budget - allocated}% available`);
   }
 
   document
@@ -192,7 +202,7 @@ function render() {
         column.querySelector<HTMLButtonElement>(".allocation-add");
       if (emptySlots) {
         emptySlots.innerHTML = Array.from(
-          { length: Math.max(budget - amount, 0) },
+          { length: Math.max((budget - amount) / BUBBLE_PERCENT, 0) },
           () => '<span class="allocation-slot allocation-drop-target"></span>',
         ).join("");
       }
@@ -200,16 +210,22 @@ function render() {
         allocatedSlots.innerHTML = dollarAssignments
           .map((assignment, index) =>
             assignment === organization
-              ? `<span class="allocation-slot is-allocated" draggable="true" data-organization="${organization}" data-dollar-index="${index}">$1</span>`
+              ? `<span class="allocation-slot is-allocated" draggable="true" data-organization="${organization}" data-dollar-index="${index}">20%</span>`
               : "",
           )
           .join("");
       }
-      if (addButton) addButton.disabled = !hasPayment || allocated >= budget;
+      if (addButton)
+        addButton.disabled = !hasPayment || submitting || allocated >= budget;
     });
+  const remaining = document.querySelector<HTMLElement>(
+    "#allocation-remaining",
+  );
+  if (remaining) remaining.textContent = `${budget - allocated}% remaining`;
   bindDraggableDollars();
   bindDraggableAllocatedSlots();
-  if (submitButton) submitButton.disabled = !hasPayment || allocated !== budget;
+  if (submitButton)
+    submitButton.disabled = !hasPayment || submitting || allocated !== budget;
 }
 
 function bindDropTargets() {
@@ -217,7 +233,7 @@ function bindDropTargets() {
     .querySelectorAll<HTMLElement>(".allocation-column")
     .forEach((column) => {
       column.addEventListener("dragover", (event) => {
-        if (!hasPayment) return;
+        if (!hasPayment || submitting) return;
         event.preventDefault();
         column.classList.add("is-drag-over");
       });
@@ -252,7 +268,7 @@ function startTouchDrag(
   element: HTMLElement,
   data: AllocationDragData,
 ) {
-  if (!hasPayment || event.pointerType === "mouse") return;
+  if (!hasPayment || submitting || event.pointerType === "mouse") return;
   event.preventDefault();
   touchDrag = { data, element, pointerId: event.pointerId, column: null };
   element.setPointerCapture(event.pointerId);
@@ -373,7 +389,7 @@ document
   .querySelectorAll<HTMLButtonElement>(".allocation-add")
   .forEach((button) => {
     button.addEventListener("click", () => {
-      if (!hasPayment) return;
+      if (!hasPayment || submitting) return;
       const organization = button.closest<HTMLElement>(".allocation-column")
         ?.dataset["organization"] as Organization;
       const allocated = Object.values(allocation).reduce(
@@ -385,13 +401,15 @@ document
       );
       if (organization && dollarIndex >= 0 && allocated < budget) {
         dollarAssignments[dollarIndex] = organization;
-        allocation[organization] = (allocation[organization] ?? 0) + 1;
+        allocation[organization] =
+          (allocation[organization] ?? 0) + BUBBLE_PERCENT;
       }
       render();
     });
   });
 
 resetButton?.addEventListener("click", () => {
+  if (!hasPayment || submitting) return;
   ORGANIZATIONS.forEach((organization) => {
     allocation[organization] = 0;
   });
@@ -401,28 +419,33 @@ resetButton?.addEventListener("click", () => {
 });
 
 distributeButton?.addEventListener("click", () => {
-  if (!hasPayment) return;
+  if (!hasPayment || submitting) return;
   ORGANIZATIONS.forEach((organization) => {
     allocation[organization] = 0;
   });
   dollarAssignments.fill(null);
-  for (let index = 0; index < budget; index += 1) {
+  for (let index = 0; index < BUBBLE_COUNT; index += 1) {
     const dollarIndex = index;
     const organization =
       ORGANIZATIONS[Math.floor(Math.random() * ORGANIZATIONS.length)]!;
     dollarAssignments[dollarIndex] = organization;
-    allocation[organization] = (allocation[organization] ?? 0) + 1;
+    allocation[organization] = (allocation[organization] ?? 0) + BUBBLE_PERCENT;
   }
   render();
 });
 
 submitButton?.addEventListener("click", async () => {
-  if (!hasPayment) return;
+  if (!hasPayment || submitting) return;
   if (!member?.userId) {
     setMessage("We could not find your registration. Please register again.");
     return;
   }
-  submitButton.disabled = true;
+  if (
+    Object.values(allocation).reduce((sum, value) => sum + value, 0) !== budget
+  )
+    return;
+  submitting = true;
+  render();
   resetButton?.setAttribute("disabled", "true");
   distributeButton?.setAttribute("disabled", "true");
   setMessage("Submitting your allocation…");
@@ -430,7 +453,11 @@ submitButton?.addEventListener("click", async () => {
     const response = await fetch(`${API_BASE_URL}/submit-allocation`, {
       method: "POST",
       headers: { "Content-Type": "application/json" },
-      body: JSON.stringify({ userId: member.userId, allocation }),
+      body: JSON.stringify({
+        userId: member.userId,
+        allocation,
+        format: "percentage",
+      }),
     });
     const body = await response.json().catch(() => ({}));
     if (!response.ok)
@@ -444,11 +471,18 @@ submitButton?.addEventListener("click", async () => {
         ? error.message
         : "We could not save your allocation. Please try again.",
     );
-    submitButton.disabled = false;
+  } finally {
+    submitting = false;
     resetButton?.removeAttribute("disabled");
     distributeButton?.removeAttribute("disabled");
+    render();
   }
 });
 
+if (storedAllocation !== undefined && !hasSavedAllocation) {
+  setMessage(
+    "Please choose a new percentage allocation. Your previous submission has been preserved.",
+  );
+}
 render();
 bindDropTargets();

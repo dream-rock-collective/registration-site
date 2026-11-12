@@ -56,9 +56,11 @@ export const pageTemplates = {
         </div>
         <h1 id="allocation-heading">{{title}}</h1>
         <div class="allocation-intro">{{body}}</div>
-        <div class="allocation-pool" id="allocation-pool" aria-label="Available dollars"></div>
+        <p>Assign five bubbles, each worth 20% of your donation share.</p>
+        <p id="allocation-remaining" role="status" aria-live="polite"></p>
+        <div class="allocation-pool" id="allocation-pool" aria-label="Available percentage bubbles"></div>
         <button class="distribute-randomly" id="distribute-randomly" type="button">
-          Distrubte Randomly
+          Distribute Randomly
         </button>
         <div class="allocation-columns">{{columns}}</div>
         <button class="allocation-submit" id="allocation-submit" type="button">
